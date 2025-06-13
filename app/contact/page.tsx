@@ -3,7 +3,7 @@ import ContactForm from "@/components/contact-form"
 import ContactInfo from "@/components/contact-info"
 
 export const metadata: Metadata = {
-  title: "Contact Us | Pixel Forge",
+  title: "Contact Us | Nova Corp",
   description: "Get in touch with our team for your web design and development needs.",
 }
 

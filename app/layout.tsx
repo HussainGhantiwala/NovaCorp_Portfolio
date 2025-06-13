@@ -12,7 +12,7 @@ import LoadingScreen from "@/components/loading-screen"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Pixel Forge | Web Design & Development Studio",
+  title: "Nova Corp | Web Design & Development Studio",
   description: "Professional web design, UI/UX solutions, and custom website development for modern businesses.",
 }
 

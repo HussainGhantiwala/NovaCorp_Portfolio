@@ -3,8 +3,8 @@ import TeamMembers from "@/components/team-members"
 import Image from "next/image"
 
 export const metadata: Metadata = {
-  title: "About Us | Pixel Forge",
-  description: "Learn about our team and mission at Pixel Forge.",
+  title: "About Us | Nova Corp",
+  description: "Learn about our team and mission at Nova Corp.",
 }
 
 export default function AboutPage() {
@@ -21,7 +21,7 @@ export default function AboutPage() {
         <div>
           <h2 className="mb-6 text-3xl font-bold md:text-4xl">Our Mission</h2>
           <p className="mb-6 text-lg text-muted-foreground">
-            At Pixel Forge, we believe every business deserves a powerful online presence. Our mission is to forge
+            At Nova Corp, we believe every business deserves a powerful online presence. Our mission is to forge
             digital experiences that not only look stunning but drive real business results.
           </p>
           <p className="mb-6 text-lg text-muted-foreground">

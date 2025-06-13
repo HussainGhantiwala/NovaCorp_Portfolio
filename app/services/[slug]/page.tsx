@@ -11,12 +11,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 
   if (!service) {
     return {
-      title: "Service Not Found | Pixel Forge",
+      title: "Service Not Found | Nova Corp",
     }
   }
 
   return {
-    title: `${service.title} | Pixel Forge`,
+    title: `${service.title} | Nova Corp`,
     description: service.description,
   }
 }

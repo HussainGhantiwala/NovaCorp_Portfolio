@@ -10,7 +10,7 @@ export default function Testimonials() {
   const testimonials = [
     {
       quote:
-        "Pixel Forge transformed our outdated website into a modern, user-friendly platform that perfectly represents our brand. The increase in leads has been remarkable.",
+        "Nova Corp transformed our outdated website into a modern, user-friendly platform that perfectly represents our brand. The increase in leads has been remarkable.",
       author: "Sarah Johnson",
       position: "CEO, Retail Solutions Inc.",
     },

@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import QuoteForm from "@/components/quote-form"
 
 export const metadata: Metadata = {
-  title: "Get a Quote | Pixel Forge",
+  title: "Get a Quote | Nova Corp",
   description: "Request a custom quote for your web design and development project.",
 }
 
