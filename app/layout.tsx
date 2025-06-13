@@ -10,7 +10,6 @@ import BackToTop from "@/components/back-to-top"
 import LoadingScreen from "@/components/loading-screen"
 
 const inter = Inter({ subsets: ["latin"] })
-
 export const metadata: Metadata = {
   icons: {
     icon: [
