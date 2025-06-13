@@ -12,6 +12,11 @@ import LoadingScreen from "@/components/loading-screen"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
+  icons: {
+    icon: [
+      { url: "/favicon.ico", type: "image/x-icon" },
+    ],
+  },
   title: "Nova Corp | Web Design & Development Studio",
   description: "Professional web design, UI/UX solutions, and custom website development for modern businesses.",
 }
