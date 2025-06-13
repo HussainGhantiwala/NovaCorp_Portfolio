@@ -37,6 +37,26 @@ export default function Hero() {
     },
   }
 
+  const buttonVariants = {
+    hover: {
+      scale: 1.05,
+      y: -2,
+      transition: {
+        type: "spring" as const,
+        stiffness: 400,
+        damping: 10,
+      },
+    },
+    tap: {
+      scale: 0.95,
+      transition: {
+        type: "spring" as const,
+        stiffness: 400,
+        damping: 10,
+      },
+    },
+  }
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-background to-background/95 px-4 py-24 md:py-32">
       {/* Background Doodles */}
@@ -135,15 +155,33 @@ export default function Hero() {
           </motion.p>
 
           <motion.div className="flex flex-col items-center justify-center gap-4 sm:flex-row" variants={itemVariants}>
-            <Button asChild size="lg" className="group">
-              <Link href="/quote">
-                Get a Quote
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            </Button>
-            <Button variant="outline" size="lg" asChild>
-              <Link href="/#portfolio">View Our Work</Link>
-            </Button>
+            <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+              <Button asChild size="lg" className="group relative overflow-hidden">
+                <Link href="/quote">
+                  <span className="relative z-10 flex items-center">
+                    Get a Quote
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                  <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary to-purple-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                </Link>
+              </Button>
+            </motion.div>
+
+            <motion.div variants={buttonVariants} whileHover="hover" whileTap="tap">
+              <Button
+                variant="outline"
+                size="lg"
+                asChild
+                className="group relative overflow-hidden border-2 transition-all duration-300 hover:border-primary hover:shadow-lg hover:shadow-primary/20"
+              >
+                <Link href="/#portfolio">
+                  <span className="relative z-10 transition-colors duration-300 group-hover:text-primary-foreground">
+                    View Our Work
+                  </span>
+                  <div className="absolute inset-0 -z-10 bg-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                </Link>
+              </Button>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
