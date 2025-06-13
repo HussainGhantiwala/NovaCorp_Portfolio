@@ -17,7 +17,7 @@ export default function QuoteForm() {
   const serviceParam = searchParams.get("service")
   const { toast } = useToast()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
 

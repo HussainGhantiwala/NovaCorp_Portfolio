@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { Suspense } from "react"
 import QuoteForm from "@/components/quote-form"
 
 export const metadata: Metadata = {
@@ -16,7 +17,9 @@ export default function QuotePage() {
         </p>
       </div>
       <div className="mx-auto max-w-3xl">
-        <QuoteForm />
+        <Suspense fallback={<div>Loading form...</div>}>
+          <QuoteForm />
+        </Suspense>
       </div>
     </div>
   )
