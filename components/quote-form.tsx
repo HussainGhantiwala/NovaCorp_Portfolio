@@ -3,25 +3,32 @@
 import { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Check, ChevronRight, ArrowRight, Loader2, CheckCircle } from "lucide-react";
-import { useSearchParams } from "next/navigation";
-import { useToast } from "@/components/ui/use-toast";
 
 const steps = [
   { id: "project-info", title: "Project Information", description: "Tell us about your project" },
   { id: "services", title: "Services", description: "Select the services you need" },
-  { id: "budget", title: "Budget & Timeline", description: "Provide your budget and timeline" },
+  { id: "budget-timeline", title: "Budget & Timeline", description: "Provide your budget and timeline" },
   { id: "contact", title: "Contact Details", description: "How can we reach you" },
 ];
 
+const projectGoals = [
+  { id: "increase-sales", label: "Increase Sales", emoji: "📈" },
+  { id: "brand-awareness", label: "Brand Awareness", emoji: "🌟" },
+  { id: "user-engagement", label: "User Engagement", emoji: "👥" },
+  { id: "new-launch", label: "New Product Launch", emoji: "🚀" },
+];
+
 const serviceOptions = [
-  "web-design", "ui-ux-solutions", "website-development", "e-commerce", "seo-analytics",
-  "mobile-optimization", "cms-integration", "website-maintenance", "other"
+  { id: "web-design", label: "Web Design", emoji: "🎨" },
+  { id: "ui-ux-solutions", label: "UI/UX Solutions", emoji: "📱" },
+  { id: "website-development", label: "Website Development", emoji: "💻" },
+  { id: "e-commerce", label: "E-commerce Solutions", emoji: "🛒" },
+  { id: "seo-analytics", label: "SEO & Analytics", emoji: "🔍" },
+  { id: "mobile-optimization", label: "Mobile Optimization", emoji: "📲" },
+  { id: "cms-integration", label: "CMS Integration", emoji: "🛠️" },
+  { id: "website-maintenance", label: "Website Maintenance", emoji: "🔧" },
+  { id: "other", label: "Other", emoji: "➕" },
 ];
 
 const budgetOptions = [
@@ -32,24 +39,158 @@ const budgetOptions = [
   { value: "not-sure", label: "Not sure yet" },
 ];
 
+const timelineOptions = [
+  { id: "1-month", label: "Within 1 Month", emoji: "⏰" },
+  { id: "1-3-months", label: "1-3 Months", emoji: "📅" },
+  { id: "3-6-months", label: "3-6 Months", emoji: "🕒" },
+  { id: "6-plus-months", label: "6+ Months", emoji: "⏳" },
+];
+
+const contactPreferences = [
+  { id: "email", label: "Email", emoji: "📧" },
+  { id: "phone", label: "Phone", emoji: "📞" },
+  { id: "video-call", label: "Video Call", emoji: "💻" },
+];
+
+// Mock UI Components
+const Button = ({ children, onClick, disabled, variant = "default", type = "button", className = "" }) => {
+  const baseClasses = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50 px-6 py-2";
+  const variants = {
+    default: "bg-primary text-primary-foreground hover:bg-primary/90",
+    outline: "border border-border bg-transparent text-muted-foreground hover:bg-muted",
+  };
+  
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={`${baseClasses} ${variants[variant]} ${className}`}
+    >
+      {children}
+    </button>
+  );
+};
+
+const Input = ({ id, name, value, onChange, required, placeholder, type = "text", className = "" }) => (
+  <input
+    id={id}
+    name={name}
+    type={type}
+    value={value}
+    onChange={onChange}
+    required={required}
+    placeholder={placeholder}
+    className={`flex h-10 w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+  />
+);
+
+const Textarea = ({ id, name, value, onChange, required, placeholder, className = "" }) => (
+  <textarea
+    id={id}
+    name={name}
+    value={value}
+    onChange={onChange}
+    required={required}
+    placeholder={placeholder}
+    className={`flex min-h-[100px] w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+  />
+);
+
+const Label = ({ children, htmlFor, className = "" }) => (
+  <label
+    htmlFor={htmlFor}
+    className={`text-sm font-medium text-muted-foreground ${className}`}
+  >
+    {children}
+  </label>
+);
+
+const Select = ({ children, onValueChange }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
+  
+  const handleSelect = (value, label) => {
+    setSelectedValue(label);
+    onValueChange(value);
+    setIsOpen(false);
+  };
+  
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex h-10 w-full items-center justify-between rounded-md border border-border bg-background text-foreground px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+      >
+        <span className={selectedValue ? "text-foreground" : "text-muted-foreground"}>
+          {selectedValue || "Select your budget range"}
+        </span>
+        <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${isOpen ? "rotate-90" : ""}`} />
+      </button>
+      {isOpen && (
+        <div className="absolute z-50 mt-1 w-full rounded-md border border-border bg-background shadow-lg">
+          {budgetOptions.map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => handleSelect(option.value, option.label)}
+              className="w-full px-3 py-2 text-left text-sm text-foreground hover:bg-muted"
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Mock Toast Component
+const useToast = () => {
+  const toast = ({ title, description, variant }) => {
+    console.log(`Toast: ${title} - ${description} (${variant})`);
+  };
+  return { toast };
+};
+
 export default function QuoteForm() {
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState({
-    name: "", company: "", email: "", phone: "", service: "", budget: "", description: "",
+    projectGoals: [],
+    description: "",
+    services: [],
+    budget: "",
+    timelines: [],
+    name: "",
+    email: "",
+    company: "",
+    phone: "",
+    contactPrefs: [],
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [toastMessage, setToastMessage] = useState<{ title: string; description: string; variant?: "default" | "destructive" } | null>(null);
-  const searchParams = useSearchParams();
-  const serviceParam = searchParams.get("service");
+  const [toastMessage, setToastMessage] = useState(null);
   const { toast } = useToast();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (name: string, value: string) => {
+  const handleCheckboxChange = (name, value) => {
+    setFormData((prev) => {
+      const current = prev[name] || [];
+      return {
+        ...prev,
+        [name]: current.includes(value)
+          ? current.filter((item) => item !== value)
+          : [...current, value],
+      };
+    });
+  };
+
+  const handleSelectChange = (name, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -68,19 +209,19 @@ export default function QuoteForm() {
   const isStepValid = () => {
     switch (currentStep) {
       case 0:
-        return formData.description.trim() !== "";
+        return formData.projectGoals.length > 0 && formData.description.trim() !== "";
       case 1:
-        return formData.service !== "";
+        return formData.services.length > 0;
       case 2:
-        return formData.budget !== "";
+        return formData.budget !== "" && formData.timelines.length > 0;
       case 3:
-        return formData.name.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+        return formData.name.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && formData.contactPrefs.length > 0;
       default:
         return false;
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -90,31 +231,41 @@ export default function QuoteForm() {
         from_email: formData.email,
         company: formData.company,
         phone: formData.phone,
-        service: formData.service,
-        budget: budgetOptions.find((opt) => opt.value === formData.budget)?.label || "",
+        project_goals: formData.projectGoals
+          .map((id) => projectGoals.find((goal) => goal.id === id)?.label || id)
+          .join(", "),
         description: formData.description,
+        services: formData.services
+          .map((id) => serviceOptions.find((service) => service.id === id)?.label || id)
+          .join(", "),
+        budget: budgetOptions.find((opt) => opt.value === formData.budget)?.label || "",
+        timelines: formData.timelines
+          .map((id) => timelineOptions.find((timeline) => timeline.id === id)?.label || id)
+          .join(", "),
+        contact_prefs: formData.contactPrefs
+          .map((id) => contactPreferences.find((pref) => pref.id === id)?.label || id)
+          .join(", "),
         to_name: "Nova Corp Team",
         reply_to: formData.email,
       };
 
       await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_QUOTE!,
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "your_service_id",
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_1_ID || "your_template_id",
         templateParams,
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "your_public_key"
       );
 
       const successMessage = {
         title: "Quote Request Sent!",
         description: "We've received your request and will get back to you within 24 hours.",
-        variant: "default" as const,
+        variant: "default",
       };
 
       toast({
         title: successMessage.title,
         description: successMessage.description,
-        className: "bg-background text-foreground border-border shadow-lg",
-        duration: 5000,
+        variant: "default",
       });
 
       setToastMessage(successMessage);
@@ -124,15 +275,13 @@ export default function QuoteForm() {
       const errorMessage = {
         title: "Error",
         description: "Failed to send quote request. Please try again later.",
-        variant: "destructive" as const,
+        variant: "destructive",
       };
 
       toast({
         title: errorMessage.title,
         description: errorMessage.description,
         variant: "destructive",
-        className: "bg-destructive text-destructive-foreground border-border shadow-lg",
-        duration: 5000,
       });
 
       setToastMessage(errorMessage);
@@ -149,10 +298,10 @@ export default function QuoteForm() {
   }, [toastMessage]);
 
   return (
-    <div className="pt-16 pb-20">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen bg-background pt-16 pb-20">
+      <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Request a Quote</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">Request a Quote</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Fill out the form below to get a custom quote for your project. We'll respond within 24 hours.
           </p>
@@ -161,33 +310,40 @@ export default function QuoteForm() {
         <div className="max-w-3xl mx-auto">
           {/* Progress Steps */}
           <div className="mb-12">
-            <div className="flex justify-between relative">
+            <div className="flex items-start justify-between relative">
+              {/* Progress Line */}
+              <div className="absolute top-5 left-0 w-full h-0.5 bg-border -z-10">
+                <div 
+                  className="h-full bg-primary transition-all duration-500 ease-in-out"
+                  style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+                />
+              </div>
+              
+              {/* Steps */}
               {steps.map((step, index) => (
-                <div key={step.id} className="flex flex-col items-center relative z-10">
-                  {index < steps.length - 1 && (
-                    <div className="absolute top-4 left-1/2 w-full h-[2px] bg-border">
-                      <motion.div
-                        className="h-full bg-primary"
-                        initial={{ width: "0%" }}
-                        animate={{ width: currentStep > index ? "100%" : "0%" }}
-                        transition={{ duration: 0.5 }}
-                      />
-                    </div>
-                  )}
+                <div key={step.id} className="flex flex-col items-center relative z-10 w-1/4">
                   <motion.div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      currentStep >= index ? "bg-primary text-primary-foreground" : "bg-background border border-border"
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
+                      currentStep >= index 
+                        ? "bg-primary text-primary-foreground border-primary" 
+                        : "bg-background border-border text-muted-foreground"
                     }`}
-                    animate={{
-                      scale: currentStep === index ? [1, 1.2, 1] : 1,
-                    }}
+                    animate={{ scale: currentStep === index ? 1.1 : 1 }}
                     transition={{ duration: 0.3 }}
                   >
-                    {currentStep > index ? <Check className="w-5 h-5" /> : index + 1}
+                    {currentStep > index ? (
+                      <Check className="w-5 h-5" />
+                    ) : (
+                      <span>{index + 1}</span>
+                    )}
                   </motion.div>
-                  <p className={`mt-2 text-sm font-medium ${currentStep >= index ? "text-foreground" : "text-muted-foreground"}`}>
-                    {step.title}
-                  </p>
+                  <div className="mt-3 text-center">
+                    <p className={`text-xs sm:text-sm font-medium max-w-[80px] leading-tight ${
+                      currentStep >= index ? "text-foreground" : "text-muted-foreground"
+                    }`}>
+                      {step.title}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -204,21 +360,59 @@ export default function QuoteForm() {
                       initial={{ opacity: 0, x: 50 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -50 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      transition={{ duration: 0.4 }}
                     >
-                      <h2 className="text-2xl font-bold mb-2">{steps[0].title}</h2>
+                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[0].title}</h2>
                       <p className="text-muted-foreground mb-6">{steps[0].description}</p>
                       <div className="space-y-6">
                         <div>
-                          <Label htmlFor="description">Project Description</Label>
+                          <Label className="mb-3 block">Project Goals *</Label>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {projectGoals.map((goal) => (
+                              <motion.label
+                                key={goal.id}
+                                className={`flex items-center p-4 border rounded-md cursor-pointer transition-colors ${
+                                  formData.projectGoals.includes(goal.id)
+                                    ? "border-primary bg-primary/10"
+                                    : "border-border hover:bg-muted"
+                                }`}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={formData.projectGoals.includes(goal.id)}
+                                  onChange={() => handleCheckboxChange("projectGoals", goal.id)}
+                                  className="sr-only"
+                                />
+                                <div
+                                  className={`w-5 h-5 rounded border mr-3 flex items-center justify-center ${
+                                    formData.projectGoals.includes(goal.id)
+                                      ? "bg-primary border-primary"
+                                      : "border-border"
+                                  }`}
+                                >
+                                  {formData.projectGoals.includes(goal.id) && (
+                                    <Check className="w-3 h-3 text-primary-foreground" />
+                                  )}
+                                </div>
+                                <span className="flex items-center text-foreground">
+                                  <span className="mr-2">{goal.emoji}</span>
+                                  {goal.label}
+                                </span>
+                              </motion.label>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <Label htmlFor="description" className="mb-2 block">Project Description *</Label>
                           <Textarea
                             id="description"
                             name="description"
                             value={formData.description}
                             onChange={handleInputChange}
                             required
-                            placeholder="Describe your project, goals, and timeline..."
-                            className="mt-1 min-h-[120px]"
+                            placeholder="Describe your project, goals, and any specific requirements..."
                           />
                         </div>
                       </div>
@@ -231,27 +425,48 @@ export default function QuoteForm() {
                       initial={{ opacity: 0, x: 50 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -50 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      transition={{ duration: 0.4 }}
                     >
-                      <h2 className="text-2xl font-bold mb-2">{steps[1].title}</h2>
+                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[1].title}</h2>
                       <p className="text-muted-foreground mb-6">{steps[1].description}</p>
                       <div>
-                        <Label htmlFor="service">Service Needed</Label>
-                        <Select
-                          defaultValue={serviceParam || formData.service}
-                          onValueChange={(value) => handleSelectChange("service", value)}
-                        >
-                          <SelectTrigger className="mt-1">
-                            <SelectValue placeholder="Select a service" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {serviceOptions.map((service) => (
-                              <SelectItem key={service} value={service}>
-                                {service.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
+                        <Label className="mb-3 block">Services Needed *</Label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {serviceOptions.map((service) => (
+                            <motion.label
+                              key={service.id}
+                              className={`flex items-center p-4 border rounded-md cursor-pointer transition-colors ${
+                                formData.services.includes(service.id)
+                                  ? "border-primary bg-primary/10"
+                                  : "border-border hover:bg-muted"
+                              }`}
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={formData.services.includes(service.id)}
+                                onChange={() => handleCheckboxChange("services", service.id)}
+                                className="sr-only"
+                              />
+                              <div
+                                className={`w-5 h-5 rounded border mr-3 flex items-center justify-center ${
+                                  formData.services.includes(service.id)
+                                    ? "bg-primary border-primary"
+                                    : "border-border"
+                                }`}
+                              >
+                                {formData.services.includes(service.id) && (
+                                  <Check className="w-3 h-3 text-primary-foreground" />
+                                )}
+                              </div>
+                              <span className="flex items-center text-foreground">
+                                <span className="mr-2">{service.emoji}</span>
+                                {service.label}
+                              </span>
+                            </motion.label>
+                          ))}
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -262,25 +477,53 @@ export default function QuoteForm() {
                       initial={{ opacity: 0, x: 50 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -50 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      transition={{ duration: 0.4 }}
                     >
-                      <h2 className="text-2xl font-bold mb-2">{steps[2].title}</h2>
+                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[2].title}</h2>
                       <p className="text-muted-foreground mb-6">{steps[2].description}</p>
                       <div className="space-y-6">
                         <div>
-                          <Label htmlFor="budget">Budget Range</Label>
-                          <Select onValueChange={(value) => handleSelectChange("budget", value)}>
-                            <SelectTrigger className="mt-1">
-                              <SelectValue placeholder="Select your budget range" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {budgetOptions.map((option) => (
-                                <SelectItem key={option.value} value={option.value}>
-                                  {option.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                          <Label className="mb-2 block">Budget Range *</Label>
+                          <Select onValueChange={(value) => handleSelectChange("budget", value)} />
+                        </div>
+                        <div>
+                          <Label className="mb-3 block">Timeline Preferences *</Label>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {timelineOptions.map((timeline) => (
+                              <motion.label
+                                key={timeline.id}
+                                className={`flex items-center p-4 border rounded-md cursor-pointer transition-colors ${
+                                  formData.timelines.includes(timeline.id)
+                                    ? "border-primary bg-primary/10"
+                                    : "border-border hover:bg-muted"
+                                }`}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={formData.timelines.includes(timeline.id)}
+                                  onChange={() => handleCheckboxChange("timelines", timeline.id)}
+                                  className="sr-only"
+                                />
+                                <div
+                                  className={`w-5 h-5 rounded border mr-3 flex items-center justify-center ${
+                                    formData.timelines.includes(timeline.id)
+                                      ? "bg-primary border-primary"
+                                      : "border-border"
+                                  }`}
+                                >
+                                  {formData.timelines.includes(timeline.id) && (
+                                    <Check className="w-3 h-3 text-primary-foreground" />
+                                  )}
+                                </div>
+                                <span className="flex items-center text-foreground">
+                                  <span className="mr-2">{timeline.emoji}</span>
+                                  {timeline.label}
+                                </span>
+                              </motion.label>
+                            ))}
+                          </div>
                         </div>
                       </div>
                     </motion.div>
@@ -292,26 +535,25 @@ export default function QuoteForm() {
                       initial={{ opacity: 0, x: 50 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -50 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
+                      transition={{ duration: 0.4 }}
                     >
-                      <h2 className="text-2xl font-bold mb-2">{steps[3].title}</h2>
+                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[3].title}</h2>
                       <p className="text-muted-foreground mb-6">{steps[3].description}</p>
                       <div className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
-                            <Label htmlFor="name">Name</Label>
+                            <Label htmlFor="name" className="mb-2 block">Name *</Label>
                             <Input
                               id="name"
                               name="name"
                               value={formData.name}
                               onChange={handleInputChange}
                               required
-                              placeholder="Your name"
-                              className="mt-1"
+                              placeholder="Your full name"
                             />
                           </div>
                           <div>
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email" className="mb-2 block">Email *</Label>
                             <Input
                               id="email"
                               name="email"
@@ -320,24 +562,22 @@ export default function QuoteForm() {
                               onChange={handleInputChange}
                               required
                               placeholder="your@email.com"
-                              className="mt-1"
                             />
                           </div>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
-                            <Label htmlFor="company">Company (optional)</Label>
+                            <Label htmlFor="company" className="mb-2 block">Company</Label>
                             <Input
                               id="company"
                               name="company"
                               value={formData.company}
                               onChange={handleInputChange}
                               placeholder="Your company name"
-                              className="mt-1"
                             />
                           </div>
                           <div>
-                            <Label htmlFor="phone">Phone (optional)</Label>
+                            <Label htmlFor="phone" className="mb-2 block">Phone</Label>
                             <Input
                               id="phone"
                               name="phone"
@@ -345,8 +585,46 @@ export default function QuoteForm() {
                               value={formData.phone}
                               onChange={handleInputChange}
                               placeholder="(555) 123-4567"
-                              className="mt-1"
                             />
+                          </div>
+                        </div>
+                        <div>
+                          <Label className="mb-3 block">Preferred Contact Methods *</Label>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {contactPreferences.map((pref) => (
+                              <motion.label
+                                key={pref.id}
+                                className={`flex items-center p-4 border rounded-md cursor-pointer transition-colors ${
+                                  formData.contactPrefs.includes(pref.id)
+                                    ? "border-primary bg-primary/10"
+                                    : "border-border hover:bg-muted"
+                                }`}
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={formData.contactPrefs.includes(pref.id)}
+                                  onChange={() => handleCheckboxChange("contactPrefs", pref.id)}
+                                  className="sr-only"
+                                />
+                                <div
+                                  className={`w-5 h-5 rounded border mr-3 flex items-center justify-center ${
+                                    formData.contactPrefs.includes(pref.id)
+                                      ? "bg-primary border-primary"
+                                      : "border-border"
+                                  }`}
+                                >
+                                  {formData.contactPrefs.includes(pref.id) && (
+                                    <Check className="w-3 h-3 text-primary-foreground" />
+                                  )}
+                                </div>
+                                <span className="flex items-center text-foreground">
+                                  <span className="mr-2">{pref.emoji}</span>
+                                  {pref.label}
+                                </span>
+                              </motion.label>
+                            ))}
                           </div>
                         </div>
                       </div>
@@ -354,14 +632,10 @@ export default function QuoteForm() {
                   )}
                 </AnimatePresence>
 
-                <div className="mt-8 flex justify-between">
+                <div className="mt-10 flex justify-between items-center">
                   {currentStep > 0 && (
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                      <Button
-                        variant="outline"
-                        onClick={prevStep}
-                        className="px-6 py-2"
-                      >
+                      <Button variant="outline" onClick={prevStep}>
                         Back
                       </Button>
                     </motion.div>
@@ -372,7 +646,7 @@ export default function QuoteForm() {
                       <Button
                         onClick={nextStep}
                         disabled={!isStepValid()}
-                        className={`px-6 py-2 ${isStepValid() ? "bg-primary hover:bg-primary/90" : "bg-muted cursor-not-allowed"}`}
+                        className={!isStepValid() ? "opacity-50 cursor-not-allowed" : ""}
                       >
                         Next <ChevronRight className="ml-2 w-4 h-4" />
                       </Button>
@@ -382,7 +656,7 @@ export default function QuoteForm() {
                       <Button
                         type="submit"
                         disabled={!isStepValid() || isSubmitting}
-                        className={`px-6 py-2 ${isStepValid() && !isSubmitting ? "bg-primary hover:bg-primary/90" : "bg-muted cursor-not-allowed"}`}
+                        className={(!isStepValid() || isSubmitting) ? "opacity-50 cursor-not-allowed" : ""}
                       >
                         {isSubmitting ? (
                           <>
@@ -409,12 +683,29 @@ export default function QuoteForm() {
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
                   <CheckCircle className="w-8 h-8 text-primary" />
                 </div>
-                <h2 className="text-2xl font-bold mb-4">Quote Request Submitted!</h2>
+                <h2 className="text-2xl font-bold mb-4 text-foreground">Quote Request Submitted!</h2>
                 <p className="text-muted-foreground mb-8 max-w-md mx-auto">
                   Thank you for your request. We'll review your details and respond within 24 hours.
                 </p>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button onClick={() => { setIsSubmitted(false); setCurrentStep(0); setFormData({ name: "", company: "", email: "", phone: "", service: "", budget: "", description: "" }); }}>
+                  <Button
+                    onClick={() => {
+                      setIsSubmitted(false);
+                      setCurrentStep(0);
+                      setFormData({
+                        projectGoals: [],
+                        description: "",
+                        services: [],
+                        budget: "",
+                        timelines: [],
+                        name: "",
+                        email: "",
+                        company: "",
+                        phone: "",
+                        contactPrefs: [],
+                      });
+                    }}
+                  >
                     Submit Another Request
                   </Button>
                 </motion.div>
@@ -424,7 +715,8 @@ export default function QuoteForm() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`mt-6 p-4 rounded-lg border shadow-lg ${
+                transition={{ duration: 0.4 }}
+                className={`mt-6 p-4 rounded-md border ${
                   toastMessage.variant === "destructive"
                     ? "bg-destructive text-destructive-foreground border-border"
                     : "bg-background text-foreground border-border"
