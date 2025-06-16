@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +16,7 @@ export default function ContactForm() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toastMessage, setToastMessage] = useState<{ title: string; description: string; variant?: "default" | "destructive" } | null>(null);
   const { toast } = useToast();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -34,6 +35,7 @@ export default function ContactForm() {
         subject: formData.subject,
         message: formData.message,
         to_name: "Nova Corp Team",
+        reply_to: formData.email,
       };
 
       await emailjs.send(
@@ -43,26 +45,54 @@ export default function ContactForm() {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
 
-      toast({
+      const successMessage = {
         title: "Message Sent!",
         description: "We've received your message and will get back to you soon.",
+        variant: "default" as const,
+      };
+
+      // Trigger Shadcn/UI toast
+      toast({
+        title: successMessage.title,
+        description: successMessage.description,
         className: "bg-background text-foreground border-border shadow-lg",
         duration: 5000,
       });
 
+      // Set toast message for display below form
+      setToastMessage(successMessage);
+
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
-      toast({
+      const errorMessage = {
         title: "Error",
         description: "Failed to send message. Please try again later.",
+        variant: "destructive" as const,
+      };
+
+      // Trigger Shadcn/UI toast
+      toast({
+        title: errorMessage.title,
+        description: errorMessage.description,
         variant: "destructive",
         className: "bg-destructive text-destructive-foreground border-border shadow-lg",
         duration: 5000,
       });
+
+      // Set toast message for display below form
+      setToastMessage(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  // Auto-hide toast after 5 seconds
+  useEffect(() => {
+    if (toastMessage) {
+      const timer = setTimeout(() => setToastMessage(null), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMessage]);
 
   return (
     <div className="rounded-lg bg-background p-8 shadow-lg">
@@ -124,6 +154,18 @@ export default function ContactForm() {
           {isSubmitting ? "Sending..." : "Send Message"}
         </Button>
       </form>
+      {toastMessage && (
+        <div
+          className={`mt-6 p-4 rounded-lg border shadow-lg ${
+            toastMessage.variant === "destructive"
+              ? "bg-destructive text-destructive-foreground border-border"
+              : "bg-background text-foreground border-border"
+          }`}
+        >
+          <h3 className="text-lg font-semibold">{toastMessage.title}</h3>
+          <p className="text-sm">{toastMessage.description}</p>
+        </div>
+      )}
     </div>
   );
 }
