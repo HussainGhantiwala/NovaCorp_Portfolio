@@ -265,7 +265,6 @@ export default function Home() {
                     {/* Icon with animation */}
                     <motion.div
                       className="mb-6 relative z-10"
-                      initial={{ scale: 0.8, opacity: 0 }}
                     >
                       {service.icon}
                     </motion.div>
