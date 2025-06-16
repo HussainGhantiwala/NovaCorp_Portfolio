@@ -28,6 +28,16 @@ export default function Home() {
   const heroY = useTransform(scrollYProgress, [0, 1], [0, -50])
   const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
 
+   const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.5 },
+    },
+  }
+
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY })
@@ -81,12 +91,13 @@ export default function Home() {
 
           {/* Main heading */}
           <motion.h1
-            className="font-heading text-6xl md:text-8xl lg:text-9xl leading-none tracking-tight mb-8"
+            className="font-mono  text-6xl md:text-8xl lg:text-9xl leading-none tracking-tight mb-8 "
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
+            variants={itemVariants}
           >
-            <span className="text-white">NOVA</span>
+            <span className="text-white typing-animation">NOVA</span>
             <br />
             <motion.span
               whileHover={{
@@ -94,7 +105,7 @@ export default function Home() {
                 transition: { duration: 0.3 },
               }}
             >
-              <GradientText>
+              <GradientText className="typing-animation font-mono">
                 <TextScramble text="CORP" />
               </GradientText>
             </motion.span>
