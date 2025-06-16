@@ -60,8 +60,8 @@ export function HeroBackground({ intensity = 1, color = "mixed" }: HeroBackgroun
       ease: number
 
       constructor() {
-        this.x = Math.random() * canvas.width
-        this.y = Math.random() * canvas.height
+        this.x = Math.random() * canvas!.width
+        this.y = Math.random() * canvas!.height
         this.originalX = this.x
         this.originalY = this.y
         this.size = Math.random() * 2 + 1
@@ -85,10 +85,10 @@ export function HeroBackground({ intensity = 1, color = "mixed" }: HeroBackgroun
         this.y += this.speedY
 
         // Boundary wrapping
-        if (this.x > canvas.width) this.x = 0
-        else if (this.x < 0) this.x = canvas.width
-        if (this.y > canvas.height) this.y = 0
-        else if (this.y < 0) this.y = canvas.height
+        if (this.x > canvas!.width) this.x = 0
+        else if (this.x < 0) this.x = canvas!.width
+        if (this.y > canvas!.height) this.y = 0
+        else if (this.y < 0) this.y = canvas!.height
 
         // Mouse interaction
         this.distance = Math.sqrt(Math.pow(this.x - mouseX, 2) + Math.pow(this.y - mouseY, 2))
@@ -108,16 +108,16 @@ export function HeroBackground({ intensity = 1, color = "mixed" }: HeroBackgroun
       }
 
       draw() {
-        ctx.fillStyle = this.color
-        ctx.beginPath()
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2)
-        ctx.fill()
+        ctx!.fillStyle = this.color
+        ctx!.beginPath()
+        ctx!.arc(this.x, this.y, this.size, 0, Math.PI * 2)
+        ctx!.fill()
       }
     }
 
     function initParticles() {
       particles = []
-      const particlesCount = Math.floor((canvas.width * canvas.height) / 10000) * intensity
+      const particlesCount = Math.floor((canvas!.width * canvas!.height) / 10000) * intensity
 
       for (let i = 0; i < particlesCount; i++) {
         particles.push(new Particle())
@@ -133,19 +133,19 @@ export function HeroBackground({ intensity = 1, color = "mixed" }: HeroBackgroun
 
           if (distance < 100) {
             const opacity = (1 - distance / 100) * 0.5
-            ctx.strokeStyle = `rgba(168, 85, 247, ${opacity * intensity})`
-            ctx.lineWidth = 0.5
-            ctx.beginPath()
-            ctx.moveTo(particles[i].x, particles[i].y)
-            ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.stroke()
+            ctx!.strokeStyle = `rgba(168, 85, 247, ${opacity * intensity})`
+            ctx!.lineWidth = 0.5
+            ctx!.beginPath()
+            ctx!.moveTo(particles[i].x, particles[i].y)
+            ctx!.lineTo(particles[j].x, particles[j].y)
+            ctx!.stroke()
           }
         }
       }
     }
 
     function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx!.clearRect(0, 0, canvas!.width, canvas!.height)
 
       particles.forEach((particle) => {
         particle.update()
