@@ -45,7 +45,7 @@ export default function Navigation() {
       >
         <div className="container px-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 group">
-            <Sparkles className="h-6 w-6 text-purple-500" />
+            <img src = '/nova-logo2.png' className="h-6 w-6 text-purple-500" />
             <motion.span
               className="text-xl font-heading text-white"
               whileHover={{ scale: 1.05 }}

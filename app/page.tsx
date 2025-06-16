@@ -326,22 +326,21 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                quote: "Nova Corp transformed our digital presence completely. The results exceeded our expectations.",
-                author: "Sarah Chen",
-                role: "CEO, TechFlow",
+                quote: "Our website turned out awesome! The support is incredible. I’ll definitely recommend Nova Corp for their quality work and responsiveness.",
+                author: "Juzer A Deesawala",
+                role: "Founder, Taha Hardware",
                 color: "purple",
               },
               {
-                quote: "Professional, creative, and delivered on time. Couldn't ask for a better development partner.",
-                author: "Marcus Rodriguez",
-                role: "Founder, DataViz Pro",
+                quote: "Nova Corp delivered a sleek, functional accounting site with expert guidance and clear communication—perfect for our business.",
+                author: "Mohammed Ghantiwala",
+                role: "Founder, HM Trading Corporation",
                 color: "cyan",
               },
               {
-                quote:
-                  "The attention to detail and user experience is outstanding. Our customers love the new platform.",
-                author: "Elena Vasquez",
-                role: "CTO, CloudSync",
+                quote: "Nova Corp delivered the best UI/UX website for our event club—great communication, seamless coordination, and on-time delivery.",
+                author: "Anirudh Sharma",
+                role: "CEO, Cresa",
                 color: "pink",
               },
             ].map((testimonial, index) => (
