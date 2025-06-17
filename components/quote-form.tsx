@@ -53,32 +53,13 @@ const contactPreferences = [
 ];
 
 // Mock UI Components
-type ButtonVariant = "default" | "outline";
-
-const Button = ({
-  children,
-  onClick,
-  disabled,
-  variant = "default",
-  type = "button",
-  className = "",
-}: {
-  children: React.ReactNode;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  disabled?: boolean;
-  variant?: ButtonVariant;
-  type?: "button" | "submit" | "reset";
-  className?: string;
-}) => {
-  const baseClasses =
-    "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50 px-6 py-2";
-  const variants: Record<ButtonVariant, string> = {
-    default:
-      "bg-gradient-to-r from-purple-400 to-blue-500 text-white hover:from-purple-500 hover:to-blue-600 shadow-md",
-    outline:
-      "border border-border bg-transparent text-muted-foreground hover:bg-muted/50 hover:border-primary",
+const Button = ({ children, onClick, disabled, variant = "default", type = "button", className = "" }) => {
+  const baseClasses = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50 px-6 py-2";
+  const variants = {
+    default: "bg-primary text-primary-foreground hover:bg-primary/90",
+    outline: "border border-border bg-transparent text-muted-foreground hover:bg-muted",
   };
-
+  
   return (
     <motion.button
       type={type}
@@ -94,27 +75,7 @@ const Button = ({
   );
 };
 
-interface InputProps {
-  id?: string;
-  name?: string;
-  value?: string;
-  onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  required?: boolean;
-  placeholder?: string;
-  type?: string;
-  className?: string;
-}
-
-const Input: React.FC<InputProps> = ({
-  id,
-  name,
-  value,
-  onChange,
-  required,
-  placeholder,
-  type = "text",
-  className = "",
-}) => (
+const Input = ({ id, name, value, onChange, required, placeholder, type = "text", className = "" }) => (
   <motion.input
     id={id}
     name={name}
@@ -129,25 +90,7 @@ const Input: React.FC<InputProps> = ({
   />
 );
 
-interface TextareaProps {
-  id?: string;
-  name?: string;
-  value?: string;
-  onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
-  required?: boolean;
-  placeholder?: string;
-  className?: string;
-}
-
-const Textarea: React.FC<TextareaProps> = ({
-  id,
-  name,
-  value,
-  onChange,
-  required,
-  placeholder,
-  className = "",
-}) => (
+const Textarea = ({ id, name, value, onChange, required, placeholder, className = "" }) => (
   <motion.textarea
     id={id}
     name={name}
@@ -161,26 +104,20 @@ const Textarea: React.FC<TextareaProps> = ({
   />
 );
 
-interface LabelProps {
-  children: React.ReactNode;
-  htmlFor?: string;
-  className?: string;
-}
-
-const Label = ({ children, htmlFor, className = "" }: LabelProps) => (
+const Label = ({ children, htmlFor, className = "" }) => (
   <label
-    {...(htmlFor ? { htmlFor } : {})}
+    htmlFor={htmlFor}
     className={`text-sm font-medium text-muted-foreground ${className}`}
   >
     {children}
   </label>
 );
 
-const Select: React.FC<{ children?: React.ReactNode; onValueChange: (value: string) => void }> = ({ children, onValueChange }) => {
+const Select = ({ children, onValueChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
   
-  const handleSelect = (value: string, label: string) => {
+  const handleSelect = (value, label) => {
     setSelectedValue(label);
     onValueChange(value);
     setIsOpen(false);
@@ -231,15 +168,7 @@ const Select: React.FC<{ children?: React.ReactNode; onValueChange: (value: stri
 
 // Mock Toast Component
 const useToast = () => {
-  const toast = ({
-    title,
-    description,
-    variant,
-  }: {
-    title: string;
-    description: string;
-    variant: string;
-  }) => {
+  const toast = ({ title, description, variant }) => {
     console.log(`Toast: ${title} - ${description} (${variant})`);
   };
   return { toast };
@@ -247,20 +176,7 @@ const useToast = () => {
 
 export default function QuoteForm() {
   const [currentStep, setCurrentStep] = useState(0);
-  interface QuoteFormData {
-    projectGoals: string[];
-    description: string;
-    services: string[];
-    budget: string;
-    timelines: string[];
-    name: string;
-    email: string;
-    company: string;
-    phone: string;
-    contactPrefs: string[];
-  }
-
-  const [formData, setFormData] = useState<QuoteFormData>({
+  const [formData, setFormData] = useState({
     projectGoals: [],
     description: "",
     services: [],
@@ -276,14 +192,14 @@ export default function QuoteForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxChange = (name: string, value: string) => {
+  const handleCheckboxChange = (name, value) => {
     setFormData((prev) => {
-      const current = prev[name as keyof typeof prev] as string[] || [];
+      const current = prev[name] || [];
       return {
         ...prev,
         [name]: current.includes(value)
@@ -293,7 +209,7 @@ export default function QuoteForm() {
     });
   };
 
-  const handleSelectChange = (name: string, value: string) => {
+  const handleSelectChange = (name, value) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -324,7 +240,7 @@ export default function QuoteForm() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
@@ -468,7 +384,7 @@ export default function QuoteForm() {
                       <p className="text-muted-foreground mb-6">{steps[0].description}</p>
                       <div className="space-y-6">
                         <div>
-                          <Label className="mb-3 block" htmlFor="project-goals">Project Goals *</Label>
+                          <Label className="mb-3 block">Project Goals *</Label>
                           <motion.div
                             className="grid grid-cols-1 md:grid-cols-2 gap-4"
                             initial={{ opacity: 0, y: 20 }}
@@ -522,7 +438,6 @@ export default function QuoteForm() {
                             value={formData.description}
                             onChange={handleInputChange}
                             required
-                            className="p-2"
                             placeholder="Describe your project, goals, and any specific requirements..."
                           />
                         </div>
@@ -671,7 +586,6 @@ export default function QuoteForm() {
                           <div>
                             <Label htmlFor="name" className="mb-2 block">Name *</Label>
                             <Input
-                              className="p-2"
                               id="name"
                               name="name"
                               value={formData.name}
@@ -683,7 +597,6 @@ export default function QuoteForm() {
                           <div>
                             <Label htmlFor="email" className="mb-2 block">Email *</Label>
                             <Input
-                            className="p-2"
                               id="email"
                               name="email"
                               type="email"
@@ -698,7 +611,6 @@ export default function QuoteForm() {
                           <div>
                             <Label htmlFor="company" className="mb-2 block">Company</Label>
                             <Input
-                            className="p-2"
                               id="company"
                               name="company"
                               value={formData.company}
@@ -709,7 +621,6 @@ export default function QuoteForm() {
                           <div>
                             <Label htmlFor="phone" className="mb-2 block">Phone</Label>
                             <Input
-                            className="p-2"
                               id="phone"
                               name="phone"
                               type="tel"
