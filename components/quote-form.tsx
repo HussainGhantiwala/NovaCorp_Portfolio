@@ -170,7 +170,6 @@ export default function QuoteForm() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
   const { toast } = useToast();
 
   const handleInputChange = (e) => {
@@ -256,19 +255,6 @@ export default function QuoteForm() {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "your_public_key"
       );
 
-      const successMessage = {
-        title: "Quote Request Sent!",
-        description: "We've received your request and will get back to you within 24 hours.",
-        variant: "default",
-      };
-
-      toast({
-        title: successMessage.title,
-        description: successMessage.description,
-        variant: "default",
-      });
-
-      setToastMessage(successMessage);
       setIsSubmitted(true);
     } catch (error) {
       console.error("EmailJS Error:", error);
@@ -284,18 +270,10 @@ export default function QuoteForm() {
         variant: "destructive",
       });
 
-      setToastMessage(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
   };
-
-  useEffect(() => {
-    if (toastMessage) {
-      const timer = setTimeout(() => setToastMessage(null), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [toastMessage]);
 
   return (
     <div className="min-h-screen bg-background pt-16 pb-20">
@@ -709,21 +687,6 @@ export default function QuoteForm() {
                     Submit Another Request
                   </Button>
                 </motion.div>
-              </motion.div>
-            )}
-            {toastMessage && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4 }}
-                className={`mt-6 p-4 rounded-md border ${
-                  toastMessage.variant === "destructive"
-                    ? "bg-destructive text-destructive-foreground border-border"
-                    : "bg-background text-foreground border-border"
-                }`}
-              >
-                <h3 className="text-lg font-semibold">{toastMessage.title}</h3>
-                <p className="text-sm">{toastMessage.description}</p>
               </motion.div>
             )}
           </div>
