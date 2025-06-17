@@ -297,24 +297,27 @@ export default function QuoteForm() {
   return (
     <div className="min-h-screen bg-background pt-16 pb-20">
       <div className="container mx-auto px-4 max-w-4xl">
-        <div className="text-center mb-12">
-          <motion.h1
-            className="text-4xl md:text-5xl font-bold mb-4 text-foreground"
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.0, ease: "easeOut", delay: 0.2 }}
-          >
-            Request a Quote
-          </motion.h1>
-          <motion.p
-            className="text-muted-foreground max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeInOut", delay: 0.4 }}
-          >
-            Fill out the form below to get a custom quote for your project. We'll respond within 24 hours.
-          </motion.p>
-        </div>
+<div className="text-center mb-12">
+  <motion.h1
+    className="text-4xl md:text-5xl font-bold mb-4"
+    initial={{ opacity: 0, y: -30 }}
+    animate={{ opacity: 1, y: 0 }}
+    whileHover={{ boxShadow: "rgba(147, 51, 234, 0) 0px 0px 0px", transform: "none" }}
+    whileTap={{ scale: 0.95 }}
+    transition={{ duration: 1.0, ease: "easeOut", delay: 0.2 }}
+  >
+    <span className="text-foreground">Request a </span>
+    <span className="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">Quote</span>
+  </motion.h1>
+  <motion.p
+    className="text-muted-foreground max-w-2xl mx-auto"
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8, ease: "easeInOut", delay: 0.4 }}
+  >
+    Fill out the form below to get a <span className="bg-gradient-to-r from-purple-300 to-blue-400 bg-clip-text text-transparent">custom quote</span> for your project. We'll respond within <span className="bg-gradient-to-r from-purple-300 to-blue-400 bg-clip-text text-transparent">24 hours</span>.
+  </motion.p>
+</div>
 
         <div className="max-w-3xl mx-auto">
           {/* Progress Steps */}
