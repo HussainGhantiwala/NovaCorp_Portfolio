@@ -1,50 +1,58 @@
-"use client"
+"use client";
 
-import { useRef, useState, useEffect } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { ArrowRight, Sparkles, Globe2, Code2, Layers3, CheckCircle, ChevronDown } from "lucide-react"
-import Link from "next/link"
-import { Card } from "@/components/ui/card"
-import { AnimatedCard } from "@/components/animated-card"
-import { ScrollReveal } from "@/components/scroll-reveal"
-import { AnimatedButton } from "@/components/animated-button"
-import { ParallaxSection } from "@/components/parallax-section"
-import { TextScramble } from "@/components/text-scramble"
-import { HeroBackground } from "@/components/hero-background"
-import { GradientText } from "@/components/gradient-text"
-import Portfolio from "@/components/portfolio"
-import Process from "@/components/process"
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  ArrowRight,
+  Sparkles,
+  Globe2,
+  Code2,
+  Layers3,
+  CheckCircle,
+  ChevronDown,
+} from "lucide-react";
+import Link from "next/link";
+import { Card } from "@/components/ui/card";
+import { AnimatedCard } from "@/components/animated-card";
+import { ScrollReveal } from "@/components/scroll-reveal";
+import { AnimatedButton } from "@/components/animated-button";
+import { ParallaxSection } from "@/components/parallax-section";
+import { TextScramble } from "@/components/text-scramble";
+import { HeroBackground } from "@/components/hero-background";
+import { GradientText } from "@/components/gradient-text";
+import Portfolio from "@/components/portfolio";
+import Process from "@/components/process";
+import DecryptedText from "@/components/DecryptedText";
 
 export default function Home() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [hoveredService, setHoveredService] = useState<number | null>(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [hoveredService, setHoveredService] = useState<number | null>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
-  })
+  });
 
-  const heroY = useTransform(scrollYProgress, [0, 1], [0, -50])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
-   const itemVariants = {
+  const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: { duration: 0.5 },
     },
-  }
-
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   return (
     <div ref={containerRef} className="relative">
@@ -64,7 +72,11 @@ export default function Home() {
             y: [0, -30, 0],
             scale: [1, 1.1, 1],
           }}
-          transition={{ duration: 15, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
+          transition={{
+            duration: 15,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+          }}
         />
         <motion.div
           className="absolute bottom-1/4 right-1/4 w-128 h-128 bg-cyan-500/10 rounded-full blur-3xl"
@@ -73,10 +85,18 @@ export default function Home() {
             y: [0, 40, 0],
             scale: [1, 1.2, 1],
           }}
-          transition={{ duration: 20, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut", delay: 2 }}
+          transition={{
+            duration: 20,
+            repeat: Number.POSITIVE_INFINITY,
+            ease: "easeInOut",
+            delay: 2,
+          }}
         />
 
-        <motion.div className="container px-4 text-center relative z-10" style={{ y: heroY, opacity: heroOpacity }}>
+        <motion.div
+          className="container px-4 text-center relative z-10"
+          style={{ y: heroY, opacity: heroOpacity }}
+        >
           {/* Subtitle */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -97,7 +117,17 @@ export default function Home() {
             transition={{ duration: 1, delay: 0.3 }}
             variants={itemVariants}
           >
-            <span className="text-white typing-animation">NOVA</span>
+            <span className="text-white">
+              <DecryptedText
+                text="NOVA"
+                  speed={40}
+                  animateOn="view"
+                  maxIterations={60}
+                  revealDirection="center"
+                  encryptedClassName="encrypted"
+                  characters="ABCDEFGH#*%()?:;"
+              />
+            </span>
             <br />
             <motion.span
               whileHover={{
@@ -105,8 +135,16 @@ export default function Home() {
                 transition: { duration: 0.3 },
               }}
             >
-              <GradientText className="typing-animation font-mono">
-                <TextScramble text="CORP" />
+              <GradientText className="font-mono">
+                <DecryptedText
+                  text="CORP"
+                  speed={40}
+                  animateOn="view"
+                  maxIterations={60}
+                  revealDirection="center"
+                  encryptedClassName="encrypted"
+                  characters="ABCDEFGH#*%()?:;"
+                />
               </GradientText>
             </motion.span>
           </motion.h1>
@@ -118,8 +156,9 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            We craft exceptional digital experiences that drive results. From cutting-edge websites to powerful SaaS
-            platforms, we turn your vision into reality.
+            We craft exceptional digital experiences that drive results. From
+            cutting-edge websites to powerful SaaS platforms, we turn your
+            vision into reality.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -176,12 +215,17 @@ export default function Home() {
                   className="text-2xl md:text-3xl font-bold text-white mb-1"
                   whileHover={{
                     color: ["#ffffff", "#a855f7", "#06b6d4", "#ffffff"],
-                    transition: { duration: 1, repeat: Number.POSITIVE_INFINITY },
+                    transition: {
+                      duration: 1,
+                      repeat: Number.POSITIVE_INFINITY,
+                    },
                   }}
                 >
                   {stat.number}
                 </motion.div>
-                <div className="text-sm text-zinc-400 uppercase tracking-wider">{stat.label}</div>
+                <div className="text-sm text-zinc-400 uppercase tracking-wider">
+                  {stat.label}
+                </div>
               </motion.div>
             ))}
           </motion.div>
@@ -200,12 +244,15 @@ export default function Home() {
               window.scrollTo({
                 top: window.innerHeight,
                 behavior: "smooth",
-              })
+              });
             }}
             whileHover={{ y: 5 }}
           >
             <p className="text-zinc-400 text-sm">Scroll to explore</p>
-            <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}>
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+            >
               <ChevronDown className="h-6 w-6 text-purple-500" />
             </motion.div>
           </motion.div>
@@ -220,7 +267,8 @@ export default function Home() {
               What We <GradientText>Create</GradientText>
             </h2>
             <p className="text-xl text-zinc-300 max-w-3xl mx-auto">
-              We specialize in building digital solutions that combine beautiful design with powerful functionality.
+              We specialize in building digital solutions that combine beautiful
+              design with powerful functionality.
             </p>
           </ScrollReveal>
 
@@ -231,21 +279,38 @@ export default function Home() {
                 title: "Website Development",
                 description:
                   "Custom websites built with modern technologies, optimized for performance and user experience.",
-                features: ["Responsive Design", "SEO Optimized", "Fast Loading", "CMS Integration"],
+                features: [
+                  "Responsive Design",
+                  "SEO Optimized",
+                  "Fast Loading",
+                  "CMS Integration",
+                ],
                 color: "purple",
               },
               {
                 icon: <Code2 className="h-8 w-8 text-cyan-400" />,
                 title: "SaaS Development",
-                description: "Scalable software solutions that grow with your business and delight your users.",
-                features: ["Cloud Architecture", "API Development", "User Analytics", "Security First"],
+                description:
+                  "Scalable software solutions that grow with your business and delight your users.",
+                features: [
+                  "Cloud Architecture",
+                  "API Development",
+                  "User Analytics",
+                  "Security First",
+                ],
                 color: "cyan",
               },
               {
                 icon: <Layers3 className="h-8 w-8 text-pink-400" />,
                 title: "Digital Strategy",
-                description: "Comprehensive digital strategies that align technology with your business goals.",
-                features: ["Tech Consulting", "UX/UI Design", "Performance Optimization", "Growth Planning"],
+                description:
+                  "Comprehensive digital strategies that align technology with your business goals.",
+                features: [
+                  "Tech Consulting",
+                  "UX/UI Design",
+                  "Performance Optimization",
+                  "Growth Planning",
+                ],
                 color: "pink",
               },
             ].map((service, index) => (
@@ -263,9 +328,7 @@ export default function Home() {
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-900/5 via-transparent to-cyan-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                     {/* Icon with animation */}
-                    <motion.div
-                      className="mb-6 relative z-10"
-                    >
+                    <motion.div className="mb-6 relative z-10">
                       {service.icon}
                     </motion.div>
 
@@ -280,7 +343,9 @@ export default function Home() {
                       {service.title}
                     </motion.h3>
 
-                    <p className="text-zinc-300 mb-6 leading-relaxed relative z-10">{service.description}</p>
+                    <p className="text-zinc-300 mb-6 leading-relaxed relative z-10">
+                      {service.description}
+                    </p>
 
                     <ul className="space-y-2 relative z-10">
                       {service.features.map((feature, i) => (
@@ -305,14 +370,18 @@ export default function Home() {
       </ParallaxSection>
 
       {/* Our Work */}
-      <Portfolio/>
+      <Portfolio />
 
       {/*Our Process Section */}
 
-      <Process/>
+      <Process />
 
       {/* Testimonials */}
-      <ParallaxSection baseVelocity={2} direction="down" className="py-32 bg-zinc-950/50">
+      <ParallaxSection
+        baseVelocity={2}
+        direction="down"
+        className="py-32 bg-zinc-950/50"
+      >
         <div className="container px-4">
           <ScrollReveal className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-heading mb-6">
@@ -326,19 +395,22 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                quote: "Our website turned out awesome! The support is incredible. I’ll definitely recommend Nova Corp for their quality work and responsiveness.",
+                quote:
+                  "Our website turned out awesome! The support is incredible. I’ll definitely recommend Nova Corp for their quality work and responsiveness.",
                 author: "Juzer A Deesawala",
                 role: "Founder, Taha Hardware",
                 color: "purple",
               },
               {
-                quote: "Nova Corp delivered a sleek, functional accounting site with expert guidance and clear communication—perfect for our business.",
+                quote:
+                  "Nova Corp delivered a sleek, functional accounting site with expert guidance and clear communication—perfect for our business.",
                 author: "Mohammed Ghantiwala",
                 role: "Founder, HM Trading Corporation",
                 color: "cyan",
               },
               {
-                quote: "Nova Corp delivered the best UI/UX website for our event club—great communication, seamless coordination, and on-time delivery.",
+                quote:
+                  "Nova Corp delivered the best UI/UX website for our event club—great communication, seamless coordination, and on-time delivery.",
                 author: "Anirudh Sharma",
                 role: "CEO, Cresa",
                 color: "pink",
@@ -363,12 +435,17 @@ export default function Home() {
                         className="font-medium text-white"
                         whileHover={{
                           color: ["#ffffff", "#a855f7", "#06b6d4", "#ffffff"],
-                          transition: { duration: 2, repeat: Number.POSITIVE_INFINITY },
+                          transition: {
+                            duration: 2,
+                            repeat: Number.POSITIVE_INFINITY,
+                          },
                         }}
                       >
                         {testimonial.author}
                       </motion.div>
-                      <div className="text-sm text-zinc-400">{testimonial.role}</div>
+                      <div className="text-sm text-zinc-400">
+                        {testimonial.role}
+                      </div>
                     </div>
                   </Card>
                 </AnimatedCard>
@@ -396,7 +473,8 @@ export default function Home() {
             </h2>
 
             <p className="text-xl text-zinc-300 max-w-2xl mx-auto mb-12">
-              Let's discuss your project and create a digital solution that drives real results for your business.
+              Let's discuss your project and create a digital solution that
+              drives real results for your business.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
@@ -426,27 +504,36 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
               <ScrollReveal delay={0.1}>
                 <div className="p-6 rounded-xl border border-zinc-800 bg-zinc-900/30">
-                  <h3 className="text-xl font-bold text-white mb-3">Consultation</h3>
+                  <h3 className="text-xl font-bold text-white mb-3">
+                    Consultation
+                  </h3>
                   <p className="text-zinc-300">
-                    Schedule a free consultation with our experts to discuss your project requirements and goals.
+                    Schedule a free consultation with our experts to discuss
+                    your project requirements and goals.
                   </p>
                 </div>
               </ScrollReveal>
 
               <ScrollReveal delay={0.2}>
                 <div className="p-6 rounded-xl border border-zinc-800 bg-zinc-900/30">
-                  <h3 className="text-xl font-bold text-white mb-3">Strategy</h3>
+                  <h3 className="text-xl font-bold text-white mb-3">
+                    Strategy
+                  </h3>
                   <p className="text-zinc-300">
-                    We'll develop a comprehensive strategy tailored to your specific business needs and objectives.
+                    We'll develop a comprehensive strategy tailored to your
+                    specific business needs and objectives.
                   </p>
                 </div>
               </ScrollReveal>
 
               <ScrollReveal delay={0.3}>
                 <div className="p-6 rounded-xl border border-zinc-800 bg-zinc-900/30">
-                  <h3 className="text-xl font-bold text-white mb-3">Execution</h3>
+                  <h3 className="text-xl font-bold text-white mb-3">
+                    Execution
+                  </h3>
                   <p className="text-zinc-300">
-                    Our team will bring your vision to life with cutting-edge technology and exceptional design.
+                    Our team will bring your vision to life with cutting-edge
+                    technology and exceptional design.
                   </p>
                 </div>
               </ScrollReveal>
@@ -455,5 +542,5 @@ export default function Home() {
         </div>
       </section>
     </div>
-  )
+  );
 }
