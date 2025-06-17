@@ -17,12 +17,11 @@ import { AnimatedCard } from "@/components/animated-card";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { AnimatedButton } from "@/components/animated-button";
 import { ParallaxSection } from "@/components/parallax-section";
-import { TextScramble } from "@/components/text-scramble";
 import { HeroBackground } from "@/components/hero-background";
 import { GradientText } from "@/components/gradient-text";
 import Portfolio from "@/components/portfolio";
 import Process from "@/components/process";
-import DecryptedText from "@/components/DecryptedText";
+// import DecryptedText from "@/components/DecryptedText";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -118,15 +117,7 @@ export default function Home() {
             variants={itemVariants}
           >
             <span className="text-white">
-              <DecryptedText
-                text="NOVA"
-                  speed={40}
-                  animateOn="view"
-                  maxIterations={60}
-                  revealDirection="center"
-                  encryptedClassName="encrypted"
-                  characters="ABCDEFGH#*%()?:;"
-              />
+             Nova
             </span>
             <br />
             <motion.span
@@ -136,15 +127,7 @@ export default function Home() {
               }}
             >
               <GradientText className="font-mono">
-                <DecryptedText
-                  text="CORP"
-                  speed={40}
-                  animateOn="view"
-                  maxIterations={60}
-                  revealDirection="center"
-                  encryptedClassName="encrypted"
-                  characters="ABCDEFGH#*%()?:;"
-                />
+                Corp
               </GradientText>
             </motion.span>
           </motion.h1>
