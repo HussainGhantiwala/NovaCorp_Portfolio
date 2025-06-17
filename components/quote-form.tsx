@@ -53,13 +53,6 @@ const contactPreferences = [
 ];
 
 // Mock UI Components
-<<<<<<< HEAD
-const Button = ({ children, onClick, disabled, variant = "default", type = "button", className = "" }) => {
-  const baseClasses = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50 px-6 py-2";
-  const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/90",
-    outline: "border border-border bg-transparent text-muted-foreground hover:bg-muted",
-=======
 type ButtonVariant = "default" | "outline";
 
 const Button = ({
@@ -84,7 +77,6 @@ const Button = ({
       "bg-gradient-to-r from-purple-400 to-blue-500 text-white hover:from-purple-500 hover:to-blue-600 shadow-md",
     outline:
       "border border-border bg-transparent text-muted-foreground hover:bg-muted/50 hover:border-primary",
->>>>>>> 858cd0435e4226a271fcff7033af715be204fb6f
   };
 
   return (
