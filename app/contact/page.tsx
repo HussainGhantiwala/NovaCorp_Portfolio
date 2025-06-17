@@ -189,20 +189,6 @@ export default function ContactPage() {
                     ))}
                   </div>
                 </div>
-
-                <div className="p-6 rounded-xl bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-purple-500/20">
-                  <h3 className="text-lg font-bold text-white mb-2">Free Consultation</h3>
-                  <p className="text-zinc-300 text-sm mb-4">
-                    Book a 30-minute discovery call to discuss your project and get expert advice on the best approach.
-                  </p>
-                  <motion.div
-                    className="inline-flex items-center text-purple-400 text-sm font-medium"
-                    whileHover={{ x: 5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    Schedule Now →
-                  </motion.div>
-                </div>
               </div>
             </FadeIn>
           </div>
