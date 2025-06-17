@@ -54,26 +54,29 @@ const contactPreferences = [
 
 // Mock UI Components
 const Button = ({ children, onClick, disabled, variant = "default", type = "button", className = "" }) => {
-  const baseClasses = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50 px-6 py-2";
+  const baseClasses = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50 px-6 py-2";
   const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/90",
-    outline: "border border-border bg-transparent text-muted-foreground hover:bg-muted",
+    default: "bg-gradient-to-r from-purple-400 to-blue-500 text-white hover:from-purple-500 hover:to-blue-600 shadow-md",
+    outline: "border border-border bg-transparent text-muted-foreground hover:bg-muted/50 hover:border-primary",
   };
   
   return (
-    <button
+    <motion.button
       type={type}
       onClick={onClick}
       disabled={disabled}
       className={`${baseClasses} ${variants[variant]} ${className}`}
+      whileHover={{ scale: 1.1, boxShadow: "0 5px 15px rgba(147, 51, 234, 0.4)" }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ duration: 0.3 }}
     >
       {children}
-    </button>
+    </motion.button>
   );
 };
 
 const Input = ({ id, name, value, onChange, required, placeholder, type = "text", className = "" }) => (
-  <input
+  <motion.input
     id={id}
     name={name}
     type={type}
@@ -82,11 +85,13 @@ const Input = ({ id, name, value, onChange, required, placeholder, type = "text"
     required={required}
     placeholder={placeholder}
     className={`flex h-10 w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+    whileFocus={{ scale: 1.03, boxShadow: "0 0 10px rgba(59, 130, 246, 0.3)" }}
+    transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
   />
 );
 
 const Textarea = ({ id, name, value, onChange, required, placeholder, className = "" }) => (
-  <textarea
+  <motion.textarea
     id={id}
     name={name}
     value={value}
@@ -94,6 +99,8 @@ const Textarea = ({ id, name, value, onChange, required, placeholder, className 
     required={required}
     placeholder={placeholder}
     className={`flex min-h-[100px] w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+    whileFocus={{ scale: 1.03, boxShadow: "0 0 10px rgba(59, 130, 246, 0.3)" }}
+    transition={{ duration: 0.3, type: "spring", stiffness: 200 }}
   />
 );
 
@@ -118,30 +125,43 @@ const Select = ({ children, onValueChange }) => {
   
   return (
     <div className="relative">
-      <button
+      <motion.button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="flex h-10 w-full items-center justify-between rounded-md border border-border bg-background text-foreground px-3 py-2 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+        whileHover={{ scale: 1.03, boxShadow: "0 0 10px rgba(59, 130, 246, 0.3)" }}
+        whileTap={{ scale: 0.97 }}
+        transition={{ duration: 0.3 }}
       >
         <span className={selectedValue ? "text-foreground" : "text-muted-foreground"}>
           {selectedValue || "Select your budget range"}
         </span>
         <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${isOpen ? "rotate-90" : ""}`} />
-      </button>
-      {isOpen && (
-        <div className="absolute z-50 mt-1 w-full rounded-md border border-border bg-background shadow-lg">
-          {budgetOptions.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              onClick={() => handleSelect(option.value, option.label)}
-              className="w-full px-3 py-2 text-left text-sm text-foreground hover:bg-muted"
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      )}
+      </motion.button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -15, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -15, scale: 0.95 }}
+            transition={{ duration: 0.3, type: "spring", stiffness: 150 }}
+            className="absolute z-50 mt-1 w-full rounded-md border border-border bg-background shadow-lg"
+          >
+            {budgetOptions.map((option) => (
+              <motion.button
+                key={option.value}
+                type="button"
+                onClick={() => handleSelect(option.value, option.label)}
+                className="w-full px-3 py-2 text-left text-sm text-foreground hover:bg-muted transition-colors duration-200"
+                whileHover={{ scale: 1.02, backgroundColor: "#e5e7eb" }}
+                transition={{ duration: 0.3 }}
+              >
+                {option.label}
+              </motion.button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
@@ -269,7 +289,6 @@ export default function QuoteForm() {
         description: errorMessage.description,
         variant: "destructive",
       });
-
     } finally {
       setIsSubmitting(false);
     }
@@ -279,25 +298,37 @@ export default function QuoteForm() {
     <div className="min-h-screen bg-background pt-16 pb-20">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">Request a Quote</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <motion.h1
+            className="text-4xl md:text-5xl font-bold mb-4 text-foreground"
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.0, ease: "easeOut", delay: 0.2 }}
+          >
+            Request a Quote
+          </motion.h1>
+          <motion.p
+            className="text-muted-foreground max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut", delay: 0.4 }}
+          >
             Fill out the form below to get a custom quote for your project. We'll respond within 24 hours.
-          </p>
+          </motion.p>
         </div>
 
         <div className="max-w-3xl mx-auto">
           {/* Progress Steps */}
           <div className="mb-12">
             <div className="flex items-start justify-between relative">
-              {/* Progress Line */}
               <div className="absolute top-5 left-0 w-full h-0.5 bg-border -z-10">
-                <div 
-                  className="h-full bg-primary transition-all duration-500 ease-in-out"
-                  style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+                <motion.div
+                  className="h-full bg-primary transition-all duration-600 ease-in-out"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+                  transition={{ duration: 0.7, type: "spring", stiffness: 100 }}
                 />
               </div>
               
-              {/* Steps */}
               {steps.map((step, index) => (
                 <div key={step.id} className="flex flex-col items-center relative z-10 w-1/4">
                   <motion.div
@@ -306,8 +337,9 @@ export default function QuoteForm() {
                         ? "bg-primary text-primary-foreground border-primary" 
                         : "bg-background border-border text-muted-foreground"
                     }`}
-                    animate={{ scale: currentStep === index ? 1.1 : 1 }}
-                    transition={{ duration: 0.3 }}
+                    initial={{ scale: 0.7, rotate: -180 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    transition={{ duration: 0.5, type: "spring", stiffness: 150 }}
                   >
                     {currentStep > index ? (
                       <Check className="w-5 h-5" />
@@ -315,37 +347,64 @@ export default function QuoteForm() {
                       <span>{index + 1}</span>
                     )}
                   </motion.div>
-                  <div className="mt-3 text-center">
-                    <p className={`text-xs sm:text-sm font-medium max-w-[80px] leading-tight ${
+                  <motion.div
+                    className={`mt-3 text-center ${
                       currentStep >= index ? "text-foreground" : "text-muted-foreground"
-                    }`}>
-                      {step.title}
-                    </p>
-                  </div>
+                    }`}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    <p className="text-xs sm:text-sm font-medium max-w-[80px] leading-tight">{step.title}</p>
+                  </motion.div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Form */}
-          <div className="rounded-lg bg-card p-6 md:p-8 shadow-lg border border-border">
+          <motion.div
+            className="rounded-lg bg-card p-6 md:p-8 shadow-lg border border-border"
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, type: "spring", stiffness: 120 }}
+          >
             {!isSubmitted ? (
               <form onSubmit={handleSubmit}>
                 <AnimatePresence mode="wait">
                   {currentStep === 0 && (
                     <motion.div
                       key="step1"
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -50 }}
-                      transition={{ duration: 0.4 }}
+                      initial={{ opacity: 0, x: 60, scale: 0.9 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: -60, scale: 0.9 }}
+                      transition={{ duration: 0.6, type: "spring", stiffness: 130, delay: 0.1 }}
                     >
-                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[0].title}</h2>
-                      <p className="text-muted-foreground mb-6">{steps[0].description}</p>
+                      <motion.h2
+                        className="text-2xl font-bold mb-2 text-foreground"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        {steps[0].title}
+                      </motion.h2>
+                      <motion.p
+                        className="text-muted-foreground mb-6"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                      >
+                        {steps[0].description}
+                      </motion.p>
                       <div className="space-y-6">
                         <div>
                           <Label className="mb-3 block">Project Goals *</Label>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <motion.div
+                            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                            initial={{ opacity: 0, y: 25 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ staggerChildren: 0.15, delayChildren: 0.2 }}
+                          >
                             {projectGoals.map((goal) => (
                               <motion.label
                                 key={goal.id}
@@ -354,8 +413,11 @@ export default function QuoteForm() {
                                     ? "border-primary bg-primary/10"
                                     : "border-border hover:bg-muted"
                                 }`}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                whileHover={{ scale: 1.04, rotate: 2 }}
+                                whileTap={{ scale: 0.97 }}
+                                transition={{ duration: 0.25, type: "spring", stiffness: 200 }}
                               >
                                 <input
                                   type="checkbox"
@@ -380,7 +442,7 @@ export default function QuoteForm() {
                                 </span>
                               </motion.label>
                             ))}
-                          </div>
+                          </motion.div>
                         </div>
                         <div>
                           <Label htmlFor="description" className="mb-2 block">Project Description *</Label>
@@ -400,16 +462,35 @@ export default function QuoteForm() {
                   {currentStep === 1 && (
                     <motion.div
                       key="step2"
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -50 }}
-                      transition={{ duration: 0.4 }}
+                      initial={{ opacity: 0, x: 60, scale: 0.9 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: -60, scale: 0.9 }}
+                      transition={{ duration: 0.6, type: "spring", stiffness: 130, delay: 0.1 }}
                     >
-                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[1].title}</h2>
-                      <p className="text-muted-foreground mb-6">{steps[1].description}</p>
+                      <motion.h2
+                        className="text-2xl font-bold mb-2 text-foreground"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        {steps[1].title}
+                      </motion.h2>
+                      <motion.p
+                        className="text-muted-foreground mb-6"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                      >
+                        {steps[1].description}
+                      </motion.p>
                       <div>
                         <Label className="mb-3 block">Services Needed *</Label>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <motion.div
+                          className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                          initial={{ opacity: 0, y: 25 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ staggerChildren: 0.15, delayChildren: 0.2 }}
+                        >
                           {serviceOptions.map((service) => (
                             <motion.label
                               key={service.id}
@@ -418,8 +499,11 @@ export default function QuoteForm() {
                                   ? "border-primary bg-primary/10"
                                   : "border-border hover:bg-muted"
                               }`}
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
+                              initial={{ opacity: 0, y: 20 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              whileHover={{ scale: 1.04, rotate: 2 }}
+                              whileTap={{ scale: 0.97 }}
+                              transition={{ duration: 0.25, type: "spring", stiffness: 200 }}
                             >
                               <input
                                 type="checkbox"
@@ -444,7 +528,7 @@ export default function QuoteForm() {
                               </span>
                             </motion.label>
                           ))}
-                        </div>
+                        </motion.div>
                       </div>
                     </motion.div>
                   )}
@@ -452,13 +536,27 @@ export default function QuoteForm() {
                   {currentStep === 2 && (
                     <motion.div
                       key="step3"
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -50 }}
-                      transition={{ duration: 0.4 }}
+                      initial={{ opacity: 0, x: 60, scale: 0.9 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: -60, scale: 0.9 }}
+                      transition={{ duration: 0.6, type: "spring", stiffness: 130, delay: 0.1 }}
                     >
-                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[2].title}</h2>
-                      <p className="text-muted-foreground mb-6">{steps[2].description}</p>
+                      <motion.h2
+                        className="text-2xl font-bold mb-2 text-foreground"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        {steps[2].title}
+                      </motion.h2>
+                      <motion.p
+                        className="text-muted-foreground mb-6"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                      >
+                        {steps[2].description}
+                      </motion.p>
                       <div className="space-y-6">
                         <div>
                           <Label className="mb-2 block">Budget Range *</Label>
@@ -466,7 +564,12 @@ export default function QuoteForm() {
                         </div>
                         <div>
                           <Label className="mb-3 block">Timeline Preferences *</Label>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <motion.div
+                            className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                            initial={{ opacity: 0, y: 25 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ staggerChildren: 0.15, delayChildren: 0.2 }}
+                          >
                             {timelineOptions.map((timeline) => (
                               <motion.label
                                 key={timeline.id}
@@ -475,8 +578,11 @@ export default function QuoteForm() {
                                     ? "border-primary bg-primary/10"
                                     : "border-border hover:bg-muted"
                                 }`}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                whileHover={{ scale: 1.04, rotate: 2 }}
+                                whileTap={{ scale: 0.97 }}
+                                transition={{ duration: 0.25, type: "spring", stiffness: 200 }}
                               >
                                 <input
                                   type="checkbox"
@@ -501,7 +607,7 @@ export default function QuoteForm() {
                                 </span>
                               </motion.label>
                             ))}
-                          </div>
+                          </motion.div>
                         </div>
                       </div>
                     </motion.div>
@@ -510,13 +616,27 @@ export default function QuoteForm() {
                   {currentStep === 3 && (
                     <motion.div
                       key="step4"
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -50 }}
-                      transition={{ duration: 0.4 }}
+                      initial={{ opacity: 0, x: 60, scale: 0.9 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      exit={{ opacity: 0, x: -60, scale: 0.9 }}
+                      transition={{ duration: 0.6, type: "spring", stiffness: 130, delay: 0.1 }}
                     >
-                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[3].title}</h2>
-                      <p className="text-muted-foreground mb-6">{steps[3].description}</p>
+                      <motion.h2
+                        className="text-2xl font-bold mb-2 text-foreground"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        {steps[3].title}
+                      </motion.h2>
+                      <motion.p
+                        className="text-muted-foreground mb-6"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
+                      >
+                        {steps[3].description}
+                      </motion.p>
                       <div className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
@@ -568,7 +688,12 @@ export default function QuoteForm() {
                         </div>
                         <div>
                           <Label className="mb-3 block">Preferred Contact Methods *</Label>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <motion.div
+                            className="grid grid-cols-1 md:grid-cols-3 gap-4"
+                            initial={{ opacity: 0, y: 25 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ staggerChildren: 0.15, delayChildren: 0.2 }}
+                          >
                             {contactPreferences.map((pref) => (
                               <motion.label
                                 key={pref.id}
@@ -577,8 +702,11 @@ export default function QuoteForm() {
                                     ? "border-primary bg-primary/10"
                                     : "border-border hover:bg-muted"
                                 }`}
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.98 }}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                whileHover={{ scale: 1.04, rotate: 2 }}
+                                whileTap={{ scale: 0.97 }}
+                                transition={{ duration: 0.25, type: "spring", stiffness: 200 }}
                               >
                                 <input
                                   type="checkbox"
@@ -603,7 +731,7 @@ export default function QuoteForm() {
                                 </span>
                               </motion.label>
                             ))}
-                          </div>
+                          </motion.div>
                         </div>
                       </div>
                     </motion.div>
@@ -612,7 +740,7 @@ export default function QuoteForm() {
 
                 <div className="mt-10 flex justify-between items-center">
                   {currentStep > 0 && (
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div whileHover={{ scale: 1.1, boxShadow: "0 5px 15px rgba(147, 51, 234, 0.4)" }} whileTap={{ scale: 0.95 }}>
                       <Button variant="outline" onClick={prevStep}>
                         Back
                       </Button>
@@ -620,7 +748,7 @@ export default function QuoteForm() {
                   )}
                   <div className="flex-1" />
                   {currentStep < steps.length - 1 ? (
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div whileHover={{ scale: 1.1, boxShadow: "0 5px 15px rgba(147, 51, 234, 0.4)" }} whileTap={{ scale: 0.95 }}>
                       <Button
                         onClick={nextStep}
                         disabled={!isStepValid()}
@@ -630,7 +758,7 @@ export default function QuoteForm() {
                       </Button>
                     </motion.div>
                   ) : (
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div whileHover={{ scale: 1.1, boxShadow: "0 5px 15px rgba(147, 51, 234, 0.4)" }} whileTap={{ scale: 0.95 }}>
                       <Button
                         type="submit"
                         disabled={!isStepValid() || isSubmitting}
@@ -653,19 +781,35 @@ export default function QuoteForm() {
               </form>
             ) : (
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
+                initial={{ opacity: 0, scale: 0.9, rotate: -10 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                transition={{ duration: 0.7, type: "spring", stiffness: 130 }}
                 className="text-center py-10"
               >
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                <motion.div
+                  className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6"
+                  animate={{ rotate: 360, scale: [1, 1.05, 1] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                >
                   <CheckCircle className="w-8 h-8 text-primary" />
-                </div>
-                <h2 className="text-2xl font-bold mb-4 text-foreground">Quote Request Submitted!</h2>
-                <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+                </motion.div>
+                <motion.h2
+                  className="text-2xl font-bold mb-4 text-foreground"
+                  initial={{ opacity: 0, y: 25 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                  Quote Request Submitted!
+                </motion.h2>
+                <motion.p
+                  className="text-muted-foreground mb-8 max-w-md mx-auto"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                >
                   Thank you for your request. We'll review your details and respond within 24 hours.
-                </p>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                </motion.p>
+                <motion.div whileHover={{ scale: 1.1, boxShadow: "0 5px 15px rgba(147, 51, 234, 0.4)" }} whileTap={{ scale: 0.95 }}>
                   <Button
                     onClick={() => {
                       setIsSubmitted(false);
@@ -689,7 +833,7 @@ export default function QuoteForm() {
                 </motion.div>
               </motion.div>
             )}
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
