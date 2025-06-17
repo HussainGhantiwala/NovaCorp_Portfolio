@@ -4,6 +4,8 @@ import { useState, useRef } from "react"
 import { useInView } from "react-intersection-observer"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Search, Palette, Code, Rocket } from "lucide-react"
+import { GradientText } from "./gradient-text"
+import { ScrollReveal } from "./scroll-reveal"
 
 export default function Process() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -19,30 +21,30 @@ export default function Process() {
     offset: ["start end", "end end"],
   })
 
-  // Transform the scroll progress to the light position
-  const lightPosition = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
+  // Transform the scroll progress to the light position (horizontal)
+  const lightPosition = useTransform(scrollYProgress, [0, 1], ["0%", "75%"])
 
   const steps = [
     {
-      icon: <Search className="h-8 w-8 text-primary" />,
+      icon: <Search className="h-6 w-6 text-purple-400" />,
       title: "Discovery",
       description:
-        "We start by understanding your business, goals, and target audience to create a strategic foundation for your project.",
+        "We start by understanding your business, goals, and target audience to create a strategic foundation.",
     },
     {
-      icon: <Palette className="h-8 w-8 text-primary" />,
+      icon: <Palette className="h-6 w-6 text-cyan-400" />,
       title: "Design",
       description:
-        "Our designers create intuitive, visually stunning interfaces that align with your brand and engage your users.",
+        "Our designers create intuitive, visually stunning interfaces that align with your brand and engage users.",
     },
     {
-      icon: <Code className="h-8 w-8 text-primary" />,
+      icon: <Code className="h-6 w-6 text-pink-400" />,
       title: "Development",
       description:
-        "We build your website using modern technologies and best practices to ensure performance, security, and scalability.",
+        "We build your website using modern technologies and best practices to ensure performance and scalability.",
     },
     {
-      icon: <Rocket className="h-8 w-8 text-primary" />,
+      icon: <Rocket className="h-6 w-6 text-purple-400" />,
       title: "Launch",
       description:
         "After thorough testing, we deploy your website and provide ongoing support to ensure continued success.",
@@ -55,94 +57,123 @@ export default function Process() {
       opacity: 1,
       transition: {
         delayChildren: 0.3,
-        staggerChildren: 0.2,
+        staggerChildren: 0.15,
       },
     },
   }
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.5 },
+      transition: { duration: 0.6, ease: "easeOut" },
     },
   }
 
   return (
-    <section className="bg-muted/10 px-4 py-24">
-      <div className="container mx-auto">
-        <div className="mb-16 text-center">
-          <h2 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl">Our Process</h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
+    <section className="py-32 bg-zinc-950/50">
+      <div className="container px-4">
+        <ScrollReveal className="text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-heading mb-6">
+            Our <GradientText>Process</GradientText>
+          </h2>
+          <p className="text-xl text-zinc-300 max-w-3xl mx-auto">
             We follow a proven methodology to deliver exceptional results for every project.
           </p>
-        </div>
+        </ScrollReveal>
 
-        <div ref={containerRef} className="relative mx-auto max-w-5xl">
-          <motion.div ref={ref} initial="hidden" animate={inView ? "visible" : "hidden"} variants={containerVariants}>
-            {/* Connection line with animated light */}
-            <div className="absolute left-1/2 top-0 h-full w-0.5 -translate-x-1/2 bg-gradient-to-b from-primary/10 via-primary/10 to-primary/10 md:block">
+        <div ref={containerRef} className="relative max-w-6xl mx-auto">
+          <motion.div 
+            ref={ref} 
+            initial="hidden" 
+            animate={inView ? "visible" : "hidden"} 
+            variants={containerVariants}
+            className="relative"
+          >
+            {/* Horizontal connection line */}
+            <div className="absolute top-16 left-0 right-0 h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent hidden md:block">
               {/* Animated light that follows scroll */}
               <motion.div
                 style={{
-                  top: lightPosition,
-                  background:
-                    "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(59, 130, 246, 0.8) 50%, rgba(0,0,0,0) 100%)",
-                  filter: "blur(4px)",
-                  opacity: 0.8,
+                  left: lightPosition,
                   position: "absolute",
-                  height: "6rem",
-                  width: "100%",
-                  transform: "translateY(-50%)",
+                  width: "120px",
+                  height: "2px",
+                  background: "linear-gradient(to right, transparent, rgba(168, 85, 247, 0.6), transparent)",
+                  transform: "translateX(-50%)",
+                  filter: "blur(1px)",
                 }}
               />
             </div>
 
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className={`mb-32 flex flex-col items-center md:flex-row ${
-                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                }`}
-                onMouseEnter={() => setHoveredStep(index)}
-                onMouseLeave={() => setHoveredStep(null)}
-              >
-                <div
-                  className={`flex-1 transition-all duration-300 ${
-                    index % 2 === 0 ? "md:text-right md:pr-16" : "md:text-left md:pl-16"
-                  } ${hoveredStep === index ? "scale-105" : ""}`}
+            {/* Process steps */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {steps.map((step, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="relative text-center group"
+                  onMouseEnter={() => setHoveredStep(index)}
+                  onMouseLeave={() => setHoveredStep(null)}
                 >
-                  <div className={`mb-4 flex items-center ${index % 2 === 0 ? "md:justify-end" : "md:justify-start"}`}>
-                    <div
-                      className={`mr-3 flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300 md:mr-0 md:ml-3 ${
-                        hoveredStep === index ? "bg-primary/30 shadow-lg shadow-primary/20" : "bg-primary/10"
-                      }`}
+                  {/* Step number circle */}
+                  <div className="relative mx-auto mb-6">
+                    <motion.div
+                      className={`
+                        w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 
+                        border transition-all duration-300 relative z-10
+                        ${hoveredStep === index
+                          ? "bg-gradient-to-r from-purple-600 to-cyan-600 border-transparent text-white"
+                          : "bg-zinc-900 border-zinc-700 text-zinc-400"
+                        }
+                      `}
+                      whileHover={{ scale: 1.1 }}
                     >
+                      <span className="text-sm font-semibold">{index + 1}</span>
+                    </motion.div>
+                    
+                    {/* Connecting dots for mobile */}
+                    {index < steps.length - 1 && (
+                      <div className="absolute top-6 left-6 w-8 h-px bg-zinc-700 md:hidden"></div>
+                    )}
+                  </div>
+
+                  {/* Icon */}
+                  <div className="mb-4">
+                    <div className={`
+                      w-10 h-10 rounded-lg flex items-center justify-center mx-auto transition-all duration-300
+                      ${hoveredStep === index 
+                        ? "bg-zinc-800 shadow-lg" 
+                        : "bg-zinc-900"
+                      }
+                    `}>
                       {step.icon}
                     </div>
-                    <h3 className="text-2xl font-bold">{step.title}</h3>
                   </div>
-                  <p className="text-muted-foreground">{step.description}</p>
-                </div>
 
-                <div
-                  className={`relative my-8 flex h-14 w-14 items-center justify-center rounded-full border-4 border-background transition-all duration-300 ${
-                    hoveredStep === index
-                      ? "bg-primary text-white shadow-lg shadow-primary/30"
-                      : "bg-primary text-white"
-                  }`}
-                >
-                  {index + 1}
-                  {hoveredStep === index && (
-                    <div className="absolute -inset-2 -z-10 animate-pulse rounded-full bg-primary/20 blur-md"></div>
-                  )}
-                </div>
+                  {/* Title */}
+                  <h3 className="text-lg font-semibold mb-3 text-white">
+                    {step.title}
+                  </h3>
 
-                <div className="flex-1"></div>
-              </motion.div>
-            ))}
+                  {/* Description */}
+                  <p className="text-sm text-zinc-400 leading-relaxed">
+                    {step.description}
+                  </p>
+
+                  {/* Subtle hover effect */}
+                  <motion.div
+                    className="absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 pointer-events-none"
+                    style={{
+                      background: hoveredStep === index 
+                        ? "linear-gradient(135deg, rgba(168, 85, 247, 0.02), rgba(6, 182, 212, 0.02))"
+                        : "transparent"
+                    }}
+                  />
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>
