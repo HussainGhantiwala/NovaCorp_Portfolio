@@ -9,10 +9,10 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { name: "Home", path: "/" },
-  { name: "About", path: "/about" },
   { name: "Services", path: "/services" },
-  { name: "Contact", path: "/contact" },
+  { name: "About", path: "/about" },
   { name: "Get Quote", path: "/quote"},
+  { name: "Contact", path: "/contact" },
 ];
 
 export default function Navigation() {
