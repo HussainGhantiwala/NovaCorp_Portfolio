@@ -21,7 +21,7 @@ import { HeroBackground } from "@/components/hero-background";
 import { GradientText } from "@/components/gradient-text";
 import Portfolio from "@/components/portfolio";
 import Process from "@/components/process";
-// import DecryptedText from "@/components/DecryptedText";
+import DecryptedText from "@/components/DecryptedText";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -117,7 +117,15 @@ export default function Home() {
             variants={itemVariants}
           >
             <span className="text-white">
-             Nova
+              <DecryptedText
+                text="NOVA"
+                  speed={40}
+                  animateOn="view"
+                  maxIterations={60}
+                  revealDirection="center"
+                  encryptedClassName="encrypted"
+                  characters="ABCDEFGH#*%()?:;"
+              />
             </span>
             <br />
             <motion.span
@@ -127,7 +135,15 @@ export default function Home() {
               }}
             >
               <GradientText className="font-mono">
-                Corp
+                <DecryptedText
+                  text="CORP"
+                  speed={40}
+                  animateOn="view"
+                  maxIterations={60}
+                  revealDirection="center"
+                  encryptedClassName="encrypted"
+                  characters="ABCDEFGH#*%()?:;"
+                />
               </GradientText>
             </motion.span>
           </motion.h1>
