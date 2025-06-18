@@ -121,7 +121,7 @@ export default function Home() {
                 text="NOVA"
                   speed={40}
                   animateOn="view"
-                  maxIterations={60}
+                  maxIterations={40}
                   revealDirection="center"
                   encryptedClassName="encrypted"
                   characters="ABCDEFGH#*%()?:{}[]/><;"
@@ -139,7 +139,7 @@ export default function Home() {
                   text="CORP"
                   speed={40}
                   animateOn="view"
-                  maxIterations={60}
+                  maxIterations={40}
                   revealDirection="center"
                   encryptedClassName="encrypted"
                   characters="ABCDEFGH#*%()?:;"
