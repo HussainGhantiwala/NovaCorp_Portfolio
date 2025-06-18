@@ -142,10 +142,11 @@ export default function Portfolio() {
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={containerVariants}
+           key={activeFilter}
           className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {filteredItems.map((item, index) => (
-            <ScrollReveal key={index} delay={index * 0.1}>
+          {filteredItems.map((item) => (
+        <ScrollReveal key={item.title} delay={0.1}>
               <AnimatedCard
                 glowColor={item.color as "purple" | "cyan" | "pink"}
                 className="h-full"
@@ -217,21 +218,7 @@ export default function Portfolio() {
         </motion.div>
 
         {/* View All Work Button */}
-        <ScrollReveal delay={0.4}>
-          <div className="text-center mt-16">
-            <Link href="/portfolio">
-              <div className="relative inline-block rounded-md p-4">
-                <AnimatedButton
-                  size="sm"
-                  className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white"
-                  glowColor="rgba(168, 85, 247, 0.4)"
-                >
-                  View Our Work <ArrowRight className="ml-2 h-4 w-4" />
-                </AnimatedButton>
-              </div>
-            </Link>
-          </div>
-        </ScrollReveal>
+        {/* We don't have a portfolio page right now, so let it be for now */}
       </div>
     </section>
   );
