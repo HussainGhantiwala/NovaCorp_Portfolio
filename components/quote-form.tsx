@@ -822,7 +822,7 @@ export default function QuoteForm() {
                 <motion.div
                   className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6"
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 2, repeat: 1, ease: "linear" }}
                 >
                   <CheckCircle className="w-8 h-8 text-primary" />
                 </motion.div>
