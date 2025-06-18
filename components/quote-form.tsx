@@ -19,6 +19,7 @@ const projectGoals = [
   { id: "new-launch", label: "New Product Launch", emoji: "🚀" },
 ];
 
+
 const serviceOptions = [
   { id: "web-design", label: "Web Design", emoji: "🎨" },
   { id: "ui-ux-solutions", label: "UI/UX Solutions", emoji: "📱" },
