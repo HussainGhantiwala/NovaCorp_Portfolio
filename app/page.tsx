@@ -25,6 +25,7 @@ import DecryptedText from "@/components/DecryptedText";
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const portfolioRef = useRef<HTMLDivElement>(null);
   const [hoveredService, setHoveredService] = useState<number | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -52,6 +53,13 @@ export default function Home() {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+
+  const scrollToPortfolio = () => {
+    portfolioRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   return (
     <div ref={containerRef} className="relative">
@@ -167,15 +175,14 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
           >
-            <Link href="/portfolio">
-              <AnimatedButton
-                size="lg"
-                className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white"
-                glowColor="rgba(168, 85, 247, 0.4)"
-              >
-                View Our Work <ArrowRight className="ml-2 h-4 w-4" />
-              </AnimatedButton>
-            </Link>
+            <AnimatedButton
+              size="lg"
+              className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white"
+              glowColor="rgba(168, 85, 247, 0.4)"
+              onClick={scrollToPortfolio}
+            >
+              View Our Work <ArrowRight className="ml-2 h-4 w-4" />
+            </AnimatedButton>
 
             <Link href="/contact">
               <AnimatedButton
@@ -370,7 +377,9 @@ export default function Home() {
       </ParallaxSection>
 
       {/* Our Work */}
-      <Portfolio />
+      <div ref={portfolioRef}>
+        <Portfolio />
+      </div>
 
       {/*Our Process Section */}
 
@@ -396,7 +405,7 @@ export default function Home() {
             {[
               {
                 quote:
-                  "Our website turned out awesome! The support is incredible. I’ll definitely recommend Nova Corp for their quality work and responsiveness.",
+                  "Our website turned out awesome! The support is incredible. I'll definitely recommend Nova Corp for their quality work and responsiveness.",
                 author: "Juzer A Deesawala",
                 role: "Founder, Taha Hardware",
                 color: "purple",
