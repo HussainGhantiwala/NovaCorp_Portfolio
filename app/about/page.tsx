@@ -41,11 +41,12 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="py-32 relative overflow-hidden">
         <div className="container px-4 mx-auto">
-          <FadeIn>
-            <h1 className="font-heading text-5xl md:text-7xl mb-6 tracking-tighter text-center">
-              About <GradientText>Nova Corp</GradientText>
-            </h1>
-          </FadeIn>
+         <FadeIn>
+  <h1 className="font-heading text-5xl md:text-7xl mb-6 tracking-tight text-center text-white">
+    About <GradientText>Nova Corp</GradientText>
+  </h1>
+</FadeIn>
+
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <FadeIn delay={0.2}>
