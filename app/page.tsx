@@ -204,9 +204,9 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 1 }}
           >
             {[
-              { number: "100+", label: "Projects Delivered" },
-              { number: "50+", label: "Happy Clients" },
-              { number: "5+", label: "Years Experience" },
+              { number: "10+", label: "Projects Delivered" },
+              { number: "7+", label: "Happy Clients" },
+              { number: "5", label: "Months Experience" },
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -288,7 +288,6 @@ export default function Home() {
                   "Custom websites built with modern technologies, optimized for performance and user experience.",
                 features: [
                   "Responsive Design",
-                  "SEO Optimized",
                   "Fast Loading",
                   "CMS Integration",
                 ],
