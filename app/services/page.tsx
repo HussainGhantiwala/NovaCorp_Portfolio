@@ -1,17 +1,18 @@
-"use client"
+"use client";
 
-import { services } from "@/lib/services"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
-import { ArrowRight, Sparkles } from "lucide-react"
+import { services } from "@/lib/services";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { AnimatedButton } from "@/components/animated-button";
+import { GradientText } from "@/components/gradient-text";
 
 export default function ServiceGrid() {
   return (
     <div className="min-h-screen bg-black relative">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-black to-cyan-900/10" />
-      
+
       {/* Animated gradient orbs */}
       <motion.div
         className="absolute top-1/4 left-1/6 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"
@@ -54,32 +55,29 @@ export default function ServiceGrid() {
             </span>
           </motion.div>
 
-          <motion.h1 
-            className="mb-6 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-white"
+          <motion.h1
+            className="mb-6 text-4xl md:text-5xl lg:text-6xl font-heading tracking-tight text-white"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
           >
-            Our{" "}
-            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-              Services
-            </span>
+            Our <GradientText>Services</GradientText>
           </motion.h1>
-          
-          <motion.p 
-            className="mx-auto max-w-2xl text-lg text-zinc-300"
+
+          <motion.p
+            className="mx-auto max-w-2xl text-xl text-zinc-300 leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            We offer comprehensive web solutions tailored to your business needs. From design to development, we've got
-            you covered.
+            We offer comprehensive web solutions tailored to your business
+            needs. From design to development, we've got you covered.
           </motion.p>
         </div>
 
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => {
-            const Icon = service.iconComponent
+            const Icon = service.iconComponent;
 
             return (
               <motion.div
@@ -88,22 +86,22 @@ export default function ServiceGrid() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ 
+                whileHover={{
                   y: -5,
-                  transition: { type: "spring", stiffness: 300 }
+                  transition: { type: "spring", stiffness: 300 },
                 }}
                 className="group relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 shadow-lg hover:shadow-2xl transition-all duration-300 backdrop-blur-sm"
               >
                 {/* Hover glow effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 {/* Animated border glow */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                   <div className="absolute inset-px rounded-2xl bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-cyan-500/20 blur-sm" />
                 </div>
 
                 <div className="relative z-10">
-                  <motion.div 
+                  <motion.div
                     className="mb-6 flex h-14 w-14 items-center justify-center rounded-full bg-zinc-800/50 border border-zinc-700 group-hover:border-purple-500/50 transition-colors duration-300"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ type: "spring", stiffness: 300 }}
@@ -111,51 +109,56 @@ export default function ServiceGrid() {
                     <Icon className="h-7 w-7 text-purple-400 group-hover:text-purple-300 transition-colors duration-300" />
                   </motion.div>
 
-                  <motion.h3 
-                    className="mb-4 text-xl font-semibold text-white group-hover:text-purple-300 transition-colors duration-300"
+                  <motion.h3
+                    className="mb-4 text-2xl font-bold text-white group-hover:text-purple-300 transition-colors duration-300"
                     whileHover={{ x: 5 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     {service.title}
                   </motion.h3>
-                  
+
                   <p className="mb-6 text-zinc-300 leading-relaxed group-hover:text-zinc-200 transition-colors duration-300">
                     {service.shortDescription}
                   </p>
-                  
-                  <div className="flex flex-wrap gap-3">
-                    <Link href={`/services/${service.slug}`}>
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+
+                  <div className="flex flex-wrap gap-3 p-2 -m-2">
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <AnimatedButton
+                        className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white"
+                        glowColor="rgba(168, 85, 247, 0.6)"
                       >
-                        <Button 
-                          className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+                        <Link
+                          href={`/services/${service.slug}`}
+                          className="flex items-center"
                         >
                           View Details
                           <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                      </motion.div>
-                    </Link>
-                    
-                    <Link href="/quote">
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
+                        </Link>
+                      </AnimatedButton>
+                    </motion.div>
+
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <AnimatedButton
+                        variant="outline"
+                        className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white hover:border-zinc-600"
+                        glowColor="rgba(6, 182, 212, 0.5)"
                       >
-                        <Button 
-                          variant="outline" 
-                          className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white hover:border-zinc-600 transition-all duration-300"
-                        >
+                        <Link href="/quote" className="flex items-center">
                           <Sparkles className="mr-2 h-4 w-4" />
                           Get Quote
-                        </Button>
-                      </motion.div>
-                    </Link>
+                        </Link>
+                      </AnimatedButton>
+                    </motion.div>
                   </div>
                 </div>
               </motion.div>
-            )
+            );
           })}
         </div>
 
@@ -168,29 +171,33 @@ export default function ServiceGrid() {
           viewport={{ once: true }}
         >
           <div className="mx-auto max-w-2xl">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              Need a custom solution?
+            <h2 className="text-3xl md:text-4xl font-heading mb-6 text-white">
+              Need a <GradientText>custom solution?</GradientText>
             </h2>
-            <p className="text-zinc-300 mb-8">
-              We create tailored digital experiences that perfectly match your unique business requirements.
+            <p className="text-xl text-zinc-300 mb-8 leading-relaxed">
+              We create tailored digital experiences that perfectly match your
+              unique business requirements.
             </p>
-            <Link href="/contact">
+            <div className="flex justify-center px-8">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Button 
+                <AnimatedButton
                   size="lg"
-                  className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white px-8 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white px-8 py-4 text-lg"
+                  glowColor="rgba(168, 85, 247, 0.4)"
                 >
-                  <Sparkles className="mr-2 h-5 w-5" />
-                  Let's Discuss Your Project
-                </Button>
+                  <Link href="/contact" className="flex items-center">
+                    <Sparkles className="mr-2 h-5 w-5" />
+                    Let's Discuss Your Project
+                  </Link>
+                </AnimatedButton>
               </motion.div>
-            </Link>
+            </div>
           </div>
         </motion.div>
       </div>
     </div>
-  )
+  );
 }
