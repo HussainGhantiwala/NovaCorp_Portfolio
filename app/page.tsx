@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <div ref={containerRef} className="relative">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pb-24 sm:pb-0">
         {/* Dynamic background elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-black to-cyan-900/10" />
 
@@ -231,31 +231,32 @@ export default function Home() {
         </motion.div>
 
         {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.8 }}
-        >
-          <motion.div
-            className="flex flex-col items-center gap-2 cursor-pointer"
-            onClick={() => {
-              window.scrollTo({
-                top: window.innerHeight,
-                behavior: "smooth",
-              });
-            }}
-            whileHover={{ y: 5 }}
-          >
-            <p className="text-zinc-400 text-sm">Scroll to explore</p>
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
-            >
-              <ChevronDown className="h-6 w-6 text-purple-500" />
-            </motion.div>
-          </motion.div>
-        </motion.div>
+       <motion.div
+  className="relative sm:absolute sm:bottom-10 left-1/2 transform -translate-x-1/2"
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 1.5, duration: 0.8 }}
+>
+  <motion.div
+    className="flex flex-col items-center gap-2 cursor-pointer"
+    onClick={() => {
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: "smooth",
+      });
+    }}
+    whileHover={{ y: 5 }}
+  >
+    <p className="text-zinc-400 text-sm">Scroll to explore</p>
+    <motion.div
+      animate={{ y: [0, 10, 0] }}
+      transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+    >
+      <ChevronDown className="h-6 w-6 text-purple-500" />
+    </motion.div>
+  </motion.div>
+</motion.div>
+
       </section>
 
       {/* Services Section */}
