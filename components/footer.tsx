@@ -108,9 +108,7 @@ export default function Footer() {
           <div>
             <h3 className="mb-4 text-lg font-bold">Contact</h3>
             <address className="not-italic">
-              <p className="mb-2 text-sm text-muted-foreground">123 Web Street, Digital City</p>
-              <p className="mb-2 text-sm text-muted-foreground">contact@novacorp.tech</p>
-              <p className="text-sm text-muted-foreground">(555) 123-4567</p>
+              <p className="mb-2 text-sm text-muted-foreground">novamindcreation52@gmail.com</p>
             </address>
           </div>
         </div>

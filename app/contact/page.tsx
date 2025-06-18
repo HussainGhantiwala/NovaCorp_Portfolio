@@ -18,7 +18,7 @@ export default function ContactPage() {
         <div className="container px-4 relative z-10">
           <FadeIn>
             <div className="text-center mb-16">
-              <span className="inline-block px-4 py-2 rounded-full bg-zinc-900/50 border border-zinc-800 text-sm font-medium text-zinc-300 backdrop-blur-sm mb-6">
+              <span className="inline-block px-4 py-2 rounded-full bg-zinc-900/50 border border-zinc-800 text-sm font-medium text-zinc-300 backdrop-blur-sm mb-6 ">
                 Let's Connect
               </span>
 
@@ -45,7 +45,7 @@ export default function ContactPage() {
                 icon: <Mail className="h-6 w-6" />,
                 title: "Email Us",
                 description: "Drop us a line anytime",
-                contact: "hello@novacorp.com",
+                contact: "novamindcreation52@gmail.com",
                 color: "purple",
               },
               {
