@@ -36,65 +36,6 @@ export default function ContactPage() {
         </div>
         </section>
 
-      {/* Contact Methods */}
-      <section className="py-16 relative">
-        <div className="flex justify-center mb-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-            {[
-              {
-                icon: <Mail className="h-6 w-6" />,
-                title: "Email Us",
-                description: "Drop us a line anytime",
-                contact: "novamindcreation52@gmail.com",
-                color: "purple",
-              },
-              {
-                icon: <Phone className="h-6 w-6" />,
-                title: "Call Us",
-                description: "Mon-Fri from 8am to 5pm",
-                contact: "+1 (555) 123-4567",
-                color: "cyan",
-              },
-            ].map((method, index) => (
-              <ScrollReveal key={index} delay={index * 0.1}>
-                <div className="relative overflow-hidden rounded-2xl isolate">
-                <AnimatedCard glowColor={method.color as "purple" | "cyan"}>
-                  <motion.div
-                    className="relative group overflow-hidden p-8 rounded-2xl bg-zinc-900/50 border border-zinc-800 text-center h-full"
-                    whileHover={{ y: -10 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <motion.div
-                      className={`inline-flex p-4 rounded-full mb-6 ${
-                        method.color === "purple"
-                          ? "bg-purple-500/10 text-purple-400"
-                          : method.color === "cyan"
-                          ? "bg-cyan-500/10 text-cyan-400"
-                          : "bg-pink-500/10 text-pink-400"
-                      }`}
-                      whileHover={{ rotate: 360, scale: 1.1 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      {method.icon}
-                    </motion.div>
-                    <h3 className="text-xl font-bold text-white mb-2">
-                      {method.title}
-                    </h3>
-                    <p className="text-zinc-400 text-sm mb-4">
-                      {method.description}
-                    </p>
-                    <p className="text-zinc-300 font-medium">
-                      {method.contact}
-                    </p>
-                  </motion.div>
-                </AnimatedCard>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Main Contact Section */}
       <section className="pb-32 relative">
         <div className="container px-4">
