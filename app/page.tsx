@@ -119,9 +119,9 @@ export default function Home() {
             <span className="text-white">
               <DecryptedText
                 text="NOVA"
-                  speed={50}
+                  speed={45}
                   animateOn="view"
-                  maxIterations={60}
+                  maxIterations={50}
                   revealDirection="center"
                   encryptedClassName="encrypted"
                   characters="ABCDEFGH#*%()?:{}[]/><;"
@@ -139,7 +139,7 @@ export default function Home() {
                   text="CORP"
                   speed={50}
                   animateOn="view"
-                  maxIterations={60}
+                  maxIterations={50}
                   revealDirection="center"
                   encryptedClassName="encrypted"
                   characters="ABCDEFGH#*%()?:;"
