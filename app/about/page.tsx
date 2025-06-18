@@ -7,7 +7,13 @@ import { FloatingText } from "@/components/floating-text";
 import { ParallaxText } from "@/components/parallax-text";
 import { GradientText } from "@/components/gradient-text";
 
-const TeamMember = ({ name, role, image }) => {
+type TeamMemberProps = {
+  name: string;
+  // role: string;
+  image: string;
+};
+
+const TeamMember = ({ name, image }: TeamMemberProps) => {
   return (
     <motion.div
       className="w-full md:w-64 bg-zinc-900/60 rounded-2xl p-6 text-center border border-zinc-800/50 shadow-md transition-all duration-300"
@@ -24,7 +30,7 @@ const TeamMember = ({ name, role, image }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
       </div>
       <h3 className="text-xl font-bold text-white mb-2">{name}</h3>
-      <p className="text-zinc-400 text-sm">{role}</p>
+      {/* <p className="text-zinc-400 text-sm">{role}</p> */}
     </motion.div>
   );
 };
@@ -112,7 +118,29 @@ export default function AboutPage() {
           </FloatingText>
 
           <div className="flex justify-center gap-6 flex-wrap md:flex-nowrap">
-            <FadeIn delay={0.2}>
+            {[
+              {
+                name: "Hussain Ghantiwala",
+                image: "/placeholder.svg?height=400&width=400"
+              },
+              {
+                name: "Yusuf Z",
+                image: "/placeholder.svg?height=400&width=400"
+              },
+              {
+                name: "Mustafa A",
+                image: "/placeholder.svg?height=400&width=400"
+              },
+              {
+                name: "Murtaza Sohangpur",
+                image: "/placeholder.svg?height=400&width=400"
+              }
+            ].map((member, idx) => (
+              <FadeIn key={idx} delay={0.1 * idx}>
+                <TeamMember name={member.name} image={member.image} />
+              </FadeIn>
+            ))}
+            {/* <FadeIn delay={0.2}>
               <TeamMember
                 name="Mustafa A"
                 role="#"
@@ -126,7 +154,7 @@ export default function AboutPage() {
                 image="/placeholder.svg?height=400&width=400"
               />
             </FadeIn>
-            <FadeIn delay={0.4}>
+             <FadeIn delay={0.4}>
               <TeamMember
                 name="Murtaza Sohangpur"
                 role="#"
@@ -139,18 +167,18 @@ export default function AboutPage() {
                 role=""
                 image="/placeholder.svg?height=400&width=400"
               />
-            </FadeIn>
+            </FadeIn> */}
           </div>
         </div>
       </section>
 
       {/* Marquee Section */}
-      <section className="py-20 bg-black/80 overflow-hidden">
-        <ParallaxText baseVelocity={-2} className="text-lg md:text-xl">
+      <section className="py-20 bg-zinc-950/70 overflow-hidden">
+        <ParallaxText baseVelocity={-2}>
           INNOVATION • CREATIVITY • EXCELLENCE •
         </ParallaxText>
-        <ParallaxText baseVelocity={2} className="text-lg md:text-xl">
-          PASSION • DEDICATION • EXPERTISE •
+        <ParallaxText baseVelocity={2}>
+           PASSION • DEDICATION • EXPERTISE •
         </ParallaxText>
       </section>
     </div>
