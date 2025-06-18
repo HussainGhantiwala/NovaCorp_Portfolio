@@ -31,7 +31,7 @@ const TeamMember = ({ name, role, image }) => {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 to-black text-white">
+    <div className="min-h-screen bg-black text-white">
       {/* Hero Section */}
       <section className="py-32 relative overflow-hidden">
         <div className="container px-4 mx-auto">
@@ -72,7 +72,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="py-32 bg-zinc-950/50 relative">
+      <section className="py-32 bg-black/80 relative">
         <div className="container px-4 mx-auto">
           <FloatingText>
             <h2 className="font-heading text-3xl md:text-5xl mb-16 text-center">
@@ -115,28 +115,28 @@ export default function AboutPage() {
             <FadeIn delay={0.2}>
               <TeamMember
                 name="Mustafa A"
-                role="Founder & Creative Director"
+                role="#"
                 image="/placeholder.svg?height=400&width=400"
               />
             </FadeIn>
             <FadeIn delay={0.3}>
               <TeamMember
                 name="Yusuf Z"
-                role="Lead Developer"
+                role="#"
                 image="/placeholder.svg?height=400&width=400"
               />
             </FadeIn>
             <FadeIn delay={0.4}>
               <TeamMember
                 name="Murtaza Sohangpur"
-                role="UX/UI Designer"
+                role="#"
                 image="/placeholder.svg?height=400&width=400"
               />
             </FadeIn>
             <FadeIn delay={0.5}>
               <TeamMember
                 name="Hussain Ghantiwala"
-                role="UX/UI Designer"
+                role=""
                 image="/placeholder.svg?height=400&width=400"
               />
             </FadeIn>
@@ -145,12 +145,12 @@ export default function AboutPage() {
       </section>
 
       {/* Marquee Section */}
-      <section className="py-20 bg-zinc-950/70 overflow-hidden">
+      <section className="py-20 bg-black/80 overflow-hidden">
         <ParallaxText baseVelocity={-2} className="text-lg md:text-xl">
           INNOVATION • CREATIVITY • EXCELLENCE •
         </ParallaxText>
         <ParallaxText baseVelocity={2} className="text-lg md:text-xl">
-           PASSION • DEDICATION • EXPERTISE •
+          PASSION • DEDICATION • EXPERTISE •
         </ParallaxText>
       </section>
     </div>
