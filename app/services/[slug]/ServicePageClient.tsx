@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { ArrowRight, CheckCircle, Sparkles } from "lucide-react"
 import Image from "next/image"
-import { motion } from "framer-motion"
+import { motion, easeOut } from "framer-motion"
 import { GradientText } from "@/components/gradient-text"
 import { AnimatedButton } from "@/components/animated-button"
 import { ScrollReveal } from "@/components/scroll-reveal"
@@ -39,7 +39,7 @@ export function ServicePageClient({ service }: ServicePageClientProps) {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" },
+      transition: { duration: 0.6, ease: easeOut }, // use imported easeOut function
     },
   }
 
