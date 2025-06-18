@@ -120,6 +120,7 @@ export default function Home() {
               <DecryptedText
                 text="NOVA"
                   speed={40}
+                  sequential={true}
                   animateOn="view"
                   maxIterations={60}
                   revealDirection="center"
@@ -137,6 +138,7 @@ export default function Home() {
               <GradientText className="font-mono">
                 <DecryptedText
                   text="CORP"
+                  sequential={true}
                   speed={40}
                   animateOn="view"
                   maxIterations={60}
