@@ -150,7 +150,7 @@ export default function AboutPage() {
           INNOVATION • CREATIVITY • EXCELLENCE •
         </ParallaxText>
         <ParallaxText baseVelocity={2} className="text-lg md:text-xl">
-          • PASSION • DEDICATION • EXPERTISE •
+           PASSION • DEDICATION • EXPERTISE •
         </ParallaxText>
       </section>
     </div>
