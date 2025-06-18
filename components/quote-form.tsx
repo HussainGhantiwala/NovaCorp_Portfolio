@@ -8,7 +8,7 @@ import { Check, ChevronRight, ArrowRight, Loader2, CheckCircle } from "lucide-re
 const steps = [
   { id: "project-info", title: "Project Information", description: "Tell us about your project" },
   { id: "services", title: "Services", description: "Select the services you need" },
-  { id: "budget-timeline", title: "Budget & Timeline", description: "Provide your budget and timeline" },
+  { id: "timeline", title: "Timeline", description: "Provide your timeline" },
   { id: "contact", title: "Contact Details", description: "How can we reach you" },
 ];
 
@@ -29,14 +29,6 @@ const serviceOptions = [
   { id: "cms-integration", label: "CMS Integration", emoji: "🛠️" },
   { id: "website-maintenance", label: "Website Maintenance", emoji: "🔧" },
   { id: "other", label: "Other", emoji: "➕" },
-];
-
-const budgetOptions = [
-  { value: "less-5k", label: "Less than $5,000" },
-  { value: "5k-10k", label: "$5,000 - $10,000" },
-  { value: "10k-20k", label: "$10,000 - $20,000" },
-  { value: "20k-plus", label: "$20,000+" },
-  { value: "not-sure", label: "Not sure yet" },
 ];
 
 const timelineOptions = [
@@ -123,8 +115,9 @@ const Input: React.FC<InputProps> = ({
     onChange={onChange}
     required={required}
     placeholder={placeholder}
-    className={`flex h-10 w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+    className={`flex h-10 w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 p-2 ${className}`}
     whileFocus={{ scale: 1.02 }}
+    whileHover={{ boxShadow: "rgba(147, 51, 234, 0) 0px 0px 0px", transform: "none" }}
     transition={{ duration: 0.2 }}
   />
 );
@@ -155,7 +148,7 @@ const Textarea: React.FC<TextareaProps> = ({
     onChange={onChange}
     required={required}
     placeholder={placeholder}
-    className={`flex min-h-[100px] w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+    className={`flex min-h-[100px] w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 p-2 ${className}`}
     whileFocus={{ scale: 1.02 }}
     transition={{ duration: 0.2 }}
   />
@@ -197,7 +190,7 @@ const Select: React.FC<{ children?: React.ReactNode; onValueChange: (value: stri
         transition={{ duration: 0.2 }}
       >
         <span className={selectedValue ? "text-foreground" : "text-muted-foreground"}>
-          {selectedValue || "Select your budget range"}
+          {selectedValue || "Select your timeline"}
         </span>
         <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${isOpen ? "rotate-90" : ""}`} />
       </motion.button>
@@ -210,11 +203,11 @@ const Select: React.FC<{ children?: React.ReactNode; onValueChange: (value: stri
             transition={{ duration: 0.2 }}
             className="absolute z-50 mt-1 w-full rounded-md border border-border bg-background shadow-lg"
           >
-            {budgetOptions.map((option) => (
+            {timelineOptions.map((option) => (
               <motion.button
-                key={option.value}
+                key={option.id}
                 type="button"
-                onClick={() => handleSelect(option.value, option.label)}
+                onClick={() => handleSelect(option.id, option.label)}
                 className="w-full px-3 py-2 text-left text-sm text-foreground hover:bg-muted transition-colors duration-200"
                 whileHover={{ backgroundColor: "#e5e7eb" }}
                 transition={{ duration: 0.2 }}
@@ -251,7 +244,7 @@ export default function QuoteForm() {
     projectGoals: string[];
     description: string;
     services: string[];
-    budget: string;
+    otherServices: string;
     timelines: string[];
     name: string;
     email: string;
@@ -264,7 +257,7 @@ export default function QuoteForm() {
     projectGoals: [],
     description: "",
     services: [],
-    budget: "",
+    otherServices: "",
     timelines: [],
     name: "",
     email: "",
@@ -279,6 +272,21 @@ export default function QuoteForm() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Phone number formatting
+    if (name === "phone") {
+      const cleaned = value.replace(/[^\d]/g, "");
+      if (cleaned.length <= 10) {
+        let formatted = cleaned;
+        if (cleaned.length > 6) formatted = `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6, 10)}`;
+        else if (cleaned.length > 3) formatted = `(${cleaned.slice(0, 3)}) ${cleaned.slice(3)}`;
+        else formatted = cleaned;
+        setFormData((prev) => ({ ...prev, [name]: formatted }));
+      } else if (cleaned.length <= 11 && cleaned.startsWith("1")) {
+        let formatted = `+${cleaned.slice(0, 1)} ${cleaned.slice(1, 4)}-${cleaned.slice(4, 7)}-${cleaned.slice(7, 11)}`;
+        setFormData((prev) => ({ ...prev, [name]: formatted }));
+      }
+    }
   };
 
   const handleCheckboxChange = (name: string, value: string) => {
@@ -316,9 +324,9 @@ export default function QuoteForm() {
       case 1:
         return formData.services.length > 0;
       case 2:
-        return formData.budget !== "" && formData.timelines.length > 0;
+        return formData.timelines.length > 0;
       case 3:
-        return formData.name.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && formData.contactPrefs.length > 0;
+        return formData.name.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && formData.contactPrefs.length > 0 && (formData.phone === "" || /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formData.phone.replace(/[^\d]/g, "")) || /^\+1[ -]?([0-9]{3})[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formData.phone));
       default:
         return false;
     }
@@ -338,10 +346,7 @@ export default function QuoteForm() {
           .map((id) => projectGoals.find((goal) => goal.id === id)?.label || id)
           .join(", "),
         description: formData.description,
-        services: formData.services
-          .map((id) => serviceOptions.find((service) => service.id === id)?.label || id)
-          .join(", "),
-        budget: budgetOptions.find((opt) => opt.value === formData.budget)?.label || "",
+        services: [...formData.services, formData.otherServices].filter(Boolean).join(", "),
         timelines: formData.timelines
           .map((id) => timelineOptions.find((timeline) => timeline.id === id)?.label || id)
           .join(", "),
@@ -522,7 +527,6 @@ export default function QuoteForm() {
                             value={formData.description}
                             onChange={handleInputChange}
                             required
-                            className="p-2"
                             placeholder="Describe your project, goals, and any specific requirements..."
                           />
                         </div>
@@ -586,6 +590,18 @@ export default function QuoteForm() {
                             </motion.label>
                           ))}
                         </motion.div>
+                        {formData.services.includes("other") && (
+                          <div className="mt-4">
+                            <Label htmlFor="otherServices" className="mb-2 block">Other Services</Label>
+                            <Textarea
+                              id="otherServices"
+                              name="otherServices"
+                              value={formData.otherServices}
+                              onChange={handleInputChange}
+                              placeholder="Please specify other services..."
+                            />
+                          </div>
+                        )}
                       </div>
                     </motion.div>
                   )}
@@ -601,10 +617,6 @@ export default function QuoteForm() {
                       <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[2].title}</h2>
                       <p className="text-muted-foreground mb-6">{steps[2].description}</p>
                       <div className="space-y-6">
-                        <div>
-                          <Label className="mb-2 block">Budget Range *</Label>
-                          <Select onValueChange={(value) => handleSelectChange("budget", value)} />
-                        </div>
                         <div>
                           <Label className="mb-3 block">Timeline Preferences *</Label>
                           <motion.div
@@ -683,7 +695,7 @@ export default function QuoteForm() {
                           <div>
                             <Label htmlFor="email" className="mb-2 block">Email *</Label>
                             <Input
-                            className="p-2"
+                              className="p-2"
                               id="email"
                               name="email"
                               type="email"
@@ -698,7 +710,7 @@ export default function QuoteForm() {
                           <div>
                             <Label htmlFor="company" className="mb-2 block">Company</Label>
                             <Input
-                            className="p-2"
+                              className="p-2"
                               id="company"
                               name="company"
                               value={formData.company}
@@ -709,14 +721,15 @@ export default function QuoteForm() {
                           <div>
                             <Label htmlFor="phone" className="mb-2 block">Phone</Label>
                             <Input
-                            className="p-2"
+                              className="p-2"
                               id="phone"
                               name="phone"
                               type="tel"
                               value={formData.phone}
                               onChange={handleInputChange}
-                              placeholder="(555) 123-4567"
+                              placeholder="(555) 123-4567 or +1 555-123-4567"
                             />
+                            <p className="text-xs text-muted-foreground mt-1">WhatsApp number is preferable</p>
                           </div>
                         </div>
                         <div>
@@ -851,7 +864,7 @@ export default function QuoteForm() {
                         projectGoals: [],
                         description: "",
                         services: [],
-                        budget: "",
+                        otherServices: "",
                         timelines: [],
                         name: "",
                         email: "",
