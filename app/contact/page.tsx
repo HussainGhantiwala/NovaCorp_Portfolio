@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Mail, MapPin, Phone, Clock, Users, Award, Zap } from "lucide-react"
-import { FadeIn } from "@/components/fade-in"
-import ContactForm  from "@/components/contact-form"
-import { AnimatedCard } from "@/components/animated-card"
-import { ScrollReveal } from "@/components/scroll-reveal"
-import { GradientText } from "@/components/gradient-text"
+import { motion } from "framer-motion";
+import { Mail, MapPin, Phone, Clock, Users, Award, Zap } from "lucide-react";
+import { FadeIn } from "@/components/fade-in";
+import ContactForm from "@/components/contact-form";
+import { AnimatedCard } from "@/components/animated-card";
+import { ScrollReveal } from "@/components/scroll-reveal";
+import { GradientText } from "@/components/gradient-text";
 
 export default function ContactPage() {
   return (
@@ -27,18 +27,19 @@ export default function ContactPage() {
               </h1>
 
               <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
-                Ready to start your next digital project? We'd love to hear from you. Reach out and let's create
-                something extraordinary together.
+                Ready to start your next digital project? We'd love to hear from
+                you. Reach out and let's create something extraordinary
+                together.
               </p>
             </div>
           </FadeIn>
         </div>
-      </section>
+        </section>
 
       {/* Contact Methods */}
       <section className="py-16 relative">
-        <div className="container px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="flex justify-center mb-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {[
               {
                 icon: <Mail className="h-6 w-6" />,
@@ -54,18 +55,12 @@ export default function ContactPage() {
                 contact: "+1 (555) 123-4567",
                 color: "cyan",
               },
-              {
-                icon: <MapPin className="h-6 w-6" />,
-                title: "Visit Us",
-                description: "Come say hello at our office",
-                contact: "123 Innovation Drive, Tech City",
-                color: "pink",
-              },
             ].map((method, index) => (
               <ScrollReveal key={index} delay={index * 0.1}>
-                <AnimatedCard glowColor={method.color as "purple" | "cyan" | "pink"}>
+                <div className="relative overflow-hidden rounded-2xl isolate">
+                <AnimatedCard glowColor={method.color as "purple" | "cyan"}>
                   <motion.div
-                    className="p-8 rounded-2xl bg-zinc-900/50 border border-zinc-800 text-center h-full"
+                    className="relative group overflow-hidden p-8 rounded-2xl bg-zinc-900/50 border border-zinc-800 text-center h-full"
                     whileHover={{ y: -10 }}
                     transition={{ duration: 0.3 }}
                   >
@@ -74,19 +69,26 @@ export default function ContactPage() {
                         method.color === "purple"
                           ? "bg-purple-500/10 text-purple-400"
                           : method.color === "cyan"
-                            ? "bg-cyan-500/10 text-cyan-400"
-                            : "bg-pink-500/10 text-pink-400"
+                          ? "bg-cyan-500/10 text-cyan-400"
+                          : "bg-pink-500/10 text-pink-400"
                       }`}
                       whileHover={{ rotate: 360, scale: 1.1 }}
                       transition={{ duration: 0.6 }}
                     >
                       {method.icon}
                     </motion.div>
-                    <h3 className="text-xl font-bold text-white mb-2">{method.title}</h3>
-                    <p className="text-zinc-400 text-sm mb-4">{method.description}</p>
-                    <p className="text-zinc-300 font-medium">{method.contact}</p>
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      {method.title}
+                    </h3>
+                    <p className="text-zinc-400 text-sm mb-4">
+                      {method.description}
+                    </p>
+                    <p className="text-zinc-300 font-medium">
+                      {method.contact}
+                    </p>
                   </motion.div>
                 </AnimatedCard>
+                </div>
               </ScrollReveal>
             ))}
           </div>
@@ -131,34 +133,47 @@ export default function ContactPage() {
                       {
                         icon: <Clock className="h-5 w-5" />,
                         title: "Fast Response",
-                        description: "We respond to all inquiries within 24 hours",
+                        description:
+                          "We respond to all inquiries within 24 hours",
                       },
                       {
                         icon: <Users className="h-5 w-5" />,
                         title: "Expert Team",
-                        description: "Work with experienced professionals who understand your needs",
+                        description:
+                          "Work with experienced professionals who understand your needs",
                       },
                       {
                         icon: <Award className="h-5 w-5" />,
                         title: "Proven Results",
-                        description: "100+ successful projects delivered on time and on budget",
+                        description:
+                          "100+ successful projects delivered on time and on budget",
                       },
                       {
                         icon: <Zap className="h-5 w-5" />,
                         title: "Cutting-edge Tech",
-                        description: "We use the latest technologies to build future-proof solutions",
+                        description:
+                          "We use the latest technologies to build future-proof solutions",
                       },
                     ].map((item, index) => (
                       <motion.div
                         key={index}
                         className="flex items-start gap-4 p-4 rounded-xl bg-zinc-900/30 border border-zinc-800/50"
-                        whileHover={{ x: 5, borderColor: "rgba(168, 85, 247, 0.3)" }}
+                        whileHover={{
+                          x: 5,
+                          borderColor: "rgba(168, 85, 247, 0.3)",
+                        }}
                         transition={{ duration: 0.3 }}
                       >
-                        <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400 flex-shrink-0">{item.icon}</div>
+                        <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400 flex-shrink-0">
+                          {item.icon}
+                        </div>
                         <div>
-                          <h3 className="font-semibold text-white mb-1">{item.title}</h3>
-                          <p className="text-zinc-400 text-sm">{item.description}</p>
+                          <h3 className="font-semibold text-white mb-1">
+                            {item.title}
+                          </h3>
+                          <p className="text-zinc-400 text-sm">
+                            {item.description}
+                          </p>
                         </div>
                       </motion.div>
                     ))}
@@ -184,7 +199,9 @@ export default function ContactPage() {
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <span className="text-sm font-medium">{social.name}</span>
+                        <span className="text-sm font-medium">
+                          {social.name}
+                        </span>
                       </motion.a>
                     ))}
                   </div>
@@ -246,7 +263,9 @@ export default function ContactPage() {
                   whileHover={{ borderColor: "rgba(168, 85, 247, 0.3)" }}
                   transition={{ duration: 0.3 }}
                 >
-                  <h3 className="text-lg font-bold text-white mb-3">{faq.question}</h3>
+                  <h3 className="text-lg font-bold text-white mb-3">
+                    {faq.question}
+                  </h3>
                   <p className="text-zinc-400">{faq.answer}</p>
                 </motion.div>
               </ScrollReveal>
@@ -255,5 +274,5 @@ export default function ContactPage() {
         </div>
       </section>
     </div>
-  )
+  );
 }
