@@ -1,11 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { AnimatedButton } from "./animated-button";
 import { GradientText } from "./gradient-text";
@@ -13,7 +11,6 @@ import { ScrollReveal } from "./scroll-reveal";
 import { AnimatedCard } from "./animated-card";
 
 export default function Portfolio() {
-  const [activeFilter, setActiveFilter] = useState("all");
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -21,60 +18,34 @@ export default function Portfolio() {
 
   const portfolioItems = [
     {
-      title: "E-commerce Platform",
-      category: "development",
-      tags: ["Web Development", "E-commerce"],
-      image: "/placeholder.svg?height=400&width=600",
+      title: "Bharat Hydraulics and Engineering Company Website",
+      tags: ["Web Development"],
+      image: "/our work/bharat-photo.png",
       color: "purple",
+      link: "https://bharat-hydraulics.vercel.app/",
     },
     {
-      title: "Corporate Website",
-      category: "design",
-      tags: ["Web Design", "Branding"],
-      image: "/placeholder.svg?height=400&width=600",
+      title: "Taha Hardware Website",
+      tags: ["Web Development", "Branding"],
+      image: "/our work/taha-photo.png",
       color: "cyan",
+      link: "https://www.google.com/search?q=taha+hardware&ie=UTF-8",
     },
     {
-      title: "Mobile App UI",
-      category: "ui-ux",
-      tags: ["UI/UX Design", "Mobile"],
-      image: "/placeholder.svg?height=400&width=600",
+      title: "Cresa Website",
+      tags: ["UI/UX Design", "Web Development"],
+      image: "/our work/Cresa.jpg",
       color: "pink",
+      link: "https://cresa-web.vercel.app/",
     },
     {
-      title: "Restaurant Booking System",
-      category: "development",
-      tags: ["Web Application", "UI/UX"],
-      image: "/placeholder.svg?height=400&width=600",
+      title: "Accountable",
+      tags: ["SaaS", "Development"],
+      image: "/our work/Accountable-web.jpg",
       color: "purple",
-    },
-    {
-      title: "Fashion Brand Website",
-      category: "design",
-      tags: ["Web Design", "E-commerce"],
-      image: "/placeholder.svg?height=400&width=600",
-      color: "cyan",
-    },
-    {
-      title: "Travel App Interface",
-      category: "ui-ux",
-      tags: ["UI/UX Design", "Mobile"],
-      image: "/placeholder.svg?height=400&width=600",
-      color: "pink",
+      link: "https://accountable-web.vercel.app/",
     },
   ];
-
-  const filters = [
-    { id: "all", label: "All" },
-    { id: "design", label: "Web Design" },
-    { id: "ui-ux", label: "UI/UX" },
-    { id: "development", label: "Development" },
-  ];
-
-  const filteredItems =
-    activeFilter === "all"
-      ? portfolioItems
-      : portfolioItems.filter((item) => item.category === activeFilter);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -109,44 +80,15 @@ export default function Portfolio() {
           </p>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.2}>
-          <div className="mb-12 flex flex-wrap justify-center gap-3">
-            {filters.map((filter) => (
-              <motion.div
-                key={filter.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  variant={activeFilter === filter.id ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setActiveFilter(filter.id)}
-                  className={`
-                    transition-all duration-300 font-medium
-                    ${
-                      activeFilter === filter.id
-                        ? "bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white border-transparent"
-                        : "border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white bg-transparent"
-                    }
-                  `}
-                >
-                  {filter.label}
-                </Button>
-              </motion.div>
-            ))}
-          </div>
-        </ScrollReveal>
-
         <motion.div
           ref={ref}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
           variants={containerVariants}
-           key={activeFilter}
           className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {filteredItems.map((item) => (
-        <ScrollReveal key={item.title} delay={0.1}>
+          {portfolioItems.map((item) => (
+            <ScrollReveal key={item.title} delay={0.1}>
               <AnimatedCard
                 glowColor={item.color as "purple" | "cyan" | "pink"}
                 className="h-full"
@@ -160,16 +102,26 @@ export default function Portfolio() {
                     <Image
                       src={item.image || "/placeholder.svg"}
                       alt={item.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      layout="responsive"
+                      width={600}
+                      height={400}
+                      className="object-cover"
                     />
-                    {/* Gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
-
-                    {/* Animated background gradient on hover */}
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-transparent to-cyan-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                    {/* Always visible text section */}
+                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                      <motion.h3
+                        className="mb-3 text-xl font-bold"
+                        whileHover={{
+                          color: ["#ffffff", "#a855f7", "#06b6d4", "#ffffff"],
+                          transition: { duration: 2, repeat: Infinity },
+                        }}
+                      >
+                        {item.title}
+                      </motion.h3>
+
                       <div className="mb-3 flex flex-wrap gap-2">
                         {item.tags.map((tag, tagIndex) => (
                           <motion.span
@@ -187,17 +139,7 @@ export default function Portfolio() {
                         ))}
                       </div>
 
-                      <motion.h3
-                        className="mb-4 text-xl font-bold text-white"
-                        whileHover={{
-                          color: ["#ffffff", "#a855f7", "#06b6d4", "#ffffff"],
-                          transition: { duration: 2, repeat: Infinity },
-                        }}
-                      >
-                        {item.title}
-                      </motion.h3>
-
-                      <Link href="https://google.com">
+                      <Link href={item.link} target="_blank" rel="noopener noreferrer">
                         <div className="relative inline-block rounded-md">
                           <AnimatedButton
                             size="sm"
@@ -216,9 +158,6 @@ export default function Portfolio() {
             </ScrollReveal>
           ))}
         </motion.div>
-
-        {/* View All Work Button */}
-        {/* We don't have a portfolio page right now, so let it be for now */}
       </div>
     </section>
   );
