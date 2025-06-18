@@ -37,7 +37,7 @@ const TeamMember = ({ name, image }: TeamMemberProps) => {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-zinc-900 to-black text-white">
+    <div className="min-h-screen bg-black text-white">
       {/* Hero Section */}
       <section className="py-32 relative overflow-hidden">
         <div className="container px-4 mx-auto">
@@ -78,7 +78,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="py-32 bg-zinc-950/50 relative">
+      <section className="py-32 bg-black/80 relative">
         <div className="container px-4 mx-auto">
           <FloatingText>
             <h2 className="font-heading text-3xl md:text-5xl mb-16 text-center">
@@ -143,24 +143,35 @@ export default function AboutPage() {
             {/* <FadeIn delay={0.2}>
               <TeamMember
                 name="Mustafa A"
+<<<<<<< HEAD
+=======
+                role="#"
+>>>>>>> d487126b1a3752a86405ec40ee0904d3f453d4a7
                 image="/placeholder.svg?height=400&width=400"
               />
             </FadeIn>
             <FadeIn delay={0.3}>
               <TeamMember
                 name="Yusuf Z"
+                role="#"
                 image="/placeholder.svg?height=400&width=400"
               />
             </FadeIn>
              <FadeIn delay={0.4}>
               <TeamMember
+<<<<<<< HEAD
                 name="Hussain Ghantiwala"
+=======
+                name="Murtaza Sohangpur"
+                role="#"
+>>>>>>> d487126b1a3752a86405ec40ee0904d3f453d4a7
                 image="/placeholder.svg?height=400&width=400"
               />
             </FadeIn>
             <FadeIn delay={0.5}>
               <TeamMember
-                name="Murtaza Sohangpur"
+                name="Hussain Ghantiwala"
+                role=""
                 image="/placeholder.svg?height=400&width=400"
               />
             </FadeIn> */}
