@@ -97,11 +97,7 @@ export default function Footer() {
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link href="#" className="text-muted-foreground transition-colors hover:text-primary">
-                  Careers
-                </Link>
-              </li>
+             
             </ul>
           </div>
 
