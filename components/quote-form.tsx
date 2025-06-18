@@ -3,14 +3,32 @@
 import { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, ChevronRight, ArrowRight, Loader2, CheckCircle } from "lucide-react";
+import {
+  Check,
+  ChevronRight,
+  ArrowRight,
+  Loader2,
+  CheckCircle,
+} from "lucide-react";
 import { GradientText } from "./gradient-text";
 
 const steps = [
-  { id: "project-info", title: "Project Information", description: "Tell us about your project" },
-  { id: "services", title: "Services", description: "Select the services you need" },
+  {
+    id: "project-info",
+    title: "Project Information",
+    description: "Tell us about your project",
+  },
+  {
+    id: "services",
+    title: "Services",
+    description: "Select the services you need",
+  },
   { id: "timeline", title: "Timeline", description: "Provide your timeline" },
-  { id: "contact", title: "Contact Details", description: "How can we reach you" },
+  {
+    id: "contact",
+    title: "Contact Details",
+    description: "How can we reach you",
+  },
 ];
 
 const projectGoals = [
@@ -19,7 +37,6 @@ const projectGoals = [
   { id: "user-engagement", label: "User Engagement", emoji: "👥" },
   { id: "new-launch", label: "New Product Launch", emoji: "🚀" },
 ];
-
 
 const serviceOptions = [
   { id: "web-design", label: "Web Design", emoji: "🎨" },
@@ -119,7 +136,10 @@ const Input: React.FC<InputProps> = ({
     placeholder={placeholder}
     className={`flex h-10 w-full rounded-md border border-border bg-background text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50 p-2 ${className}`}
     whileFocus={{ scale: 1.02 }}
-    whileHover={{ boxShadow: "rgba(147, 51, 234, 0) 0px 0px 0px", transform: "none" }}
+    whileHover={{
+      boxShadow: "rgba(147, 51, 234, 0) 0px 0px 0px",
+      transform: "none",
+    }}
     transition={{ duration: 0.2 }}
   />
 );
@@ -171,16 +191,21 @@ const Label = ({ children, htmlFor, className = "" }: LabelProps) => (
   </label>
 );
 
-const Select: React.FC<{ children?: React.ReactNode; onValueChange: (value: string) => void }> = ({ children, onValueChange }) => {
+const Select: React.FC<{
+  children?: React.ReactNode;
+  onValueChange: (value: string) => void;
+}> = ({ children, onValueChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
-  
+
   const handleSelect = (value: string, label: string) => {
     setSelectedValue(label);
     onValueChange(value);
     setIsOpen(false);
   };
-  
+
+  const primaryColor = "bg-gradient-to-r from-purple-400 to-blue-500";
+
   return (
     <div className="relative">
       <motion.button
@@ -191,10 +216,18 @@ const Select: React.FC<{ children?: React.ReactNode; onValueChange: (value: stri
         whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.2 }}
       >
-        <span className={selectedValue ? "text-foreground" : "text-muted-foreground"}>
+        <span
+          className={
+            selectedValue ? "text-foreground" : "text-muted-foreground"
+          }
+        >
           {selectedValue || "Select your timeline"}
         </span>
-        <ChevronRight className={`h-4 w-4 text-muted-foreground transition-transform ${isOpen ? "rotate-90" : ""}`} />
+        <ChevronRight
+          className={`h-4 w-4 text-muted-foreground transition-transform ${
+            isOpen ? "rotate-90" : ""
+          }`}
+        />
       </motion.button>
       <AnimatePresence>
         {isOpen && (
@@ -271,7 +304,9 @@ export default function QuoteForm() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -280,12 +315,20 @@ export default function QuoteForm() {
       const cleaned = value.replace(/[^\d]/g, "");
       if (cleaned.length <= 10) {
         let formatted = cleaned;
-        if (cleaned.length > 6) formatted = `(${cleaned.slice(0, 3)}) ${cleaned.slice(3, 6)}-${cleaned.slice(6, 10)}`;
-        else if (cleaned.length > 3) formatted = `(${cleaned.slice(0, 3)}) ${cleaned.slice(3)}`;
+        if (cleaned.length > 6)
+          formatted = `(${cleaned.slice(0, 3)}) ${cleaned.slice(
+            3,
+            6
+          )}-${cleaned.slice(6, 10)}`;
+        else if (cleaned.length > 3)
+          formatted = `(${cleaned.slice(0, 3)}) ${cleaned.slice(3)}`;
         else formatted = cleaned;
         setFormData((prev) => ({ ...prev, [name]: formatted }));
       } else if (cleaned.length <= 11 && cleaned.startsWith("1")) {
-        let formatted = `+${cleaned.slice(0, 1)} ${cleaned.slice(1, 4)}-${cleaned.slice(4, 7)}-${cleaned.slice(7, 11)}`;
+        let formatted = `+${cleaned.slice(0, 1)} ${cleaned.slice(
+          1,
+          4
+        )}-${cleaned.slice(4, 7)}-${cleaned.slice(7, 11)}`;
         setFormData((prev) => ({ ...prev, [name]: formatted }));
       }
     }
@@ -293,7 +336,7 @@ export default function QuoteForm() {
 
   const handleCheckboxChange = (name: string, value: string) => {
     setFormData((prev) => {
-      const current = prev[name as keyof typeof prev] as string[] || [];
+      const current = (prev[name as keyof typeof prev] as string[]) || [];
       return {
         ...prev,
         [name]: current.includes(value)
@@ -322,13 +365,26 @@ export default function QuoteForm() {
   const isStepValid = () => {
     switch (currentStep) {
       case 0:
-        return formData.projectGoals.length > 0 && formData.description.trim() !== "";
+        return (
+          formData.projectGoals.length > 0 && formData.description.trim() !== ""
+        );
       case 1:
         return formData.services.length > 0;
       case 2:
         return formData.timelines.length > 0;
       case 3:
-        return formData.name.trim() !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && formData.contactPrefs.length > 0 && (formData.phone === "" || /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formData.phone.replace(/[^\d]/g, "")) || /^\+1[ -]?([0-9]{3})[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(formData.phone));
+        return (
+          formData.name.trim() !== "" &&
+          /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) &&
+          formData.contactPrefs.length > 0 &&
+          (formData.phone === "" ||
+            /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(
+              formData.phone.replace(/[^\d]/g, "")
+            ) ||
+            /^\+1[ -]?([0-9]{3})[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/.test(
+              formData.phone
+            ))
+        );
       default:
         return false;
     }
@@ -348,12 +404,21 @@ export default function QuoteForm() {
           .map((id) => projectGoals.find((goal) => goal.id === id)?.label || id)
           .join(", "),
         description: formData.description,
-        services: [...formData.services, formData.otherServices].filter(Boolean).join(", "),
+        services: [...formData.services, formData.otherServices]
+          .filter(Boolean)
+          .join(", "),
         timelines: formData.timelines
-          .map((id) => timelineOptions.find((timeline) => timeline.id === id)?.label || id)
+          .map(
+            (id) =>
+              timelineOptions.find((timeline) => timeline.id === id)?.label ||
+              id
+          )
           .join(", "),
         contact_prefs: formData.contactPrefs
-          .map((id) => contactPreferences.find((pref) => pref.id === id)?.label || id)
+          .map(
+            (id) =>
+              contactPreferences.find((pref) => pref.id === id)?.label || id
+          )
           .join(", "),
         to_name: "Nova Corp Team",
         reply_to: formData.email,
@@ -389,17 +454,17 @@ export default function QuoteForm() {
     <div className="min-h-screen bg-background pt-16 pb-20">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12">
-         <motion.h1
-  className="text-4xl md:text-5xl font-heading tracking-tight text-white"
-  initial={{ opacity: 0, y: -20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, ease: "easeOut" }}
->
-  Request a{' '}
-  <span className="text-4xl md:text-5xl font-heading tracking-tight">
-    <GradientText>Quote</GradientText>
-  </span>
-</motion.h1>
+          <motion.h1
+            className="text-4xl md:text-5xl font-heading tracking-tight text-white"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            Request a{" "}
+            <span className="text-4xl md:text-5xl font-heading tracking-tight">
+              <GradientText>Quote</GradientText>
+            </span>
+          </motion.h1>
 
           <motion.p
             className="text-muted-foreground max-w-2xl mx-auto p-2"
@@ -407,7 +472,8 @@ export default function QuoteForm() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            Fill out the form below to get a custom quote for your project. We'll respond within 24 hours.
+            Fill out the form below to get a custom quote for your project.
+            We'll respond within 24 hours.
           </motion.p>
         </div>
 
@@ -417,19 +483,24 @@ export default function QuoteForm() {
             <div className="flex items-start justify-between relative">
               <div className="absolute top-5 left-0 w-full h-0.5 bg-border -z-10">
                 <motion.div
-                  className="h-full bg-primary transition-all duration-500 ease-in-out"
+                  className="h-full bg-gradient-to-r from-purple-600 to-cyan-600 transition-all duration-500 ease-in-out"
                   initial={{ width: 0 }}
-                  animate={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
+                  animate={{
+                    width: `${(currentStep / (steps.length - 1)) * 100}%`,
+                  }}
                   transition={{ duration: 0.5 }}
                 />
               </div>
-              
+
               {steps.map((step, index) => (
-                <div key={step.id} className="flex flex-col items-center relative z-10 w-1/4">
+                <div
+                  key={step.id}
+                  className="flex flex-col items-center relative z-10 w-1/4"
+                >
                   <motion.div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold border-2 ${
-                      currentStep >= index 
-                        ? "bg-primary text-primary-foreground border-primary" 
+                      currentStep >= index
+                        ? "bg-gradient-to-r from-purple-400 to-blue-500 text-white border-none"
                         : "bg-background border-border text-muted-foreground"
                     }`}
                     initial={{ scale: 0.8 }}
@@ -444,13 +515,17 @@ export default function QuoteForm() {
                   </motion.div>
                   <motion.div
                     className={`mt-3 text-center ${
-                      currentStep >= index ? "text-foreground" : "text-muted-foreground"
+                      currentStep >= index
+                        ? "text-foreground"
+                        : "text-muted-foreground"
                     }`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.1, duration: 0.3 }}
                   >
-                    <p className="text-xs sm:text-sm font-medium max-w-[80px] leading-tight">{step.title}</p>
+                    <p className="text-xs sm:text-sm font-medium max-w-[80px] leading-tight">
+                      {step.title}
+                    </p>
                   </motion.div>
                 </div>
               ))}
@@ -473,13 +548,23 @@ export default function QuoteForm() {
                       initial={{ opacity: 0, x: 50, scale: 0.9 }}
                       animate={{ opacity: 1, x: 0, scale: 1 }}
                       exit={{ opacity: 0, x: -50, scale: 0.9 }}
-                      transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
+                      transition={{
+                        duration: 0.5,
+                        type: "spring",
+                        stiffness: 120,
+                      }}
                     >
-                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[0].title}</h2>
-                      <p className="text-muted-foreground mb-6">{steps[0].description}</p>
+                      <h2 className="text-2xl font-bold mb-2 text-foreground">
+                        {steps[0].title}
+                      </h2>
+                      <p className="text-muted-foreground mb-6">
+                        {steps[0].description}
+                      </p>
                       <div className="space-y-6">
                         <div>
-                          <Label className="mb-3 block" htmlFor="project-goals">Project Goals *</Label>
+                          <Label className="mb-3 block" htmlFor="project-goals">
+                            Project Goals *
+                          </Label>
                           <motion.div
                             className="grid grid-cols-1 md:grid-cols-2 gap-4"
                             initial={{ opacity: 0, y: 20 }}
@@ -491,7 +576,7 @@ export default function QuoteForm() {
                                 key={goal.id}
                                 className={`flex items-center p-4 border rounded-md cursor-pointer transition-colors ${
                                   formData.projectGoals.includes(goal.id)
-                                    ? "border-primary bg-primary/10"
+                                    ? "bg-gradient-to-r from-purple-600/30 to-cyan-600/30 border-transparent"
                                     : "border-border hover:bg-muted"
                                 }`}
                                 initial={{ opacity: 0, y: 10 }}
@@ -502,8 +587,15 @@ export default function QuoteForm() {
                               >
                                 <input
                                   type="checkbox"
-                                  checked={formData.projectGoals.includes(goal.id)}
-                                  onChange={() => handleCheckboxChange("projectGoals", goal.id)}
+                                  checked={formData.projectGoals.includes(
+                                    goal.id
+                                  )}
+                                  onChange={() =>
+                                    handleCheckboxChange(
+                                      "projectGoals",
+                                      goal.id
+                                    )
+                                  }
                                   className="sr-only"
                                 />
                                 <div
@@ -526,7 +618,9 @@ export default function QuoteForm() {
                           </motion.div>
                         </div>
                         <div>
-                          <Label htmlFor="description" className="mb-2 block">Project Description *</Label>
+                          <Label htmlFor="description" className="mb-2 block">
+                            Project Description *
+                          </Label>
                           <Textarea
                             id="description"
                             name="description"
@@ -546,10 +640,18 @@ export default function QuoteForm() {
                       initial={{ opacity: 0, x: 50, scale: 0.9 }}
                       animate={{ opacity: 1, x: 0, scale: 1 }}
                       exit={{ opacity: 0, x: -50, scale: 0.9 }}
-                      transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
+                      transition={{
+                        duration: 0.5,
+                        type: "spring",
+                        stiffness: 120,
+                      }}
                     >
-                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[1].title}</h2>
-                      <p className="text-muted-foreground mb-6">{steps[1].description}</p>
+                      <h2 className="text-2xl font-bold mb-2 text-foreground">
+                        {steps[1].title}
+                      </h2>
+                      <p className="text-muted-foreground mb-6">
+                        {steps[1].description}
+                      </p>
                       <div>
                         <Label className="mb-3 block">Services Needed *</Label>
                         <motion.div
@@ -563,7 +665,7 @@ export default function QuoteForm() {
                               key={service.id}
                               className={`flex items-center p-4 border rounded-md cursor-pointer transition-colors ${
                                 formData.services.includes(service.id)
-                                  ? "border-primary bg-primary/10"
+                                  ? "bg-gradient-to-r from-purple-600/30 to-cyan-600/30 border-transparent"
                                   : "border-border hover:bg-muted"
                               }`}
                               initial={{ opacity: 0, y: 10 }}
@@ -575,13 +677,15 @@ export default function QuoteForm() {
                               <input
                                 type="checkbox"
                                 checked={formData.services.includes(service.id)}
-                                onChange={() => handleCheckboxChange("services", service.id)}
+                                onChange={() =>
+                                  handleCheckboxChange("services", service.id)
+                                }
                                 className="sr-only"
                               />
                               <div
                                 className={`w-5 h-5 rounded border mr-3 flex items-center justify-center ${
                                   formData.services.includes(service.id)
-                                    ? "bg-primary border-primary"
+                                    ? "bg-gradient-to-r from-purple-600 to-cyan-600 border-transparent"
                                     : "border-border"
                                 }`}
                               >
@@ -598,7 +702,12 @@ export default function QuoteForm() {
                         </motion.div>
                         {formData.services.includes("other") && (
                           <div className="mt-4">
-                            <Label htmlFor="otherServices" className="mb-2 block">Other Services</Label>
+                            <Label
+                              htmlFor="otherServices"
+                              className="mb-2 block"
+                            >
+                              Other Services
+                            </Label>
                             <Textarea
                               id="otherServices"
                               name="otherServices"
@@ -618,13 +727,23 @@ export default function QuoteForm() {
                       initial={{ opacity: 0, x: 50, scale: 0.9 }}
                       animate={{ opacity: 1, x: 0, scale: 1 }}
                       exit={{ opacity: 0, x: -50, scale: 0.9 }}
-                      transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
+                      transition={{
+                        duration: 0.5,
+                        type: "spring",
+                        stiffness: 120,
+                      }}
                     >
-                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[2].title}</h2>
-                      <p className="text-muted-foreground mb-6">{steps[2].description}</p>
+                      <h2 className="text-2xl font-bold mb-2 text-foreground">
+                        {steps[2].title}
+                      </h2>
+                      <p className="text-muted-foreground mb-6">
+                        {steps[2].description}
+                      </p>
                       <div className="space-y-6">
                         <div>
-                          <Label className="mb-3 block">Timeline Preferences *</Label>
+                          <Label className="mb-3 block">
+                            Timeline Preferences *
+                          </Label>
                           <motion.div
                             className="grid grid-cols-1 md:grid-cols-2 gap-4"
                             initial={{ opacity: 0, y: 20 }}
@@ -636,7 +755,7 @@ export default function QuoteForm() {
                                 key={timeline.id}
                                 className={`flex items-center p-4 border rounded-md cursor-pointer transition-colors ${
                                   formData.timelines.includes(timeline.id)
-                                    ? "border-primary bg-primary/10"
+                                    ? "bg-gradient-to-r from-purple-600/30 to-cyan-600/30 border-transparent"
                                     : "border-border hover:bg-muted"
                                 }`}
                                 initial={{ opacity: 0, y: 10 }}
@@ -647,14 +766,21 @@ export default function QuoteForm() {
                               >
                                 <input
                                   type="checkbox"
-                                  checked={formData.timelines.includes(timeline.id)}
-                                  onChange={() => handleCheckboxChange("timelines", timeline.id)}
+                                  checked={formData.timelines.includes(
+                                    timeline.id
+                                  )}
+                                  onChange={() =>
+                                    handleCheckboxChange(
+                                      "timelines",
+                                      timeline.id
+                                    )
+                                  }
                                   className="sr-only"
                                 />
                                 <div
                                   className={`w-5 h-5 rounded border mr-3 flex items-center justify-center ${
                                     formData.timelines.includes(timeline.id)
-                                      ? "bg-primary border-primary"
+                                      ? "bg-gradient-to-r from-purple-600 to-cyan-600 border-transparent"
                                       : "border-border"
                                   }`}
                                 >
@@ -680,14 +806,24 @@ export default function QuoteForm() {
                       initial={{ opacity: 0, x: 50, scale: 0.9 }}
                       animate={{ opacity: 1, x: 0, scale: 1 }}
                       exit={{ opacity: 0, x: -50, scale: 0.9 }}
-                      transition={{ duration: 0.5, type: "spring", stiffness: 120 }}
+                      transition={{
+                        duration: 0.5,
+                        type: "spring",
+                        stiffness: 120,
+                      }}
                     >
-                      <h2 className="text-2xl font-bold mb-2 text-foreground">{steps[3].title}</h2>
-                      <p className="text-muted-foreground mb-6">{steps[3].description}</p>
+                      <h2 className="text-2xl font-bold mb-2 text-foreground">
+                        {steps[3].title}
+                      </h2>
+                      <p className="text-muted-foreground mb-6">
+                        {steps[3].description}
+                      </p>
                       <div className="space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
-                            <Label htmlFor="name" className="mb-2 block">Name *</Label>
+                            <Label htmlFor="name" className="mb-2 block">
+                              Name *
+                            </Label>
                             <Input
                               className="p-2"
                               id="name"
@@ -699,7 +835,9 @@ export default function QuoteForm() {
                             />
                           </div>
                           <div>
-                            <Label htmlFor="email" className="mb-2 block">Email *</Label>
+                            <Label htmlFor="email" className="mb-2 block">
+                              Email *
+                            </Label>
                             <Input
                               className="p-2"
                               id="email"
@@ -714,7 +852,9 @@ export default function QuoteForm() {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
-                            <Label htmlFor="company" className="mb-2 block">Company</Label>
+                            <Label htmlFor="company" className="mb-2 block">
+                              Company
+                            </Label>
                             <Input
                               className="p-2"
                               id="company"
@@ -725,7 +865,9 @@ export default function QuoteForm() {
                             />
                           </div>
                           <div>
-                            <Label htmlFor="phone" className="mb-2 block">Phone</Label>
+                            <Label htmlFor="phone" className="mb-2 block">
+                              Phone
+                            </Label>
                             <Input
                               className="p-2"
                               id="phone"
@@ -735,11 +877,15 @@ export default function QuoteForm() {
                               onChange={handleInputChange}
                               placeholder="(555) 123-4567 or +1 555-123-4567"
                             />
-                            <p className="text-xs text-muted-foreground mt-1">WhatsApp number is preferable</p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              WhatsApp number is preferable
+                            </p>
                           </div>
                         </div>
                         <div>
-                          <Label className="mb-3 block">Preferred Contact Methods *</Label>
+                          <Label className="mb-3 block">
+                            Preferred Contact Methods *
+                          </Label>
                           <motion.div
                             className="grid grid-cols-1 md:grid-cols-3 gap-4"
                             initial={{ opacity: 0, y: 20 }}
@@ -751,7 +897,7 @@ export default function QuoteForm() {
                                 key={pref.id}
                                 className={`flex items-center p-4 border rounded-md cursor-pointer transition-colors ${
                                   formData.contactPrefs.includes(pref.id)
-                                    ? "border-primary bg-primary/10"
+                                    ? "bg-gradient-to-r from-purple-600/30 to-cyan-600/30 border-transparent"
                                     : "border-border hover:bg-muted"
                                 }`}
                                 initial={{ opacity: 0, y: 10 }}
@@ -762,14 +908,21 @@ export default function QuoteForm() {
                               >
                                 <input
                                   type="checkbox"
-                                  checked={formData.contactPrefs.includes(pref.id)}
-                                  onChange={() => handleCheckboxChange("contactPrefs", pref.id)}
+                                  checked={formData.contactPrefs.includes(
+                                    pref.id
+                                  )}
+                                  onChange={() =>
+                                    handleCheckboxChange(
+                                      "contactPrefs",
+                                      pref.id
+                                    )
+                                  }
                                   className="sr-only"
                                 />
                                 <div
                                   className={`w-5 h-5 rounded border mr-3 flex items-center justify-center ${
                                     formData.contactPrefs.includes(pref.id)
-                                      ? "bg-primary border-primary"
+                                      ? "bg-gradient-to-r from-purple-600 to-cyan-600 border-transparent"
                                       : "border-border"
                                   }`}
                                 >
@@ -792,7 +945,10 @@ export default function QuoteForm() {
 
                 <div className="mt-10 flex justify-between items-center">
                   {currentStep > 0 && (
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <Button variant="outline" onClick={prevStep}>
                         Back
                       </Button>
@@ -800,21 +956,33 @@ export default function QuoteForm() {
                   )}
                   <div className="flex-1" />
                   {currentStep < steps.length - 1 ? (
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <Button
                         onClick={nextStep}
                         disabled={!isStepValid()}
-                        className={!isStepValid() ? "opacity-50 cursor-not-allowed" : ""}
+                        className={
+                          !isStepValid() ? "opacity-50 cursor-not-allowed" : ""
+                        }
                       >
                         Next <ChevronRight className="ml-2 w-4 h-4" />
                       </Button>
                     </motion.div>
                   ) : (
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <motion.div
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
                       <Button
                         type="submit"
                         disabled={!isStepValid() || isSubmitting}
-                        className={(!isStepValid() || isSubmitting) ? "opacity-50 cursor-not-allowed" : ""}
+                        className={
+                          !isStepValid() || isSubmitting
+                            ? "opacity-50 cursor-not-allowed"
+                            : ""
+                        }
                       >
                         {isSubmitting ? (
                           <>
@@ -823,7 +991,8 @@ export default function QuoteForm() {
                           </>
                         ) : (
                           <>
-                            Submit Request <ArrowRight className="ml-2 w-4 h-4" />
+                            Submit Request{" "}
+                            <ArrowRight className="ml-2 w-4 h-4" />
                           </>
                         )}
                       </Button>
@@ -859,9 +1028,13 @@ export default function QuoteForm() {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.3, duration: 0.5 }}
                 >
-                  Thank you for your request. We'll review your details and respond within 24 hours.
+                  Thank you for your request. We'll review your details and
+                  respond within 24 hours.
                 </motion.p>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Button
                     onClick={() => {
                       setIsSubmitted(false);
