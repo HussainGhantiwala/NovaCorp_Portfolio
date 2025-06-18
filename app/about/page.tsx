@@ -142,7 +142,7 @@ export default function AboutPage() {
             ))}
             {/* <FadeIn delay={0.2}>
               <TeamMember
-                name="Hussain Ghantiwala"
+                name="Mustafa A"
                 image="/placeholder.svg?height=400&width=400"
               />
             </FadeIn>
@@ -154,8 +154,7 @@ export default function AboutPage() {
             </FadeIn>
              <FadeIn delay={0.4}>
               <TeamMember
-                name="Mustafa A"
-                // role="Founder & Creative Director"
+                name="Hussain Ghantiwala"
                 image="/placeholder.svg?height=400&width=400"
               />
             </FadeIn>

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from "framer-motion";
 import { Check, ChevronRight, ArrowRight, Loader2, CheckCircle } from "lucide-react";
+import { GradientText } from "./gradient-text";
 
 const steps = [
   { id: "project-info", title: "Project Information", description: "Tell us about your project" },
@@ -388,16 +389,20 @@ export default function QuoteForm() {
     <div className="min-h-screen bg-background pt-16 pb-20">
       <div className="container mx-auto px-4 max-w-4xl">
         <div className="text-center mb-12">
-          <motion.h1
-            className="text-4xl md:text-5xl font-bold mb-4 text-foreground"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            Request a Quote
-          </motion.h1>
+         <motion.h1
+  className="text-4xl md:text-5xl font-heading tracking-tight text-white"
+  initial={{ opacity: 0, y: -20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, ease: "easeOut" }}
+>
+  Request a{' '}
+  <span className="text-4xl md:text-5xl font-heading tracking-tight">
+    <GradientText>Quote</GradientText>
+  </span>
+</motion.h1>
+
           <motion.p
-            className="text-muted-foreground max-w-2xl mx-auto"
+            className="text-muted-foreground max-w-2xl mx-auto p-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.6 }}
