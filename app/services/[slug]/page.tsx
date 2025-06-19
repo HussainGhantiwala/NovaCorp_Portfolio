@@ -1,9 +1,4 @@
 import { notFound } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { ArrowRight, CheckCircle, Sparkles, Layers3 } from "lucide-react"
-import Image from "next/image"
-import { Badge } from "@/components/ui/badge"
 import { services } from "@/lib/services"
 import { ServicePageClient } from "./ServicePageClient"
 
