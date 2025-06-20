@@ -64,7 +64,8 @@ export default function Home() {
   return (
     <div ref={containerRef} className="relative">
       {/* Hero Section */}
-     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pb-24 sm:pb-0">
+     <section className="relative min-h-screen flex items-center justify-center px-4 py-12 sm:py-16 md:py-20 overflow-hidden">
+
         {/* Dynamic background elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-black to-cyan-900/10" />
 
@@ -170,7 +171,8 @@ export default function Home() {
 
           {/* CTA Buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 w-full max-w-lg mx-auto"
+
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.8 }}
@@ -265,9 +267,9 @@ export default function Home() {
 </motion.div>
 
       </section>
-
       {/* Services Section */}
-      <ParallaxSection baseVelocity={3} className="py-32 bg-zinc-950/50">
+      <ParallaxSection baseVelocity={3} className="py-30 bg-zinc-950/50">
+        <div className="h-24 sm:h-40" />
         <div className="container px-4">
           <ScrollReveal className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-heading mb-6">
