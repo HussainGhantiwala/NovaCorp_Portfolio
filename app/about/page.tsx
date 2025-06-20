@@ -5,34 +5,14 @@ import Image from "next/image";
 import { FadeIn } from "@/components/fade-in";
 import { FloatingText } from "@/components/floating-text";
 import { ParallaxText } from "@/components/parallax-text";
+import TeamMembers from "@/components/team-members";
 import { GradientText } from "@/components/gradient-text";
+import { TeamMember } from "@/components/team-member";
 
 type TeamMemberProps = {
   name: string;
   // role: string;
   image: string;
-};
-
-const TeamMember = ({ name, image }: TeamMemberProps) => {
-  return (
-    <motion.div
-      className="w-full md:w-64 bg-zinc-900/60 rounded-2xl p-6 text-center border border-zinc-800/50 shadow-md transition-all duration-300"
-      whileHover={{ y: -8, scale: 1.05, borderColor: "rgba(168, 85, 247, 0.6)" }}
-      transition={{ duration: 0.4 }}
-    >
-      <div className="relative w-full h-48 rounded-lg overflow-hidden mb-4">
-        <Image
-          src={image}
-          alt={`${name}'s profile`}
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-      </div>
-      <h3 className="text-xl font-bold text-white mb-2">{name}</h3>
-      {/* <p className="text-zinc-400 text-sm">{role}</p> */}
-    </motion.div>
-  );
 };
 
 export default function AboutPage() {
@@ -116,57 +96,7 @@ export default function AboutPage() {
               Meet Our <GradientText>Team</GradientText>
             </h2>
           </FloatingText>
-
-          <div className="flex justify-center gap-6 flex-wrap md:flex-nowrap">
-            {[
-              {
-                name: "Hussain Ghantiwala",
-                image: "/placeholder.svg?height=400&width=400"
-              },
-              {
-                name: "Yusuf Z",
-                image: "/placeholder.svg?height=400&width=400"
-              },
-              {
-                name: "Mustafa A",
-                image: "/placeholder.svg?height=400&width=400"
-              },
-              {
-                name: "Murtaza Sohangpur",
-                image: "/placeholder.svg?height=400&width=400"
-              }
-            ].map((member, idx) => (
-              <FadeIn key={idx} delay={0.1 * idx}>
-                <TeamMember name={member.name} image={member.image} />
-              </FadeIn>
-            ))}
-            {/* <FadeIn delay={0.2}>
-              <TeamMember
-                name="Mustafa A"
-                image="/placeholder.svg?height=400&width=400"
-              />
-            </FadeIn>
-            <FadeIn delay={0.3}>
-              <TeamMember
-                name="Yusuf Z"
-                role="#"
-                image="/placeholder.svg?height=400&width=400"
-              />
-            </FadeIn>
-             <FadeIn delay={0.4}>
-              <TeamMember
-                name="Hussain Ghantiwala"
-                image="/placeholder.svg?height=400&width=400"
-              />
-            </FadeIn>
-            <FadeIn delay={0.5}>
-              <TeamMember
-                name="Hussain Ghantiwala"
-                role=""
-                image="/placeholder.svg?height=400&width=400"
-              />
-            </FadeIn> */}
-          </div>
+          <TeamMembers/>
         </div>
       </section>
 

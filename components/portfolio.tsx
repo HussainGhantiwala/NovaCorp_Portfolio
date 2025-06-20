@@ -68,7 +68,7 @@ export default function Portfolio() {
   };
 
   return (
-    <section id="portfolio" className="py-32 bg-zinc-950/50">
+    <section id="portfolio" className="py-20 bg-zinc-950/50">
       <div className="container px-4">
         <ScrollReveal className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-heading mb-6">
