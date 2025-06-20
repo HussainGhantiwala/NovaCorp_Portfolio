@@ -97,8 +97,8 @@ export default function TeamMembers() {
     >
       {team.map((member, index) => (
         <motion.div key={index} variants={itemVariants}>
-         <div
-  className="relative h-[400px] cursor-pointer rounded-lg border border-border/50 bg-card/30 shadow-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(236,72,153,0.3),_0_0_30px_rgba(139,92,246,0.3),_0_0_40px_rgba(34,211,238,0.3)]"
+        <div
+  className="relative h-[400px] cursor-pointer rounded-lg border border-border/50 bg-card/30 shadow-sm transition-all duration-300 hover:shadow-[0_0_12px_#a855f7,0_0_20px_#06b6d4,0_0_28px_#ec4899]"
 >
   <div className="absolute inset-0 transition-all duration-300">
               <div className="flex h-full flex-col items-center justify-center p-6 text-center">
