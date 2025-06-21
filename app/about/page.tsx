@@ -45,7 +45,7 @@ export default function AboutPage() {
             <FadeIn delay={0.4}>
               <div className="relative h-[450px] rounded-2xl overflow-hidden border border-zinc-800 shadow-lg">
                 <Image
-                  src="/placeholder.svg?height=900&width=600"
+                  src="/nova-logo2.png"
                   alt="Nova Corp Office"
                   fill
                   className="object-cover transition-opacity duration-300 hover:opacity-90"

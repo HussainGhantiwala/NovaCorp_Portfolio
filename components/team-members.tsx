@@ -20,7 +20,7 @@ export default function TeamMembers() {
     {
       name: "Hussain Mohammed Ghantiwala",
       // role: "Founder & Creative Director",
-      image: "/placeholder.svg?height=400&width=400",
+      image: "/images/HussainG.jpeg?height=400&width=400",
       // bio: "Alex has over 15 years of experience in web design and development. He founded Nova Corp with a vision to help businesses succeed online.",
       // social: {
       //   twitter: "#",
@@ -30,7 +30,7 @@ export default function TeamMembers() {
     {
       name: "Yusuf Deesawala",
       role: "Lead UI/UX Designer",
-      image: "/placeholder.svg?height=400&width=400",
+      image: "/images/Desaa.jpeg?height=400&width=400",
       bio: "Jamie specializes in creating intuitive user experiences and beautiful interfaces. She has designed award-winning websites for clients across various industries.",
       social: {
         twitter: "#",
@@ -40,7 +40,7 @@ export default function TeamMembers() {
     {
       name: "Mustafa Tinwala",
       role: "Senior Developer",
-      image: "/placeholder.svg?height=400&width=400",
+      image: "/images/Tehni.jpeg?height=400&width=400",
       bio: "Sam is an expert in front-end and back-end development with a passion for clean code and performance optimization. He leads our development team.",
       social: {
         twitter: "#",
