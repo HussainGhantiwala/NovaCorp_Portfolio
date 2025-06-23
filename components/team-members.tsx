@@ -50,7 +50,7 @@ export default function TeamMembers() {
     {
       name: "Murtaza Sohangpur",
       role: "Project Manager",
-      image: "/placeholder.svg?height=400&width=400",
+      image:"/images/Murtaza_S.jpg?height=400&width=400",
       bio: "Taylor ensures all projects run smoothly from concept to completion. With her attention to detail, she keeps everything on track and on budget.",
       social: {
         twitter: "#",
