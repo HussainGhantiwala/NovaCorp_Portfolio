@@ -45,7 +45,6 @@ const serviceOptions = [
   { id: "e-commerce", label: "E-commerce Solutions", emoji: "🛒" },
   { id: "seo-analytics", label: "SEO & Analytics", emoji: "🔍" },
   { id: "mobile-optimization", label: "Mobile Optimization", emoji: "📲" },
-  { id: "cms-integration", label: "CMS Integration", emoji: "🛠️" },
   { id: "website-maintenance", label: "Website Maintenance", emoji: "🔧" },
   { id: "other", label: "Other", emoji: "➕" },
 ];
