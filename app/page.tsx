@@ -23,6 +23,7 @@ import Portfolio from "@/components/portfolio";
 import Process from "@/components/process";
 import DecryptedText from "@/components/DecryptedText";
 
+
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const portfolioRef = useRef<HTMLDivElement>(null);
@@ -64,7 +65,7 @@ export default function Home() {
   return (
     <div ref={containerRef} className="relative">
       {/* Hero Section */}
-     <section className="relative min-h-screen flex items-center justify-center px-4 py-12 sm:py-16 md:py-20 overflow-hidden">
+      <section className="relative min-h-screen flex flex-col items-center justify-center px-4 py-12 sm:py-16 md:py-20 overflow-hidden text-center sm:text-left sm:flex-row sm:items-start">
 
         {/* Dynamic background elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-black to-cyan-900/10" />
@@ -238,6 +239,8 @@ export default function Home() {
             ))}
           </motion.div>
         </motion.div>
+  
+  
 
         {/* Scroll indicator */}
        <motion.div
