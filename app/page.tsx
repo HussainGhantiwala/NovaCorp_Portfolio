@@ -208,7 +208,7 @@ export default function Home() {
             {[
               { number: "10+", label: "Projects Delivered" },
               { number: "7+", label: "Happy Clients" },
-              { number: "5", label: "Months Experience" },
+              { number: "1", label: "Years Of Experience" },
             ].map((stat, index) => (
               <motion.div
                 key={index}
