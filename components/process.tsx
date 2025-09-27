@@ -25,31 +25,32 @@ export default function Process() {
   const lightPosition = useTransform(scrollYProgress, [0, 1], ["0%", "75%"])
 
   const steps = [
-    {
-      icon: <Search className="h-6 w-6 text-purple-400" />,
-      title: "Discovery",
-      description:
-        "We start by understanding your business, goals, and target audience to create a strategic foundation.",
-    },
-    {
-      icon: <Palette className="h-6 w-6 text-cyan-400" />,
-      title: "Design",
-      description:
-        "Our designers create intuitive, visually stunning interfaces that align with your brand and engage users.",
-    },
-    {
-      icon: <Code className="h-6 w-6 text-pink-400" />,
-      title: "Development",
-      description:
-        "We build your website using modern technologies and best practices to ensure performance and scalability.",
-    },
-    {
-      icon: <Rocket className="h-6 w-6 text-purple-400" />,
-      title: "Launch",
-      description:
-        "After thorough testing, we deploy your website and provide ongoing support to ensure continued success.",
-    },
-  ]
+  {
+    icon: <Search className="h-6 w-6 text-purple-400" />,
+    title: "Identify Pain Points",
+    description:
+      "We work with small businesses to spot the repetitive, time-wasting tasks holding them back.",
+  },
+  {
+    icon: <Palette className="h-6 w-6 text-cyan-400" />,
+    title: "Build Automation",
+    description:
+      "Our platform transforms those manual tasks into automated workflows — no technical skills needed.",
+  },
+  {
+    icon: <Code className="h-6 w-6 text-pink-400" />,
+    title: "Track & Optimize",
+    description:
+      "Businesses monitor results in real-time dashboards, with clear insights on time saved and payments collected.",
+  },
+  {
+    icon: <Rocket className="h-6 w-6 text-purple-400" />,
+    title: "Scale Effortlessly",
+    description:
+      "As your business grows, our automation grows with you — from billing to payroll to full compliance.",
+  },
+];
+
 
   const containerVariants = {
     hidden: { opacity: 0 },

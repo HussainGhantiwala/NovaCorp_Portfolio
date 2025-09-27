@@ -15,52 +15,59 @@ import { GradientText } from "./gradient-text";
 const steps = [
   {
     id: "project-info",
-    title: "Project Information",
-    description: "Tell us about your project",
+    title: "Your Process",
+    description: "Tell us the workflow or task you want automated.",
   },
   {
     id: "services",
-    title: "Services",
-    description: "Select the services you need",
+    title: "Automation Services",
+    description: "Pick the automation solutions that suit your needs.",
   },
-  { id: "timeline", title: "Timeline", description: "Provide your timeline" },
+  {
+    id: "timeline",
+    title: "Speed",
+    description: "How quickly do you want this process running automatically?",
+  },
   {
     id: "contact",
-    title: "Contact Details",
-    description: "How can we reach you",
+    title: "Connect",
+    description: "Share your contact so we can set up your automated system.",
   },
 ];
 
+
 const projectGoals = [
-  { id: "increase-sales", label: "Increase Sales", emoji: "📈" },
-  { id: "brand-awareness", label: "Brand Awareness", emoji: "🌟" },
-  { id: "user-engagement", label: "User Engagement", emoji: "👥" },
-  { id: "new-launch", label: "New Product Launch", emoji: "🚀" },
+  { id: "save-time", label: "Save Time", emoji: "⏱️" },
+  { id: "reduce-errors", label: "Reduce Errors", emoji: "❌" },
+  { id: "increase-efficiency", label: "Increase Efficiency", emoji: "⚡" },
+  { id: "simplify-tasks", label: "Simplify Tasks", emoji: "🛠️" },
 ];
+
 
 const serviceOptions = [
-  { id: "web-design", label: "Web Design", emoji: "🎨" },
-  { id: "ui-ux-solutions", label: "UI/UX Solutions", emoji: "📱" },
-  { id: "website-development", label: "Website Development", emoji: "💻" },
-  { id: "e-commerce", label: "E-commerce Solutions", emoji: "🛒" },
-  { id: "seo-analytics", label: "SEO & Analytics", emoji: "🔍" },
-  { id: "mobile-optimization", label: "Mobile Optimization", emoji: "📲" },
-  { id: "website-maintenance", label: "Website Maintenance", emoji: "🔧" },
-  { id: "other", label: "Other", emoji: "➕" },
+  { id: "billing-automation", label: "Billing & Invoicing", emoji: "💰" },
+  { id: "payroll-automation", label: "Payroll Management", emoji: "💵" },
+  { id: "reminder-system", label: "Automated Reminders", emoji: "📩" },
+  { id: "workflow-tools", label: "Workflow & Task Automation", emoji: "⚙️" },
+  { id: "data-sync", label: "Data Collection & Sync", emoji: "📊" },
+  { id: "custom-solution", label: "Custom Automation", emoji: "🔧" },
 ];
+
 
 const timelineOptions = [
-  { id: "1-month", label: "Within 1 Month", emoji: "⏰" },
-  { id: "1-3-months", label: "1-3 Months", emoji: "📅" },
-  { id: "3-6-months", label: "3-6 Months", emoji: "🕒" },
-  { id: "6-plus-months", label: "6+ Months", emoji: "⏳" },
+  { id: "1-week", label: "ASAP — 1 Week", emoji: "⚡" },
+  { id: "1-month", label: "Within a Month", emoji: "⏳" },
+  { id: "1-3-months", label: "1–3 Months", emoji: "📅" },
+  { id: "3-plus-months", label: "Longer-term Setup", emoji: "🛠️" },
 ];
 
+
 const contactPreferences = [
-  { id: "email", label: "Email", emoji: "📧" },
-  { id: "phone", label: "Phone", emoji: "📞" },
-  { id: "video-call", label: "Video Call", emoji: "💻" },
+  { id: "email", label: "Email — Quick Updates", emoji: "📧" },
+  { id: "phone", label: "Call — Fast Clarifications", emoji: "📞" },
+  { id: "video-call", label: "Video — Walkthrough & Demo", emoji: "💻" },
 ];
+
 
 // Mock UI Components
 type ButtonVariant = "default" | "outline";

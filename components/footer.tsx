@@ -15,7 +15,7 @@ export default function Footer() {
               </span>
             </h3>
             <p className="mb-4 text-sm text-muted-foreground">
-              Forging exceptional digital experiences through innovative web design and development.
+              We build automation tools that cut manual work, save time, and let small businesses focus on growth.
             </p>
             <div className="flex gap-4">
               <Link href="#" className="text-muted-foreground transition-colors hover:text-primary">
@@ -42,38 +42,26 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-4 text-lg font-bold">Services</h3>
+            <h3 className="mb-4 text-lg font-bold">Solutions</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link
-                  href="/services/web-design"
-                  className="text-muted-foreground transition-colors hover:text-primary"
-                >
-                  Web Design
+                <Link href="/services/billing-automation" className="text-muted-foreground transition-colors hover:text-primary">
+                  Billing Automation
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/services/ui-ux-solutions"
-                  className="text-muted-foreground transition-colors hover:text-primary"
-                >
-                  UI/UX Solutions
+                <Link href="/services/payroll" className="text-muted-foreground transition-colors hover:text-primary">
+                  Payroll Automation
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/services/website-development"
-                  className="text-muted-foreground transition-colors hover:text-primary"
-                >
-                  Website Development
+                <Link href="/services/reminders" className="text-muted-foreground transition-colors hover:text-primary">
+                  Smart Reminders
                 </Link>
               </li>
               <li>
-                <Link
-                  href="/services/e-commerce"
-                  className="text-muted-foreground transition-colors hover:text-primary"
-                >
-                  E-commerce Solutions
+                <Link href="/services/workflow-tools" className="text-muted-foreground transition-colors hover:text-primary">
+                  Workflow Tools
                 </Link>
               </li>
             </ul>
@@ -89,7 +77,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/#portfolio" className="text-muted-foreground transition-colors hover:text-primary">
-                  Our Work
+                  Case Studies
                 </Link>
               </li>
               <li>
@@ -97,7 +85,6 @@ export default function Footer() {
                   Contact
                 </Link>
               </li>
-             
             </ul>
           </div>
 
@@ -111,7 +98,7 @@ export default function Footer() {
 
         <div className="mt-12 border-t border-border/50 pt-6">
           <div className="flex flex-col items-center justify-between gap-4 text-center text-sm text-muted-foreground md:flex-row md:text-left">
-            <p>&copy; {currentYear} Nova Corp. All rights reserved.</p>
+            <p>&copy; {currentYear} Nova Corp. Automating the future, one process at a time.</p>
             <div className="flex gap-4">
               <Link href="#" className="transition-colors hover:text-primary">
                 Privacy Policy

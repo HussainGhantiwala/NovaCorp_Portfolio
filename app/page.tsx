@@ -165,9 +165,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            We craft exceptional digital experiences that drive results. From
-            cutting-edge websites to powerful SaaS platforms, we turn your
-            vision into reality.
+           We build automation tools that save small businesses time and money. From billing to payroll, if it’s repetitive — we automate it.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -194,7 +192,7 @@ export default function Home() {
                 className="border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-white"
                 glowColor="rgba(6, 182, 212, 0.4)"
               >
-                Get Started
+                Discover Automation
               </AnimatedButton>
             </Link>
           </motion.div>
@@ -276,54 +274,54 @@ export default function Home() {
         <div className="container px-4">
           <ScrollReveal className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-heading mb-6">
-              What We <GradientText>Create</GradientText>
+              What We <GradientText>Automate</GradientText>
             </h2>
             <p className="text-xl text-zinc-300 max-w-3xl mx-auto">
-              We specialize in building digital solutions that combine beautiful
-              design with powerful functionality.
+              Nova Corp is building the Automation SaaS suite for small businesses, starting with Billing and eminders, expanding into everything that saves you time.
             </p>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Globe2 className="h-8 w-8 text-purple-400" />,
-                title: "Website Development",
-                description:
-                  "Custom websites built with modern technologies, optimized for performance and user experience.",
-                features: [
-                  "Responsive Design",
-                  "Fast Loading",
-                  "CMS Integration",
-                ],
-                color: "purple",
-              },
-              {
-                icon: <Code2 className="h-8 w-8 text-cyan-400" />,
-                title: "SaaS Development",
-                description:
-                  "Scalable software solutions that grow with your business and delight your users.",
-                features: [
-                  "Cloud Architecture",
-                  "API Development",
-                  "User Analytics",
-                  "Security First",
-                ],
-                color: "cyan",
-              },
-              {
-                icon: <Layers3 className="h-8 w-8 text-pink-400" />,
-                title: "Digital Strategy",
-                description:
-                  "Comprehensive digital strategies that align technology with your business goals.",
-                features: [
-                  "Tech Consulting",
-                  "UX/UI Design",
-                  "Performance Optimization",
-                  "Growth Planning",
-                ],
-                color: "pink",
-              },
+  icon: <Globe2 className="h-8 w-8 text-purple-400" />,
+  title: "Automated Billing",
+  description:
+    "Stop creating invoices manually. Upload your customer list once and let automation handle the rest.",
+  features: [
+    "One-Click Invoices",
+    "Customer Database",
+    "Cycle-Based Billing",
+  ],
+  color: "purple",
+},
+{
+  icon: <Code2 className="h-8 w-8 text-cyan-400" />,
+  title: "Smart Reminders",
+  description:
+    "Never chase payments again. Send personalized reminders automatically through WhatsApp, SMS, or Email.",
+  features: [
+    "Bulk Reminder Scheduling",
+    "Personalized Messages",
+    "Multi-Channel Notifications",
+    "Track Paid vs Pending",
+  ],
+  color: "cyan",
+},
+{
+  icon: <Layers3 className="h-8 w-8 text-pink-400" />,
+  title: "Revenue Dashboard",
+  description:
+    "Get real-time insights on collections, dues, and cash flow with a simple and clear dashboard.",
+  features: [
+    "Monthly Reports",
+    "Pending vs Collected View",
+    "Customer Payment History",
+    "Export Data Anytime",
+  ],
+  color: "pink",
+},
+
             ].map((service, index) => (
               <ScrollReveal key={index} delay={index * 0.2}>
                 <AnimatedCard

@@ -7,7 +7,6 @@ import { FloatingText } from "@/components/floating-text";
 import { ParallaxText } from "@/components/parallax-text";
 import TeamMembers from "@/components/team-members";
 import { GradientText } from "@/components/gradient-text";
-import { TeamMember } from "@/components/team-member";
 
 type TeamMemberProps = {
   name: string;

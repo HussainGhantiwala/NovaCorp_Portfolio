@@ -165,53 +165,54 @@ export default function ContactPage() {
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            {[
-              {
-                question: "How long does a typical project take?",
-                answer:
-                  "Project timelines vary based on complexity, but most websites take 2-5 weeks and SaaS platforms take 2-4 months.",
-              },
-              {
-                question: "Do you provide ongoing support?",
-                answer:
-                  "Yes, we offer comprehensive maintenance packages and ongoing support to ensure your project continues to perform optimally.",
-              },
-              {
-                question: "What technologies do you work with?",
-                answer:
-                  "We specialize in modern web technologies including React, Next.js, Node.js, and various cloud platforms. We also use HTML and CSS and are proficient with building APIs using python.",
-              },
-              {
-                question: "Can you help with existing projects?",
-                answer:
-                  "We can audit, optimize, and enhance existing projects or take over development from other teams.",
-              },
-              {
-                question: "What's your pricing structure?",
-                answer:
-                  "We offer flexible pricing models based on the client's requirements and ensure that the price we offer is justifiable and often better than the competiotion.",
-              },
-              {
-                question: "Do you work with international clients?",
-                answer:
-                  "Yes, we work with clients worldwide and have experience managing projects across different time zones. We are also up on fiverr and upwork.",
-              },
-            ].map((faq, index) => (
-              <ScrollReveal key={index} delay={index * 0.1}>
-                <motion.div
-                  className="p-6 rounded-xl bg-zinc-900/50 border border-zinc-800"
-                  whileHover={{ borderColor: "rgba(168, 85, 247, 0.3)" }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <h3 className="text-lg font-bold text-white mb-3">
-                    {faq.question}
-                  </h3>
-                  <p className="text-zinc-400">{faq.answer}</p>
-                </motion.div>
-              </ScrollReveal>
-            ))}
-          </div>
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+  {[
+    {
+      question: "How fast can you deliver?",
+      answer:
+        "Websites are usually live in 3–4 weeks. SaaS platforms? 2–3 months. We cut fluff, move fast, and ship.",
+    },
+    {
+      question: "Do you stick around after launch?",
+      answer:
+        "Yes. We handle updates, fixes, and scaling so your product doesn’t rot after v1.",
+    },
+    {
+      question: "What tech do you use?",
+      answer:
+        "React, Next.js, Node.js, cloud infra, and custom APIs. The stack is modern, fast, and built to last.",
+    },
+    {
+      question: "Can you rescue half-baked projects?",
+      answer:
+        "Absolutely. We’ll audit, clean up the mess, and push it across the finish line.",
+    },
+    {
+      question: "How do you price projects?",
+      answer:
+        "Transparent and scoped to your needs. No bloated retainers, no shady upsells.",
+    },
+    {
+      question: "Do you work with global clients?",
+      answer:
+        "Yes. Time zones aren’t a barrier. We’ve shipped across continents without missing deadlines.",
+    },
+  ].map((faq, index) => (
+    <ScrollReveal key={index} delay={index * 0.1}>
+      <motion.div
+        className="p-6 rounded-xl bg-zinc-900/50 border border-zinc-800"
+        whileHover={{ borderColor: "rgba(168, 85, 247, 0.3)" }}
+        transition={{ duration: 0.3 }}
+      >
+        <h3 className="text-lg font-bold text-white mb-3">
+          {faq.question}
+        </h3>
+        <p className="text-zinc-400">{faq.answer}</p>
+      </motion.div>
+    </ScrollReveal>
+  ))}
+</div>
+
         </div>
       </section>
     </div>

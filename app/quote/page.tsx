@@ -5,7 +5,7 @@ import QuoteForm from "@/components/quote-form"
 
 export const metadata: Metadata = {
   title: "Get a Quote | Nova Corp",
-  description: "Request a custom quote for your web design and development project.",
+  description: "Every product starts with a blueprint. Let’s draft yours.",
 }
 
 export default function QuotePage() {

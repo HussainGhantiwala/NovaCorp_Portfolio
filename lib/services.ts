@@ -1,412 +1,128 @@
 import {
-  Code,
-  Palette,
-  Layout,
-  ShoppingCart,
-  LineChart,
-  Smartphone,
-  Globe,
+  CreditCard,
+  Bell,
+  BarChart3,
+  Settings2,
   Shield,
 } from "lucide-react";
 
 export const services = [
   {
-    title: "Web Design",
-    slug: "web-design",
-    category: "Design",
+    title: "Billing Automation",
+    slug: "billing-automation",
+    category: "Automation",
     shortDescription:
-      "Beautiful, user-focused designs that elevate your brand and engage your audience.",
+      "Eliminate manual invoicing and collections. Automate recurring billing with precision.",
     description:
-      "Our web design services focus on creating visually stunning, on-brand websites that capture your company's essence...",
-    iconComponent: Palette,
+      "Our billing automation engine takes care of invoices, reminders, and collections so your team can focus on growth. Scale your revenue operations without scaling headcount.",
+    iconComponent: CreditCard,
     features: [
-      "Custom website design tailored to your brand",
-      "Responsive layouts that work on all devices",
-      "User experience (UX) focused design",
-      "Interactive prototypes and wireframes",
-      "Brand consistency across all pages",
-      "Accessibility compliance",
+      "Recurring invoice scheduling",
+      "Automated payment links",
+      "GST/tax compliance",
+      "Multi-currency support",
+      "Auto-reconciliation",
     ],
-    technologies: ["Figma", "Adobe XD", "Sketch", "Photoshop", "Illustrator"],
+    technologies: ["Stripe", "Razorpay", "Xero API", "QuickBooks API"],
     process: [
-      {
-        title: "Discovery",
-        description: "We learn about your brand, goals, and target audience...",
-      },
-      {
-        title: "Wireframing",
-        description: "We create the structural blueprint of your website...",
-      },
-      {
-        title: "Visual Design",
-        description: "We develop the visual elements...",
-      },
+      { title: "Setup", description: "Connect your accounts and define billing rules." },
+      { title: "Automation", description: "Invoices, reminders, and follow-ups run on autopilot." },
+      { title: "Monitoring", description: "Track payments and retries from a single dashboard." },
     ],
     examples: [
       {
-        title: "E-commerce Redesign",
-        description:
-          "A complete redesign that increased conversion rates by 35%",
+        title: "SaaS Startup",
+        description: "Cut invoice time by 90% and reduced late payments by 40%.",
       },
       {
-        title: "Corporate Website",
-        description:
-          "Modern design that strengthened brand perception and user engagement",
+        title: "Consulting Firm",
+        description: "Automated recurring retainers and reconciled payments with Xero.",
       },
     ],
   },
   {
-    title: "UI/UX Solutions",
-    slug: "ui-ux-solutions",
-    category: "Design",
+    title: "Reminder Automation",
+    slug: "reminder-automation",
+    category: "Communication",
     shortDescription:
-      "Intuitive interfaces and seamless user experiences that convert visitors into customers.",
+      "Never chase clients manually again. Automated payment reminders across channels.",
     description:
-      "Our UI/UX solutions are centered around creating intuitive, enjoyable user experiences...",
-    iconComponent: Layout,
+      "Late payments crush cash flow. Our reminder automation system sends WhatsApp, SMS, and email nudges at the right time — polite, professional, and consistent.",
+    iconComponent: Bell,
     features: [
-      "User research and persona development",
-      "Information architecture design",
-      "User flow mapping and optimization",
-      "Interactive prototyping",
-      "Usability testing",
-      "Conversion rate optimization",
+      "Multi-channel reminders (WhatsApp, SMS, Email)",
+      "Personalized messaging",
+      "Smart retry scheduling",
+      "Customer segmentation",
+      "Custom reminder flows",
     ],
-    technologies: [
-      "Figma",
-      "Adobe XD",
-      "InVision",
-      "Maze",
-      "Hotjar",
-      "Optimal Workshop",
-    ],
+    technologies: ["Twilio", "WhatsApp API", "SendGrid"],
     process: [
-      {
-        title: "Research",
-        description: "We conduct user research...",
-      },
-      {
-        title: "Strategy",
-        description: "We develop a UX strategy...",
-      },
-      {
-        title: "Design & Testing",
-        description: "We create and test interfaces...",
-      },
+      { title: "Integration", description: "Connect CRM or billing system." },
+      { title: "Configuration", description: "Define reminder rules and timing." },
+      { title: "Go Live", description: "Sit back as reminders reduce your DSO automatically." },
     ],
     examples: [
       {
-        title: "App Redesign",
-        description:
-          "Simplified user flows that increased user retention by 40%",
-      },
-      {
-        title: "Checkout Process Optimization",
-        description:
-          "Streamlined checkout that reduced cart abandonment by 25%",
+        title: "Freelance Collective",
+        description: "Improved collection rates from 60% to 92% within 3 months.",
       },
     ],
   },
   {
-    title: "Website Development",
-    slug: "website-development",
-    category: "Development",
+    title: "Revenue Dashboard",
+    slug: "revenue-dashboard",
+    category: "Analytics",
     shortDescription:
-      "Fast, responsive, and accessible websites built with modern technologies.",
+      "One place to track dues, collections, and cash flow in real-time.",
     description:
-      "We build websites using the latest technologies and best practices...",
-    iconComponent: Code,
+      "Our dashboard gives founders and finance teams crystal-clear visibility into money in, money out, and what’s stuck. Export reports or integrate directly with your accounting stack.",
+    iconComponent: BarChart3,
     features: [
-      "Custom website development",
-      "Front-end and back-end programming",
-      "Responsive and mobile-first development",
-      "Performance optimization",
-      "SEO-friendly code structure",
-      "Cross-browser compatibility",
+      "Real-time revenue tracking",
+      "Dues aging report",
+      "Cash flow forecasting",
+      "Automated CSV/Excel exports",
+      "Team permissions",
     ],
-    technologies: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "Node.js",
-      "Tailwind CSS",
-      "Vercel",
-    ],
+    technologies: ["Next.js", "Supabase", "Metabase", "BigQuery"],
     process: [
-      {
-        title: "Planning",
-        description: "We define technical requirements...",
-      },
-      {
-        title: "Development",
-        description: "We write clean, efficient code...",
-      },
-      {
-        title: "Testing & Deployment",
-        description: "We thoroughly test and deploy your website...",
-      },
+      { title: "Connect", description: "Hook into billing + payment systems." },
+      { title: "Visualize", description: "Interactive dashboards update in real-time." },
+      { title: "Decide", description: "Use insights to plan collections and growth." },
     ],
     examples: [
       {
-        title: "E-commerce Platform",
-        description:
-          "Custom-built online store with integrated payment processing",
-      },
-      {
-        title: "SaaS Application",
-        description:
-          "Feature-rich web application with user authentication and dashboard",
+        title: "Agency Network",
+        description: "Centralized finance ops for 12 subsidiaries across 3 countries.",
       },
     ],
   },
   {
-    title: "E-commerce Solutions",
-    slug: "e-commerce",
-    category: "Development",
+    title: "Future Automations",
+    slug: "future-automations",
+    category: "Roadmap",
     shortDescription:
-      "Online stores that drive sales and provide seamless shopping experiences.",
+      "Payroll, compliance, inventory — automation doesn’t stop with billing.",
     description:
-      "Our e-commerce solutions are designed to maximize conversions...",
-    iconComponent: ShoppingCart,
+      "We’re building toward an automation suite that will extend beyond billing. Early adopters shape the roadmap and get lifetime discounts.",
+    iconComponent: Settings2,
     features: [
-      "Custom e-commerce website development",
-      "Shopping cart and checkout optimization",
-      "Payment gateway integration",
-      "Inventory management systems",
-      "Customer account portals",
-      "Order tracking and management",
+      "Payroll automation",
+      "Compliance workflows",
+      "Inventory sync",
+      "Vendor payments",
     ],
-    technologies: [
-      "Shopify",
-      "WooCommerce",
-      "Next.js Commerce",
-      "Stripe",
-      "PayPal",
-      "Snipcart",
-    ],
+    technologies: ["Coming Soon"],
     process: [
-      {
-        title: "Strategy",
-        description: "We develop an e-commerce strategy...",
-      },
-      {
-        title: "Development",
-        description: "We build your online store...",
-      },
-      {
-        title: "Optimization",
-        description: "We optimize your store...",
-      },
+      { title: "Research", description: "Work with early customers to prioritize pain points." },
+      { title: "Beta", description: "Release MVP modules for select partners." },
+      { title: "Launch", description: "Roll out as part of the automation suite." },
     ],
     examples: [
       {
-        title: "Fashion Boutique",
-        description: "Custom online store with virtual try-on features",
-      },
-      {
-        title: "Subscription Box Service",
-        description: "Recurring billing platform with customer portal",
-      },
-    ],
-  },
-  {
-    title: "SEO & Analytics",
-    slug: "seo-analytics",
-    category: "Marketing",
-    shortDescription:
-      "Data-driven strategies to increase visibility and measure performance.",
-    description:
-      "We implement comprehensive SEO strategies to improve your website's visibility...",
-    iconComponent: LineChart,
-    features: [
-      "Technical SEO audits and optimization",
-      "Keyword research and strategy",
-      "On-page and off-page SEO",
-      "Content optimization",
-      "Analytics setup and reporting",
-      "Conversion tracking",
-    ],
-    technologies: [
-      "Google Analytics",
-      "Google Search Console",
-      "Ahrefs",
-      "SEMrush",
-      "Hotjar",
-      "Tag Manager",
-    ],
-    process: [
-      {
-        title: "Audit",
-        description: "We analyze your current SEO performance...",
-      },
-      {
-        title: "Strategy",
-        description: "We develop a comprehensive SEO strategy...",
-      },
-      {
-        title: "Implementation & Monitoring",
-        description: "We implement optimizations and monitor performance...",
-      },
-    ],
-    examples: [
-      {
-        title: "Local Business SEO",
-        description: "Increased organic traffic by 150% in 6 months",
-      },
-      {
-        title: "E-commerce SEO Campaign",
-        description: "Improved search rankings for 200+ product pages",
-      },
-    ],
-  },
-  {
-    title: "Mobile Optimization",
-    slug: "mobile-optimization",
-    category: "Development",
-    shortDescription:
-      "Responsive designs that provide exceptional experiences on all devices.",
-    description:
-      "With mobile traffic accounting for over half of all web visits...",
-    iconComponent: Smartphone,
-    features: [
-      "Responsive web design",
-      "Mobile-first development approach",
-      "Touch-friendly navigation",
-      "Mobile performance optimization",
-      "Progressive Web App (PWA) development",
-      "Mobile usability testing",
-    ],
-    technologies: [
-      "Responsive CSS",
-      "Progressive Web Apps",
-      "AMP",
-      "Mobile Testing Tools",
-      "Touch Events API",
-    ],
-    process: [
-      {
-        title: "Analysis",
-        description: "We analyze your mobile user data...",
-      },
-      {
-        title: "Optimization",
-        description: "We implement responsive design...",
-      },
-      {
-        title: "Testing",
-        description: "We test across multiple devices...",
-      },
-    ],
-    examples: [
-      {
-        title: "Restaurant Website",
-        description: "Mobile-optimized menu and ordering system",
-      },
-      {
-        title: "News Portal",
-        description: "Fast-loading mobile experience with offline capabilities",
-      },
-    ],
-  },
-  {
-    title: "CMS Integration",
-    slug: "cms-integration",
-    category: "Development",
-    shortDescription:
-      "Easy-to-update content management systems tailored to your needs.",
-    description:
-      "We integrate powerful content management systems that make updating your website simple...",
-    iconComponent: Globe,
-    features: [
-      "CMS selection and customization",
-      "Content migration and setup",
-      "Custom post types and fields",
-      "User role management",
-      "Workflow optimization",
-      "Training and documentation",
-    ],
-    technologies: [
-      "WordPress",
-      "Contentful",
-      "Sanity",
-      "Strapi",
-      "Prismic",
-      "Headless CMS",
-    ],
-    process: [
-      {
-        title: "Requirements",
-        description: "We identify your content management needs...",
-      },
-      {
-        title: "Implementation",
-        description: "We set up and customize the CMS...",
-      },
-      {
-        title: "Training",
-        description: "We provide training and documentation...",
-      },
-    ],
-    examples: [
-      {
-        title: "Corporate Blog",
-        description: "Custom WordPress implementation with editorial workflow",
-      },
-      {
-        title: "Multi-language Website",
-        description: "Headless CMS powering content in 5 languages",
-      },
-    ],
-  },
-  {
-    title: "Website Maintenance",
-    slug: "website-maintenance",
-    category: "Support",
-    shortDescription:
-      "Ongoing support to keep your website secure, updated, and performing optimally.",
-    description:
-      "Our website maintenance services ensure your site remains secure, up-to-date, and performing at its best. We offer regular updates, security monitoring, performance optimization, and content updates.",
-    iconComponent: Shield,
-    features: [
-      "Regular software updates",
-      "Security monitoring and patches",
-      "Performance optimization",
-      "Content updates and management",
-      "Backup and recovery",
-      "Technical support",
-    ],
-    technologies: [
-      "Monitoring Tools",
-      "Security Scanners",
-      "Backup Solutions",
-      "Performance Optimization Tools",
-    ],
-    process: [
-      {
-        title: "Assessment",
-        description:
-          "We assess your website's current state and maintenance needs.",
-      },
-      {
-        title: "Maintenance Plan",
-        description:
-          "We develop a customized maintenance plan for your website.",
-      },
-      {
-        title: "Ongoing Support",
-        description:
-          "We provide regular maintenance and respond quickly to any issues.",
-      },
-    ],
-    examples: [
-      {
-        title: "E-commerce Platform",
-        description: "Ongoing maintenance resulting in 99.9% uptime",
-      },
-      {
-        title: "Membership Website",
-        description:
-          "Regular updates and security monitoring for sensitive user data",
+        title: "Beta Cohort",
+        description: "Exclusive group of customers shaping our roadmap.",
       },
     ],
   },
