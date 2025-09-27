@@ -165,7 +165,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-           We build automation tools that save small businesses time and money. From billing to payroll, if it’s repetitive — we automate it.
+           We build automation tools that save small businesses time and money. From billing to payroll, if it’s repetitive...we automate it.
           </motion.p>
 
           {/* CTA Buttons */}
