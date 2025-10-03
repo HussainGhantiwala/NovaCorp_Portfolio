@@ -95,7 +95,9 @@ export default function AboutPage() {
               Meet Our <GradientText>Team</GradientText>
             </h2>
           </FloatingText>
-          <TeamMembers/>
+         
+          <TeamMembers />
+
         </div>
       </section>
 

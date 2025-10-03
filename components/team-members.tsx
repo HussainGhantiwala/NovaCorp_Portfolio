@@ -38,25 +38,25 @@ export default function TeamMembers() {
       },
     },
     {
-      name: "Mustafa Tinwala",
+      name: "Kunal Deshmukh",
       role: "Senior Developer",
-      image: "/images/Tehni.jpeg?height=400&width=400",
-      bio: "Sam is an expert in front-end and back-end development with a passion for clean code and performance optimization. He leads our development team.",
+      image: "/images/Kunal.png?height=400&width=400",
+      bio: "Kunal is an expert in front-end and back-end development with a passion for clean code and performance optimization. He leads our development team.",
       social: {
         twitter: "#",
         linkedin: "#",
       },
     },
-    {
-      name: "Murtaza Sohangpur",
-      role: "Project Manager",
-      image:"/images/Murtaza_S.jpg?height=400&width=400",
-      bio: "Taylor ensures all projects run smoothly from concept to completion. With her attention to detail, she keeps everything on track and on budget.",
-      social: {
-        twitter: "#",
-        linkedin: "#",
-      },
-    },
+    // {
+    //   name: "Murtaza Sohangpur",
+    //   role: "Project Manager",
+    //   image:"/images/Murtaza_S.jpg?height=400&width=400",
+    //   bio: "Taylor ensures all projects run smoothly from concept to completion. With her attention to detail, she keeps everything on track and on budget.",
+    //   social: {
+    //     twitter: "#",
+    //     linkedin: "#",
+    //   },
+    // },
   ]
 
   const containerVariants = {
@@ -93,7 +93,7 @@ export default function TeamMembers() {
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       variants={containerVariants}
-      className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4"
+      className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 justify-center"
     >
       {team.map((member, index) => (
         <motion.div key={index} variants={itemVariants}>
