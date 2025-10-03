@@ -16,8 +16,9 @@ export const metadata: Metadata = {
       { url: "/favicon.ico", type: "image/x-icon" },
     ],
   },
-  title: "Nova Corp | Web Design & Development Studio",
-  description: "Professional web design, UI/UX solutions, and custom website development for modern businesses.",
+  title: "Nova Corp | Automation SaaS Solutions",
+description: "We build automation tools that save time, cut errors, and streamline workflows for small businesses.",
+
 }
 
 export default function RootLayout({

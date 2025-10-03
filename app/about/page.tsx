@@ -28,17 +28,18 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <FadeIn delay={0.2}>
-              <div className="space-y-6">
-                <p className="text-xl text-zinc-400 leading-relaxed">
-                  Founded with a vision to redefine digital experiences, Nova Corp has evolved into a powerhouse of innovation and creativity.
-                </p>
-                <p className="text-zinc-400 leading-relaxed">
-                  We're not just developers; we're digital architects crafting the future of web and SaaS solutions. Our team blends technical expertise with artistic vision to deliver captivating, engaging, and conversion-driven experiences.
-                </p>
-                <p className="text-zinc-400 leading-relaxed">
-                  With a client-first approach and an unwavering commitment to excellence, we’ve empowered businesses across industries to establish powerful digital presences and transformative SaaS solutions.
-                </p>
-              </div>
+            <div className="space-y-6">
+  <p className="text-xl text-zinc-400 leading-relaxed">
+    Nova Corp was founded with a simple mission: eliminate repetitive work through automation.
+  </p>
+  <p className="text-zinc-400 leading-relaxed">
+    We’re not just building software...we’re building systems that save time, reduce errors, and scale seamlessly. From SaaS platforms to custom workflow automations, our focus is making businesses run smarter, not harder.
+  </p>
+  <p className="text-zinc-400 leading-relaxed">
+    With a client-first mindset and proven expertise, we’ve helped companies cut manual tasks, unlock growth, and stay ahead in a world that demands efficiency.
+  </p>
+</div>
+
             </FadeIn>
 
             <FadeIn delay={0.4}>
