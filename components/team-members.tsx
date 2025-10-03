@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Image from "next/image"
-import { Linkedin, Twitter } from "lucide-react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { useInView } from "react-intersection-observer"
+import { useState } from "react";
+import Image from "next/image";
+import { Linkedin, Twitter } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 export default function TeamMembers() {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
-  })
+  });
 
   // Track which card is flipped
-  const [flippedCard, setFlippedCard] = useState<number | null>(null)
+  const [flippedCard, setFlippedCard] = useState<number | null>(null);
 
   const team = [
     {
@@ -22,10 +22,10 @@ export default function TeamMembers() {
       // role: "Founder & Creative Director",
       image: "/images/HussainG.jpeg?height=400&width=400",
       // bio: "Alex has over 15 years of experience in web design and development. He founded Nova Corp with a vision to help businesses succeed online.",
-      // social: {
-      //   twitter: "#",
-      //   linkedin: "#",
-      // },
+      social: {
+        twitter: "#",
+        linkedin: "www.linkedin.com/in/hussain-ghantiwala5253",
+      },
     },
     {
       name: "Yusuf Deesawala",
@@ -44,7 +44,7 @@ export default function TeamMembers() {
       bio: "Kunal is an expert in front-end and back-end development with a passion for clean code and performance optimization. He leads our development team.",
       social: {
         twitter: "#",
-        linkedin: "#",
+        linkedin: "www.linkedin.com/in/kunaldeshmukh34",
       },
     },
     // {
@@ -57,7 +57,7 @@ export default function TeamMembers() {
     //     linkedin: "#",
     //   },
     // },
-  ]
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -68,7 +68,7 @@ export default function TeamMembers() {
         staggerChildren: 0.2,
       },
     },
-  }
+  };
 
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
@@ -77,15 +77,15 @@ export default function TeamMembers() {
       opacity: 1,
       transition: { duration: 0.5 },
     },
-  }
+  };
 
   const handleCardClick = (index: number) => {
     if (flippedCard === index) {
-      setFlippedCard(null)
+      setFlippedCard(null);
     } else {
-      setFlippedCard(index)
+      setFlippedCard(index);
     }
-  }
+  };
 
   return (
     <motion.div
@@ -97,10 +97,8 @@ export default function TeamMembers() {
     >
       {team.map((member, index) => (
         <motion.div key={index} variants={itemVariants}>
-        <div
-  className="relative h-[400px] cursor-pointer rounded-lg border border-border/50 bg-card/30 shadow-sm transition-all duration-300 hover:shadow-[0_0_12px_#a855f7,0_0_20px_#06b6d4,0_0_28px_#ec4899]"
->
-  <div className="absolute inset-0 transition-all duration-300">
+          <div className="relative h-[400px] cursor-pointer rounded-lg border border-border/50 bg-card/30 shadow-sm transition-all duration-300 hover:shadow-[0_0_12px_#a855f7,0_0_20px_#06b6d4,0_0_28px_#ec4899]">
+            <div className="absolute inset-0 transition-all duration-300">
               <div className="flex h-full flex-col items-center justify-center p-6 text-center">
                 <div className="mx-auto mb-4 aspect-square h-40 w-40 overflow-hidden rounded-full">
                   <Image
@@ -114,6 +112,22 @@ export default function TeamMembers() {
                 <h3 className="mb-1 text-xl font-bold">{member.name}</h3>
                 {/* <p className="text-sm text-muted-foreground">{member.role}</p> */}
                 <div className="mt-4 flex justify-center gap-3">
+                  {member.social?.linkedin && (
+                    <a
+                      href={
+                        member.social.linkedin.startsWith("http")
+                          ? member.social.linkedin
+                          : `https://${member.social.linkedin}`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-primary"
+                    >
+                      <span className="sr-only">LinkedIn</span>
+                      <Linkedin size={18} />
+                    </a>
+                  )}
+
                   {/* <Link href={member.social.twitter} className="text-muted-foreground hover:text-primary">
                     <span className="sr-only">Twitter</span>
                     <Twitter size={18} />
@@ -129,7 +143,8 @@ export default function TeamMembers() {
             <div
               className="absolute inset-0 backface-hidden transition-all duration-500"
               style={{
-                transform: flippedCard === index ? "rotateY(0deg)" : "rotateY(-180deg)",
+                transform:
+                  flippedCard === index ? "rotateY(0deg)" : "rotateY(-180deg)",
                 opacity: flippedCard === index ? 1 : 0,
                 pointerEvents: flippedCard === index ? "auto" : "none",
               }}
@@ -154,5 +169,5 @@ export default function TeamMembers() {
         </motion.div>
       ))}
     </motion.div>
-  )
+  );
 }
