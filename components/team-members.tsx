@@ -34,7 +34,7 @@ export default function TeamMembers() {
       bio: "Jamie specializes in creating intuitive user experiences and beautiful interfaces. She has designed award-winning websites for clients across various industries.",
       social: {
         twitter: "#",
-        linkedin: "#",
+        linkedin: "https://www.linkedin.com/in/yusuf-deesawala-a21610229?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
       },
     },
     {
